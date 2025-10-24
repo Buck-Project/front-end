@@ -4,7 +4,8 @@ import { LoginForm } from './pages/LoginForm';
 import { Home } from './pages/Home';
 import { SignupForm } from './pages/SignupForm';
 import { Profile } from './pages/Profile';
-import { Validayion } from './pages/Validation';
+import { Validation } from './pages/Validation';
+// import { Valid } from './pages/valid'
 
 function App() {
   return (
@@ -42,7 +43,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<LoginForm />} />
             <Route path='/signUp' element={<SignupForm />} />
-            <Route path='/validation' element={<Validayion />} />
+            <Route path='/validation' element={<Validation />} />
+            {/* <Route path='/valid' element={<Valid />} /> */}
             <Route path='/profile/:name' element={<Profile />} />
             <Route path='*' element={
               <div className="flex items-center justify-center min-h-[60vh]">
