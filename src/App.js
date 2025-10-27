@@ -10,35 +10,9 @@ import { Validation } from './pages/Validation';
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-        <header className="bg-white shadow-md">
-          <nav className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-center gap-6 text-lg">
-              <Link
-                to='/'
-                className="text-slate-700 hover:text-blue-600 transition-colors duration-200 font-medium"
-              >
-                خانه
-              </Link>
-              <span className="text-slate-300">|</span>
-              <Link
-                to='/login'
-                className="text-slate-700 hover:text-blue-600 transition-colors duration-200 font-medium"
-              >
-                ورود
-              </Link>
-              <span className="text-slate-300">|</span>
-              <Link
-                to='/signUp'
-                className="text-slate-700 hover:text-blue-600 transition-colors duration-200 font-medium"
-              >
-                ثبت نام
-              </Link>
-            </div>
-          </nav>
-        </header>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100" font-style='Vazir'>
 
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto">
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<LoginForm />} />

@@ -4,6 +4,8 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 // import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import logo from '../assets/logo.png';
+import buck from '../assets/buck.png';
 
 export const SignupForm = () => {
     const navigate = useNavigate()
@@ -28,9 +30,14 @@ export const SignupForm = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-[75vh] py-12 px-4">
-            <div className="w-full max-w-md">
-                <div className="bg-customlight rounded-2xl shadow-xl p-8">
+        <div className="flex min-h-screen bg-white" dir="rtl">
+            <div className="w-full flex items-center justify-center p-6 md:p-10">
+                <div className="w-full max-w-xl h-full bg-gray-100 rounded-3xl border-2 border-gray-200 shadow-2xl px-12 py-8 bx-12 relative overflow-hidden">
+                    <img
+                        src={logo}
+                        alt="CB Buck Gallery"
+                        className="mx-auto w-32 h-auto"
+                    />
                     <div className="text-center mb-8">
                         <h2 className="text-3xl font-bold text-slate-800">ساخت حساب جدید</h2>
                     </div>

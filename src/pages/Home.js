@@ -1,3 +1,7 @@
 export const Home =() =>{
-    return <h1>this is home page</h1>
+    return (
+        <div className="jusify-center">
+            <h1>this is home page</h1>
+        </div>
+    )
 }
