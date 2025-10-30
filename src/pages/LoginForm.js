@@ -4,13 +4,28 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { checkPhone } from '../services/api'
+import CustomModal from '../components/CustomModal'
 import logo from '../assets/logo.png';
 import buck from '../assets/buck.png';
+
+import successCat from '../assets/success.png'
+import errorCat from '../assets/error.png' 
+
+const SUCCESS_CAT = successCat
+const ERROR_CAT = errorCat
+
 
 export const LoginForm = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    buttonText: '',
+    onButtonClick: () => {},
+    imageSrc: ''
+  })
 
   const schema = yup.object().shape({
     phone: yup.string()
@@ -18,31 +33,56 @@ export const LoginForm = () => {
       .matches(/^09[0-9]{9}$/, "شماره تلفن معتبر نیست (مثال: 09123456789)")
   })
 
-  const { register, handleSubmit, formState: { errors } } =
-    useForm({ resolver: yupResolver(schema) })
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  })
 
   const onFormSubmit = async (data) => {
     setLoading(true)
-    setErrorMessage('')
 
     try {
       const result = await checkPhone(data.phone)
 
       if (result.success) {
         if (result.data.registered === true) {
-          console.log('کاربر ثبت نام کرده - کد ارسال شد')
-          navigate("/validation", { state: { phone: data.phone } })
+          setModalConfig({
+            isOpen: true,
+            title: 'ورود موفق!',
+            message: 'کد تأیید به شماره شما ارسال شد.',
+            buttonText: 'ادامه',
+            onButtonClick: () => {
+              setModalConfig(prev => ({ ...prev, isOpen: false }))
+              navigate("/validation", { state: { phone: data.phone } })
+            },
+            imageSrc: SUCCESS_CAT
+          })
         } else {
-          console.log('کاربر جدید است - هدایت به ثبت نام')
           navigate("/signUp", { state: { phone: data.phone } })
         }
       } else {
-        // خطا در ارتباط با سرور
-        setErrorMessage(result.message)
+        setModalConfig({
+          isOpen: true,
+          title: 'خطا!',
+          message: result.message || 'لطفاً دوباره تلاش کنید.',
+          buttonText: 'بازگشت',
+          onButtonClick: () => {
+            setModalConfig(prev => ({ ...prev, isOpen: false }))
+          },
+          imageSrc: ERROR_CAT
+        })
       }
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error)
-      setErrorMessage('خطای غیرمنتظره رخ داد. لطفاً دوباره تلاش کنید.')
+      setModalConfig({
+        isOpen: true,
+        title: 'خطا!',
+        message: 'خطای غیرمنتظره رخ داد. لطفاً دوباره تلاش کنید.',
+        buttonText: 'بازگشت',
+        onButtonClick: () => {
+          setModalConfig(prev => ({ ...prev, isOpen: false }))
+        },
+        imageSrc: ERROR_CAT
+      })
     } finally {
       setLoading(false)
     }
@@ -54,22 +94,16 @@ export const LoginForm = () => {
         <div className="w-full max-w-xl h-[600px] bg-gray-100 rounded-3xl border-2 border-gray-200 shadow-2xl p-8 relative overflow-hidden">
           <div className="text-center mb-8">
             <img
-              src={logo} 
+              src={logo}
               alt="CB Buck Gallery"
               className="mx-auto w-32 h-auto"
             />
             <h2 className="text-3xl font-bold text-slate-800">عضویت/ورود</h2>
             <p className="text-sm text-slate-600 mt-2">خوش آمدید،</p>
-            <p className="text-sm text-slate-600">لطفا شماره موبایل یا ایمیل خود را وارد کنید.</p>
+            <p className="text-sm text-slate-600">لطفا شماره موبایل خود را وارد کنید.</p>
           </div>
 
           <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6 px-6">
-
-            {errorMessage && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                <p className="text-sm">{errorMessage}</p>
-              </div>
-            )}
 
             <div className="flex justify-center">
               <div className="w-full max-w-xs">
@@ -77,9 +111,10 @@ export const LoginForm = () => {
                   type="text"
                   placeholder="09123456789"
                   disabled={loading}
+                  {...register("phone")}
                   className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none disabled:bg-slate-100 disabled:cursor-not-allowed text-center text-sm"
                 />
-                {errors.phoneOrEmail && (
+                {errors.phone && ( 
                   <p className="mt-2 text-xs text-red-600 flex items-center gap-1 justify-center">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path
@@ -88,7 +123,7 @@ export const LoginForm = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    {errors.phoneOrEmail.message}
+                    {errors.phone.message}
                   </p>
                 )}
               </div>
@@ -141,19 +176,28 @@ export const LoginForm = () => {
               </Link>
               <span className="text-slate-600"> است.</span>
             </div>
-
           </form>
 
           <div className="absolute bottom-0 left-0 w-48 h-55 opacity-80 pointer-events-none">
             <img
-              src={buck} 
+              src={buck}
               alt="Hand Illustration"
               className="w-full h-full object-contain"
             />
           </div>
-
         </div>
       </div>
+
+      <CustomModal
+        isOpen={modalConfig.isOpen}
+        onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        buttonText={modalConfig.buttonText}
+        onButtonClick={modalConfig.onButtonClick}
+        imageSrc={modalConfig.imageSrc}
+      />
     </div>
   )
+
 };
