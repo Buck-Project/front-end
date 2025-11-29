@@ -1,10 +1,7 @@
 import User from '@/assets/icon.png';
 
 const ProfileIcon = () => (
-  <button 
-    className="text-gray-600 hover:text-gray-800 transition-colors" 
-    aria-label="پروفایل"
-  >
+  <button className="text-foreground hover:text-muted-foreground transition-colors">
     <img src={User} alt="پروفایل" className="h-5 w-5" />
   </button>
 );

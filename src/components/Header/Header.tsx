@@ -18,16 +18,16 @@ const Header = () => {
         >
           <div className="container mx-auto flex items-center">
             <div className="flex items-center space-x-2 space-x-reverse mr-2 md:mr-3">
-              <div className="w-11 h-11 md:w-13.5 md:h-13.5 bg-white/20 backdrop-blur-md rounded-full shadow-sm  flex items-center justify-center">
+              <div className="w-11 h-11 md:w-13.5 md:h-13.5 bg-background/20 backdrop-blur-md rounded-full shadow-sm  flex items-center justify-center">
                 <img
                   src={logo}
                   alt="لوگو"
-                  className="w-10 h-10 md:w-12 md:h-12 object-contain"
+                  className="w-logo-container h-logo-container md:w-12 md:h-12 object-contain"
                 />
               </div>
             </div>
 
-            <div className=" bg-white/20 backdrop-blur-md rounded-full shadow-sm flex flex-1 items-center justify-between p-1.5 md:p-2.5">
+            <div className=" bg-background/20 backdrop-blur-md rounded-full shadow-sm flex flex-1 items-center justify-between p-1.5 md:p-2.5">
               <div className=" ml-4 flex items-center space-x-1 md:space-x-2 space-x-reverse mr-1 md:mr-2">
                 <CartIcon />
                 <NotificationIcon />
@@ -38,9 +38,9 @@ const Header = () => {
                 {menuItems.map((item, index) => (
                   <DropdownMenu item={item} key={index}/>
                 ))}
-                 <button className="text-orange-600 text-xs md:text-sm font-medium hover:text-orange-800 whitespace-nowrap mr-5">
-                  !حراج
-                </button>
+                  <button className="text-primary text-xs md:text-sm font-medium hover:text-primary/90 whitespace-nowrap mr-5">
+                    !حراج
+                  </button>
               </nav>
 
               <SearchBox />

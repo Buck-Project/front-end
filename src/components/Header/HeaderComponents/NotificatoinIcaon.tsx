@@ -1,10 +1,7 @@
 import Bell from '@/assets/notifications.png';
 
 const NotificationIcon = () => (
-  <button 
-    className="text-gray-600 hover:text-gray-800 transition-colors" 
-    aria-label="اعلان‌ها"
-  >
+  <button className="text-foreground hover:text-muted-foreground transition-colors">
     <img src={Bell} alt="اعلان‌ها" className="h-5 w-5" />
   </button>
 );

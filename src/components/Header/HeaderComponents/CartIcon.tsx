@@ -1,10 +1,7 @@
 import ShoppingBag from '@/assets/Shopping bag.png';
 
 const CartIcon = () => (
-  <button 
-    className="text-gray-600 hover:text-gray-800 transition-colors" 
-    aria-label="سبد خرید"
-  >
+  <button className="text-foreground hover:text-muted-foreground transition-colors">
     <img src={ShoppingBag} alt="سبد خرید" className="h-5 w-5" />
   </button>
 );
