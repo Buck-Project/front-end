@@ -1,6 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
 import { Outlet } from "react-router-dom";
-import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 const PublicLayout = () => {
@@ -16,7 +15,6 @@ const PublicLayout = () => {
 				// 	},
 				// }}
 			/>
-			<Header/>
 			<Outlet />
 			<Footer/>
 		</>
