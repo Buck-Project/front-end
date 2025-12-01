@@ -94,8 +94,8 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
                         onMouseLeave={() => setHoveredItem(null)}
                         className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${
                           selectedCategory === cat.name
-                            ? 'bg-primary/10 text-primary font-medium border border-primary/20'
-                            : 'text-foreground hover:bg-muted hover:border hover:border-border'
+                            ? 'bg-dropdown-selected-bg text-primary border border-dropdown-selected-border'
+                            : 'text-foreground hover:bg-dropdown-hover-bg hover:border hover:border-border'
                         }`}
                       >
                         {cat.name}

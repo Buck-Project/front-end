@@ -54,6 +54,12 @@ const config: Config = {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+
+        'dropdown-selected-bg': 'hsl(var(--dropdown-selected-bg))',
+        'dropdown-selected-border': 'hsl(var(--dropdown-selected-border))',
+        'dropdown-hover-bg': 'hsl(var(--dropdown-hover-bg))',
+        'header-bg-blur': 'hsl(var(--header-bg-blur))',
+        'ring-primary-subtle': 'hsl(var(--ring-primary-subtle))',
       },
       borderRadius: {
         sm: "calc(var(--radius) - 4px)",
