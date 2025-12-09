@@ -19,7 +19,12 @@ const SearchBox = () => {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="جست و جو محصولات"
         dir="rtl"
-        className="bg-background rounded-full px-4 py-2 pr-10 text-xs focus:outline-none focus:ring-2 focus:ring-ring-primary-subtle w-search-input md:w-search-input-md md:text-sm lg:w-search-input-lg text-foreground placeholder-muted-foreground"
+        className="
+          bg-background rounded-full px-4 py-2 pr-10 text-xs
+          focus:outline-none focus:ring-2 focus:ring-ring-primary-subtle
+          w-60 md:w-48 lg:w-90
+          text-foreground placeholder-muted-foreground
+        "
       />
       <button
         type="submit"

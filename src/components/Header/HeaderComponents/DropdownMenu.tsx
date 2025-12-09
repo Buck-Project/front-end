@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import type { DropdownItem, DropdownMenuProps } from '@/types/headerTypes';
-import Icon from './icon';
+import Icon from './nextIcon';
 
 
 const DropdownMenu = ({ item }: DropdownMenuProps) => {
@@ -55,7 +55,12 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
           />
           <div
             ref={menuRef}
-            className="absolute z-50 mt-2 w-auto min-w-dropdown-menu max-w-dropdown-menu bg-background shadow-xl rounded-xl p-6 border border-border right-0 transform translate-x-16"
+            className="
+                absolute z-50 mt-2
+                min-w-xl max-w-3xl
+                bg-background shadow-xl rounded-xl p-6 border border-border right-0
+                transform translate-x-16
+              "
           >
             <button
               className="text-lg font-semibold text-foreground hover:text-primary
@@ -66,7 +71,7 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
             </button>
 
             <div className="flex gap-8">
-              <div className="w-dropdown-image h-full shrink-0 rounded-xl overflow-hidden shadow-md relative">
+              <div className="w-60 h-full shrink-0 rounded-xl overflow-hidden shadow-md relative">
                 {hoveredItem?.image ? (
                   <img
                     src={hoveredItem.image}
@@ -92,8 +97,8 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
                         onMouseEnter={() => setHoveredItem(cat)}
                         onMouseLeave={() => setHoveredItem(null)}
                         className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${selectedCategory === cat.name
-                            ? 'bg-dropdown-selected-bg text-primary border border-dropdown-selected-border'
-                            : 'text-foreground hover:bg-dropdown-hover-bg hover:border hover:border-border'
+                          ? 'bg-dropdown-selected-bg text-primary border border-dropdown-selected-border'
+                          : 'text-foreground hover:bg-dropdown-hover-bg hover:border hover:border-border'
                           }`}
                       >
                         {cat.name}
@@ -111,8 +116,8 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
                             onMouseEnter={() => setHoveredItem(cat)}
                             onMouseLeave={() => setHoveredItem(null)}
                             className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${selectedCategory === cat.name
-                                ? 'bg-primary/10 text-primary font-medium border border-primary/20'
-                                : 'text-foreground hover:bg-muted hover:border hover:border-border'
+                              ? 'bg-primary/10 text-primary font-medium border border-primary/20'
+                              : 'text-foreground hover:bg-muted hover:border hover:border-border'
                               }`}
                           >
                             {cat.name}

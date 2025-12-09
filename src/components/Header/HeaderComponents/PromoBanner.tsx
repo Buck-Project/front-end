@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CloseIcon from "./closeIcon";
 
 const PromoBanner = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -15,9 +16,7 @@ const PromoBanner = () => {
           onClick={handleClose}
           className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <CloseIcon />
         </button>
       </div>
     </div>
