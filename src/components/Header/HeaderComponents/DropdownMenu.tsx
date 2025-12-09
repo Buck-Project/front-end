@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import type { DropdownItem, DropdownMenuProps } from '@/types/headerTypes';
+import Icon from './icon';
 
 
 const DropdownMenu = ({ item }: DropdownMenuProps) => {
@@ -60,9 +61,7 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
               className="text-lg font-semibold text-foreground hover:text-primary
                 flex items-center space-x-1 space-x-reverse justify-end w-full mb-4"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+              <Icon />
               <span>{item.category.categoryName}</span>
             </button>
 
@@ -92,11 +91,10 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
                         onClick={() => setSelectedCategory(cat.name)}
                         onMouseEnter={() => setHoveredItem(cat)}
                         onMouseLeave={() => setHoveredItem(null)}
-                        className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${
-                          selectedCategory === cat.name
+                        className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${selectedCategory === cat.name
                             ? 'bg-dropdown-selected-bg text-primary border border-dropdown-selected-border'
                             : 'text-foreground hover:bg-dropdown-hover-bg hover:border hover:border-border'
-                        }`}
+                          }`}
                       >
                         {cat.name}
                       </button>
@@ -112,11 +110,10 @@ const DropdownMenu = ({ item }: DropdownMenuProps) => {
                             onClick={() => setSelectedCategory(cat.name)}
                             onMouseEnter={() => setHoveredItem(cat)}
                             onMouseLeave={() => setHoveredItem(null)}
-                            className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${
-                              selectedCategory === cat.name
+                            className={`block w-full text-right px-4 py-2 rounded-lg text-sm transition-colors ${selectedCategory === cat.name
                                 ? 'bg-primary/10 text-primary font-medium border border-primary/20'
                                 : 'text-foreground hover:bg-muted hover:border hover:border-border'
-                            }`}
+                              }`}
                           >
                             {cat.name}
                           </button>
