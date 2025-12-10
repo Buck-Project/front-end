@@ -1,38 +1,33 @@
-import { useState } from 'react';
-import searchIcon from '@/assets/search.png';
+import { Formik, Form } from "formik";
+import { Input } from "@/components/Custom/input";
+import { Search } from "lucide-react";
 
 const SearchBox = () => {
-  const [query, setQuery] = useState<string>('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      console.log('has been searched', query);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="relative">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="جست و جو محصولات"
-        dir="rtl"
-        className="
-          bg-background rounded-full px-4 py-2 pr-10 text-xs
-          focus:outline-none focus:ring-2 focus:ring-ring-primary-subtle
-          w-60 md:w-48 lg:w-90
-          text-foreground placeholder-muted-foreground
-        "
-      />
-      <button
-        type="submit"
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground p-1"
-      >
-        <img src={searchIcon} alt="ذره‌بین" className="h-4 w-4" />
-      </button>
-    </form>
+    <Formik
+      initialValues={{ query: "" }}
+      onSubmit={(values) => {
+        if (values.query.trim()) {
+          console.log("has been searched", values.query);
+        }
+      }}
+    >
+      <Form>
+        <Input
+          name="query"
+          placeholder="جست‌وجوی محصولات"
+          icon={Search}
+          iconClassName="right-3"
+          containerClassName="relative"
+          inputClassName="
+            bg-background rounded-full py-2 px-10 text-xs pr-7
+            focus:outline-none focus:ring-2 focus:ring-ring-primary-subtle
+            w-60 md:w-48 lg:w-90
+            text-foreground placeholder-muted-foreground
+          "
+        />
+      </Form>
+    </Formik>
   );
 };
 
