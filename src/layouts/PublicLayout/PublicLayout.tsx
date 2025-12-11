@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { Outlet } from "react-router-dom";
 import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 
 const PublicLayout = () => {
 	return (
@@ -9,14 +10,15 @@ const PublicLayout = () => {
 				position="bottom-right"
 				richColors={true}
 				duration={5000}
-				// toastOptions={{
-				// 	style: {
-				// 		color: "red",
-				// 	},
-				// }}
+			// toastOptions={{
+			// 	style: {
+			// 		color: "red",
+			// 	},
+			// }}
 			/>
-			<Header/>
+			<Header />
 			<Outlet />
+			<Footer />
 		</>
 	);
 };
