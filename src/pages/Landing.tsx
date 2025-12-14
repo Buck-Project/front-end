@@ -1,4 +1,15 @@
+import CustomButton from "@/components/Custom/CustomButton";
+import { Formik, Form } from "formik";
+import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
+
+
+const validationSchema = Yup.object({
+	email: Yup.string()
+		.email('ایمیل نامعتبر است')
+		.required('ایمیل الزامی است'),
+});
+
 
 function Landing() {
 	const Navigate = useNavigate();
@@ -16,6 +27,16 @@ function Landing() {
 				</button>
 			</div>
 			<p className="text-5xl text-center ">This is your landing</p>
+
+			{/* use the customButton like this: */}
+			<div className="flex justify-center items-center">
+				<CustomButton
+					type="button"
+					className="flex-none text-center bg-secondary border border-gray-600"
+				>salam</CustomButton>
+
+			</div>
+			
 		</div>
 	);
 }
