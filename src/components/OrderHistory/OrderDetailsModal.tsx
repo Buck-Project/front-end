@@ -1,11 +1,8 @@
 import { X } from 'lucide-react';
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback.tsx";
 // 🌟 ایمپورت کردن Typeهای مرکزی
-import type { OrderDetailsType, OrderItem } from "@/types/orderTypes"; 
-
-// ❌ حذف تعاریف محلی OrderItem و Order (Order همان OrderDetailsType است)
-
-// 🌟 به‌روزرسانی اینترفیس OrderDetailsModalProps
+import type { OrderDetailsType } from "@/types/orderTypes"; 
+// import type { OrderItem } from "@/types/orderTypes"; 
 interface OrderDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
