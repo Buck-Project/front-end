@@ -5,6 +5,7 @@ import ProductList from "@/pages/ProductListing"
 import Temp from "@/pages/Temp";
 import Error404 from "@/pages/Error404";
 import Error500 from "@/pages/Error500";
+import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage"
 
 
 export const router = createBrowserRouter([
@@ -27,8 +28,13 @@ export const router = createBrowserRouter([
 				path: "/productList",
 				element: <ProductList/>
 			},
+			{
 				path: "/error500",
 				element: <Error500 />
+			},
+			{
+				path: "ProductManagement",
+				element: <ProductManagementPage />
 			}
 			// {
 			// 	path: "/AboutUs",

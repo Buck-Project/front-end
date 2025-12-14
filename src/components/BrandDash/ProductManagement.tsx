@@ -1,0 +1,396 @@
+import { useEffect, useState } from "react";
+import {
+  getProductsService,
+  createProductService,
+  updateProductService,
+  deleteProductService,
+} from "@/services/productService";
+
+import type {
+  Product,
+  CreateProductPayload,
+  UpdateProductPayload,
+} from "@/types/productTypes";
+
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Badge } from "../ui/badge";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Textarea } from "../Custom/CustomTextArea";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Plus, Edit2, Trash2, Grid, List, Search } from "lucide-react";
+import { ImageWithFallback } from "../ui/ImageWithFallback";
+import { Formik, Form } from "formik";
+
+export function ProductManagement() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+ const initialValues: CreateProductPayload = {
+  name: "",
+  category: "",
+  sku: "",
+  price: 0,
+  stock: 0,
+  description: "",
+  image: "",
+};
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const data = await getProductsService();
+      setProducts(data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    await deleteProductService(id);
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  const handleUpdateProduct = async (
+    id: string,
+    payload: UpdateProductPayload
+  ) => {
+    const updated = await updateProductService(id, payload);
+    setProducts((prev) =>
+      prev.map((p) => (p.id === id ? updated : p))
+    );
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  return (
+    <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 py-8 lg:px-8 py-10">
+    <div className="space-y-6">
+    <Formik
+      initialValues={initialValues}
+      onSubmit={async (values, { resetForm }) => {
+      await createProductService(values);
+      resetForm();
+      setIsDialogOpen(false);
+      fetchProducts();
+              }}
+            >
+
+      <Form>
+      <div className="flex items-center justify-between">
+        
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-primary hover:bg-primary/90">
+              <Plus className="w-4 h-4 ml-2" />
+              افزودن محصول جدید
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>افزودن محصول جدید</DialogTitle>
+              <DialogDescription>
+                اطلاعات محصول جدید را وارد کنید
+              </DialogDescription>
+            </DialogHeader>
+
+            
+            <Tabs defaultValue="details" className="w-full" dir="rtl">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="details">جزئیات</TabsTrigger>
+                <TabsTrigger value="images">تصاویر</TabsTrigger>
+                <TabsTrigger value="inventory">موجودی</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="details" className="space-y-4 mt-4" dir="rtl">
+                <div className="space-y-2">
+                  <Input
+                    name="name"
+                    label="نام محصول"
+                    placeholder="نام محصول را وارد کنید"
+                    forceRTL
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Input
+                    name="category"
+                    label="دسته‌بندی"
+                    placeholder="دسته‌بندی"
+                    forceRTL
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Input
+                    name="sku"
+                    label="کد محصول (SKU)"
+                    placeholder="مثال: WD-001"
+                    forceRTL
+                  />
+
+                </div>
+                <div className="space-y-2">
+                  <Input
+                    name="price"
+                    label="قیمت (تومان)"
+                    type="text"
+                    onlyNumbers
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>توضیحات</Label>
+                  <Textarea
+                    name="description"
+                    placeholder="توضیحات محصول..."
+                  />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="images" className="space-y-4 mt-4">
+                <div className="border-2 border-dashed rounded-lg p-8 text-center">
+                  <p className="text-muted-foreground mb-4">
+                    تصاویر محصول را بکشید و رها کنید
+                  </p>
+                  <Button variant="outline">انتخاب فایل</Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="inventory" className="space-y-4 mt-4" dir="rtl">
+                <div className="space-y-2">
+                  <Input 
+                    name="stock" 
+                    label="تعداد موجودی"
+                    type="number" 
+                    placeholder="۰" />
+                </div>
+                <div className="space-y-2">
+                  <Input 
+                    name="sizes" 
+                    label="سایزها"
+                    placeholder="S, M, L, XL" />
+                </div>
+                <div className="space-y-2">
+                  <Input 
+                    name="colors" 
+                    label="رنگ‌ها"
+                    placeholder="مشکی، سفید، آبی" />
+                </div>
+              </TabsContent>
+            </Tabs>
+            
+
+            <div className="flex justify-end gap-2 mt-6">
+              <Button 
+                type="button"
+                variant="outline" 
+                onClick={() => setIsDialogOpen(false)}
+              >
+                انصراف
+              </Button>
+              <Button 
+                type="submit"
+                className="bg-primary hover:bg-primary/90" 
+              >
+                ذخیره محصول
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+        
+
+        <div className="flex items-center gap-3" dir="rtl">
+          <img
+            src="/avatar.png"
+            className="w-10 h-10 rounded-full"
+            alt="brand"
+          />
+          <div className="text-right">
+            <div className="font-bold">نام برند</div>
+            <div className="text-xs text-muted-foreground">
+             مدیریت محصولات، موجودی و قیمت‌ها
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search */}
+
+      <Card className="p-3">
+        <div className="flex items-center justify-between">
+          <div className="flex gap-2">
+            <Button
+              variant={viewMode === "list" ? "default" : "ghost"}
+              size="icon"
+               onClick={() => setViewMode("list")}
+              >
+              <List className="w-4 h-4" />
+            </Button>
+            <Button
+              variant={viewMode === "grid" ? "default" : "ghost"}
+              size="icon"
+               onClick={() => setViewMode("grid")}
+              >
+              <Grid className="w-4 h-4" />
+            </Button>
+          </div>
+
+          <div className="relative w-64">
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"/>
+            <Input
+              name="search"
+              className="pr-10 rounded-full" dir="rtl"
+              placeholder="محصول خود را جستجو کنید"
+            />
+          </div>
+        </div>
+      </Card>
+      </Form>
+      </Formik>
+
+      {/* Table */}
+      {viewMode === "list" ? (
+      <Card className="overflow-hidden">
+        <Table className="max-auto" dir="rtl">
+          <TableHeader>
+            <TableRow>
+              <TableHead>محصول</TableHead>
+              <TableHead>دسته‌بندی</TableHead>
+              <TableHead>کد محصول</TableHead>
+              <TableHead>موجودی</TableHead>
+              <TableHead>قیمت</TableHead>
+              <TableHead>وضعیت</TableHead>
+              <TableHead>عملیات</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {products.map((product) => (
+              <TableRow key={product.id}>
+                <TableCell className="flex items-center gap-3">
+                  <ImageWithFallback
+                    src={product.image}
+                    alt={product.name}
+                    className="w-12 h-12 rounded"
+                  />
+                  {product.name}
+                </TableCell>
+                <TableCell>{product.category}</TableCell>
+                <TableCell>{product.sku}</TableCell>
+                <TableCell>{product.stock}</TableCell>
+                <TableCell>
+                  {product.price.toLocaleString("fa-IR")} ت
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    className={
+                      product.status === "active"
+                        ? "bg-green-500 text-white rounded-full px-4"
+                        : "bg-red-500 text-white rounded-full px-4"
+                    }
+                  >
+                    {product.status === "active" ? "فعال" : "غیرفعال"}
+                  </Badge>
+
+                </TableCell>
+                <TableCell className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleUpdateProduct(product.id, { name: product.name, price: product.price, stock: product.stock, image: product.image })}
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDeleteProduct(product.id)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        {loading && (
+          <div className="p-4 text-center text-muted-foreground">
+            در حال بارگذاری...
+          </div>
+        )}
+      </Card>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {products.map((product) => (
+            <Card key={product.id} className="p-4 space-y-3">
+              <ImageWithFallback
+                src={product.image}
+                alt={product.name}
+                className="w-full h-40 object-cover rounded"
+              />
+
+              <div className="font-bold">{product.name}</div>
+              <div className="text-sm text-muted-foreground">
+                {product.category}
+              </div>
+
+              <div className="flex justify-between items-center">
+                <span>
+                  {product.price.toLocaleString("fa-IR")} ت
+                </span>
+                <Badge
+                  className={
+                    product.status === "active"
+                      ? "bg-green-500 text-white"
+                      : "bg-red-500 text-white"
+                  }
+                >
+                  {product.status === "active" ? "فعال" : "غیرفعال"}
+                </Badge>
+              </div>
+
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline">
+                  <Edit2 className="w-4 h-4" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleDeleteProduct(product.id)}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+              {loading && (
+                <div className="p-4 text-center text-muted-foreground">
+                  در حال بارگذاری...
+                </div>
+              )}
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+    </div>
+  );
+}
