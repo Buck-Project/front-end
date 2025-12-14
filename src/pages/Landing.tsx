@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function Landing() {
-	const Navigate = useNavigate();
+	// const Navigate = useNavigate();
 
 	return (
 		<div className="w-full h-screen font-3xl flex flex-col place-self-center justify-center">
