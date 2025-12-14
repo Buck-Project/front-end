@@ -13,17 +13,10 @@ const config: Config = {
             fontFamily: {
                 vazirmatn: ["Vazirmatn", "Roboto"],
             },
-            width: {
-                sidebar: "300px",             
-                "sidebar-collapsed": "110px",
-            },
-            height: {
-                sidebar: "100vh",
-            },
             colors: {
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
-                sidebar: "hsl(var(--sidebar))",
+                light: "hsl(var(--light))",
                 card: {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
