@@ -95,7 +95,7 @@ export function ProductManagement() {
             setIsDialogOpen(false);
           }}
         >
-          <Form>
+          <Form id="create-product-form">
             <div className="mb-4 flex items-center gap-3" dir="rtl">
               <img
                 src="/avatar.png"
@@ -201,15 +201,6 @@ export function ProductManagement() {
                           placeholder="۰"
                         />
                       </div>
-
-                      {/* ⚠️ این فیلدها در CreateProductPayload نیستند. اگر لازمشان داری باید به type اضافه کنی.
-                          فعلاً اگر نمی‌خواهی type را تغییر بدهی، این دو تا را حذف کن یا به صورت UI-only نگه دار. */}
-                      {/* <div className="space-y-2">
-                        <Input name="sizes" label="سایزها" placeholder="S, M, L, XL" />
-                      </div>
-                      <div className="space-y-2">
-                        <Input name="colors" label="رنگ‌ها" placeholder="مشکی، سفید، آبی" />
-                      </div> */}
                     </TabsContent>
                   </Tabs>
 
@@ -223,6 +214,7 @@ export function ProductManagement() {
                     </Button>
                     <Button
                       type="submit"
+                      form="create-product-form"
                       className="bg-primary hover:bg-primary/90"
                     >
                       ذخیره محصول
@@ -237,6 +229,7 @@ export function ProductManagement() {
               <div className="flex items-center justify-between">
                 <div className="flex gap-2">
                   <Button
+                    type="button"
                     variant={viewMode === "list" ? "default" : "ghost"}
                     size="icon"
                     onClick={() => setViewMode("list")}
@@ -244,6 +237,7 @@ export function ProductManagement() {
                     <List className="w-4 h-4" />
                   </Button>
                   <Button
+                    type="button"
                     variant={viewMode === "grid" ? "default" : "ghost"}
                     size="icon"
                     onClick={() => setViewMode("grid")}
