@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Formik, Form } from "formik";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -18,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Search, Filter, Eye } from "lucide-react";
+import { Search, Eye } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -27,304 +28,359 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { getOrdersService } from "@/services/orderService";
+import type { Order, OrderStatus, OrderStats } from "@/types/orderType";
 
-interface Order {
-  id: string;
-  customer: string;
-  date: string;
-  amount: string;
-  status: string;
-  statusColor: string;
-  items: number;
-}
+const STATUS_META: Record<
+  OrderStatus,
+  { label: string; className: string; badgeTone: string }
+> = {
+  processing: {
+    label: "در حال پردازش",
+    className: "bg-[#E91E63] hover:bg-[#D81B60]",
+    badgeTone: "bg-[#E91E63] hover:bg-[#D81B60]",
+  },
+  shipped: {
+    label: "در حال ارسال",
+    className: "bg-[#FF8A65] hover:bg-[#FF7043]",
+    badgeTone: "bg-[#FF8A65] hover:bg-[#FF7043]",
+  },
+  delivered: {
+    label: "تحویل داده شده",
+    className: "bg-[#4CAF50] hover:bg-[#43A047]",
+    badgeTone: "bg-[#4CAF50] hover:bg-[#43A047]",
+  },
+  cancelled: {
+    label: "لغو شده",
+    className: "bg-[#EF5350] hover:bg-[#E53935]",
+    badgeTone: "bg-[#EF5350] hover:bg-[#E53935]",
+  },
+};
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("fa-IR").format(value || 0);
 
 export function OrderManagement() {
-  const [filterStatus, setFilterStatus] = useState("all");
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [filterStatus, setFilterStatus] = useState<"all" | OrderStatus>("all");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [statsFromApi, setStatsFromApi] = useState<OrderStats | null>(null);
 
-  const orders: Order[] = [
-    {
-      id: "#ORD-2024-101",
-      customer: "محمد رضایی",
-      date: "۱۴۰۳/۰۸/۱۵",
-      amount: "۲,۴۵۰,۰۰۰",
-      status: "در حال پردازش",
-      statusColor: "bg-accent",
-      items: 3,
-    },
-    {
-      id: "#ORD-2024-102",
-      customer: "زهرا محمدی",
-      date: "۱۴۰۳/۰۸/۱۵",
-      amount: "۱,۲۰۰,۰۰۰",
-      status: "ارسال شده",
-      statusColor: "bg-blue-500",
-      items: 2,
-    },
-    {
-      id: "#ORD-2024-103",
-      customer: "علی احمدی",
-      date: "۱۴۰۳/۰۸/۱۴",
-      amount: "۳,۱۵۰,۰۰۰",
-      status: "تحویل داده شده",
-      statusColor: "bg-green-500",
-      items: 5,
-    },
-    {
-      id: "#ORD-2024-104",
-      customer: "فاطمه حسینی",
-      date: "۱۴۰۳/۰۸/۱۴",
-      amount: "۹۸۰,۰۰۰",
-      status: "در حال پردازش",
-      statusColor: "bg-accent",
-      items: 1,
-    },
-    {
-      id: "#ORD-2024-105",
-      customer: "حسین کریمی",
-      date: "۱۴۰۳/۰۸/۱۳",
-      amount: "۱,۸۵۰,۰۰۰",
-      status: "لغو شده",
-      statusColor: "bg-red-500",
-      items: 2,
-    },
-  ];
+  useEffect(() => {
+    let isMounted = true;
 
-  const OrderDetailsDialog = ({ order }: { order: Order }) => (
-    <DialogContent className="max-w-2xl">
-      <DialogHeader>
-        <DialogTitle>جزئیات سفارش {order.id}</DialogTitle>
-        <DialogDescription>
-          اطلاعات کامل سفارش مشتری
-        </DialogDescription>
-      </DialogHeader>
+    const fetchOrders = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const { orders: fetchedOrders, stats } = await getOrdersService();
+        if (!isMounted) return;
+        setOrders(fetchedOrders);
+        setStatsFromApi(stats ?? null);
+      } catch (err) {
+        console.error(err);
+        if (isMounted) {
+          setError("خطا در دریافت سفارش‌ها");
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
 
-      <div className="space-y-6 mt-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-              مشتری
-            </p>
-            <p style={{ fontSize: "14px", fontWeight: 600 }}>{order.customer}</p>
-          </div>
-          <div>
-            <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-              تاریخ
-            </p>
-            <p style={{ fontSize: "14px", fontWeight: 600 }}>{order.date}</p>
-          </div>
-          <div>
-            <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-              مبلغ کل
-            </p>
-            <p style={{ fontSize: "14px", fontWeight: 600 }}>{order.amount} تومان</p>
-          </div>
-          <div>
-            <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-              وضعیت
-            </p>
-            <Badge className={`${order.statusColor} text-white border-0`}>
-              {order.status}
-            </Badge>
-          </div>
-        </div>
+    fetchOrders();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
-        <div>
-          <h4 className="mb-3" style={{ fontSize: "14px", fontWeight: 600 }}>
-            محصولات سفارش
-          </h4>
-          <div className="space-y-2">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="flex items-center justify-between p-3 border rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded bg-secondary"></div>
-                  <div>
-                    <p style={{ fontSize: "14px", fontWeight: 600 }}>
-                      پیراهن مجلسی - سایز L
-                    </p>
-                    <p className="text-muted-foreground" style={{ fontSize: "12px" }}>
-                      تعداد: ۱
-                    </p>
-                  </div>
-                </div>
-                <p style={{ fontSize: "14px", fontWeight: 600 }}>
-                  ۸۵۰,۰۰۰ تومان
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+  const stats = useMemo(() => {
+    const counts: Record<OrderStatus, number> = {
+      processing: 0,
+      shipped: 0,
+      delivered: 0,
+      cancelled: 0,
+    };
 
-        <div>
-          <h4 className="mb-3" style={{ fontSize: "14px", fontWeight: 600 }}>
-            تایم‌لاین ارسال
-          </h4>
-          <div className="space-y-4">
-            <div className="flex gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
-              <div>
-                <p style={{ fontSize: "14px", fontWeight: 600 }}>سفارش ثبت شد</p>
-                <p className="text-muted-foreground" style={{ fontSize: "12px" }}>
-                  ۱۴۰۳/۰۸/۱۵ - ۱۰:۳۰
-                </p>
-              </div>
+    orders.forEach((order) => {
+      counts[order.status] += 1;
+    });
+
+    return [
+      {
+        label: "کل سفارشات",
+        value: statsFromApi?.allorders ?? orders.length,
+      },
+      {
+        label: STATUS_META.processing.label,
+        value: statsFromApi?.inprocess ?? counts.processing,
+      },
+      {
+        label: STATUS_META.shipped.label,
+        value: statsFromApi?.onroute ?? counts.shipped,
+      },
+      {
+        label: STATUS_META.delivered.label,
+        value: statsFromApi?.delivered ?? counts.delivered,
+      },
+    ];
+  }, [orders, statsFromApi]);
+
+  const OrderDetailsDialog = ({ order }: { order: Order }) => {
+    const statusMeta = STATUS_META[order.status];
+
+    return (
+      <DialogContent className="max-w-2xl" dir="rtl">
+        <DialogHeader className="text-right">
+          <DialogTitle>جزئیات سفارش: {order.productName}</DialogTitle>
+          <DialogDescription>
+            اطلاعات کامل سفارش در این پنجره نمایش داده می‌شود
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-6 mt-4">
+          <div className="grid grid-cols-2 gap-4 text-right">
+            <div>
+              <p className="text-muted-foreground text-xs mb-1">نام سفارش</p>
+              <p className="font-semibold text-sm">{order.productName}</p>
             </div>
-            <div className="flex gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
-              <div>
-                <p style={{ fontSize: "14px", fontWeight: 600 }}>در حال پردازش</p>
-                <p className="text-muted-foreground" style={{ fontSize: "12px" }}>
-                  ۱۴۰۳/۰۸/۱۵ - ۱۴:۰۰
-                </p>
-              </div>
+            <div>
+              <p className="text-muted-foreground text-xs mb-1">تاریخ</p>
+              <p className="font-semibold text-sm">{order.date}</p>
             </div>
-            <div className="flex gap-3">
-              <div className="w-2 h-2 rounded-full bg-secondary mt-2"></div>
-              <div>
-                <p className="text-muted-foreground" style={{ fontSize: "14px" }}>
-                  آماده ارسال
-                </p>
-              </div>
+            <div>
+              <p className="text-muted-foreground text-xs mb-1">مبلغ</p>
+              <p className="font-semibold text-sm">
+                {formatCurrency(order.amount)} تومان
+              </p>
+            </div>
+            <div>
+              <p className="text-muted-foreground text-xs mb-1">وضعیت</p>
+              <Badge className={`${statusMeta.className} text-white border-0`}>
+                {statusMeta.label}
+              </Badge>
             </div>
           </div>
         </div>
-
-        <div className="flex gap-2">
-          <Select defaultValue="processing">
-            <SelectTrigger className="flex-1">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="processing">در حال پردازش</SelectItem>
-              <SelectItem value="shipped">ارسال شده</SelectItem>
-              <SelectItem value="delivered">تحویل داده شده</SelectItem>
-              <SelectItem value="cancelled">لغو شده</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button className="bg-primary hover:bg-primary/90">
-            به‌روزرسانی وضعیت
-          </Button>
-        </div>
-      </div>
-    </DialogContent>
-  );
+      </DialogContent>
+    );
+  };
 
   return (
-    <div className="space-y-6">
-      <div className="text-right">
-        <h1 style={{ fontSize: "28px", fontWeight: 700 }}>
-          مدیریت سفارشات
-        </h1>
-        <p className="text-muted-foreground mt-2" style={{ fontSize: "14px" }}>
-          مشاهده و مدیریت سفارشات مشتریان
-        </p>
-      </div>
+    <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
+      {({ values }) => {
+        const normalizedQuery =
+          (values.search?.trim().toLowerCase() as string) ?? "";
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="p-4">
-          <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-            کل سفارشات
-          </p>
-          <p style={{ fontSize: "22px", fontWeight: 700 }}>۱۵۸</p>
-        </Card>
-        <Card className="p-4">
-          <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-            در حال پردازش
-          </p>
-          <p style={{ fontSize: "22px", fontWeight: 700 }}>۱۲</p>
-        </Card>
-        <Card className="p-4">
-          <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-            ارسال شده
-          </p>
-          <p style={{ fontSize: "22px", fontWeight: 700 }}>۸</p>
-        </Card>
-        <Card className="p-4">
-          <p className="text-muted-foreground mb-1" style={{ fontSize: "12px" }}>
-            تحویل داده شده
-          </p>
-          <p style={{ fontSize: "22px", fontWeight: 700 }}>۱۳۵</p>
-        </Card>
-      </div>
+        const filteredOrders = orders.filter((order) => {
+          const matchesStatus =
+            filterStatus === "all" || order.status === filterStatus;
+          const matchesQuery =
+            !normalizedQuery ||
+            order.productName.toLowerCase().includes(normalizedQuery);
 
-      {/* Filters */}
-      <Card className="p-4">
-        <div className="flex items-center gap-4 flex-row-reverse">
-          <div className="flex-1 max-w-md">
-            <div className="relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                name="search" 
-                placeholder="جستجوی سفارشات..." 
-                className="pr-10" />
-            </div>
-          </div>
+          return matchesStatus && matchesQuery;
+        });
 
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="همه وضعیت‌ها" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">همه وضعیت‌ها</SelectItem>
-              <SelectItem value="processing">در حال پردازش</SelectItem>
-              <SelectItem value="shipped">ارسال شده</SelectItem>
-              <SelectItem value="delivered">تحویل داده شده</SelectItem>
-              <SelectItem value="cancelled">لغو شده</SelectItem>
-            </SelectContent>
-          </Select>
+        return (
+          <Form
+            className="p-6 bg-gray-50/50 min-h-screen font-sans"
+            dir="rtl"
+          >
+            <div className="max-w-6xl mx-auto space-y-8">
+              {/* Header Section */}
+              <div className="flex justify-end items-center mb-8" dir="ltr">
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <h2 className="font-bold text-lg">نام برند</h2>
+                    <p className="text-xs text-muted-foreground">
+                      مشاهده و مدیریت سفارش‌های شما
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                      alt="Avatar"
+                      className="w-full h-full object-cover bg-amber-100"
+                    />
+                  </div>
+                </div>
+              </div>
 
-          <Button variant="outline">
-            <Filter className="w-4 h-4 ml-2" />
-            فیلترها
-          </Button>
-        </div>
-      </Card>
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {stats.map((stat, index) => (
+                  <Card
+                    key={`${stat.label}-${index}`}
+                    className="p-6 flex flex-col items-center justify-center shadow-sm border-gray-100"
+                  >
+                    <p className="text-gray-500 text-sm mb-3 font-medium">
+                      {stat.label}
+                    </p>
+                    <p className="text-3xl font-bold text-gray-800">
+                      {stat.value}
+                    </p>
+                  </Card>
+                ))}
+              </div>
 
-      {/* Orders Table */}
-      <Card>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-right">شماره سفارش</TableHead>
-              <TableHead className="text-right">مشتری</TableHead>
-              <TableHead className="text-right">تاریخ</TableHead>
-              <TableHead className="text-right">تعداد</TableHead>
-              <TableHead className="text-right">مبلغ</TableHead>
-              <TableHead className="text-right">وضعیت</TableHead>
-              <TableHead className="text-right">عملیات</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell style={{ fontWeight: 600 }}>{order.id}</TableCell>
-                <TableCell>{order.customer}</TableCell>
-                <TableCell>{order.date}</TableCell>
-                <TableCell>{order.items} محصول</TableCell>
-                <TableCell style={{ fontWeight: 600 }}>
-                  {order.amount} تومان
-                </TableCell>
-                <TableCell>
-                  <Badge className={`${order.statusColor} text-white border-0`}>
-                    {order.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" size="sm">
-                        <Eye className="w-4 h-4 ml-1" />
+              {/* Filter and Search Bar */}
+              <div className="flex flex-col md:flex-row gap-4 items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100">
+                <Input
+                  name="search"
+                  placeholder="محصول خود را جست و جو کنید"
+                  icon={Search}
+                  forceRTL
+                  containerClassName="w-full md:w-64"
+                  inputClassName="w-full border-0 bg-transparent text-right pr-4 focus-visible:ring-0 focus:ring-0 focus:border-transparent placeholder:text-gray-400"
+                  iconClassName="left-1 top-1/2 -translate-y-1/2 bg-[#E91E63] p-2 rounded-full text-white hover:bg-[#D81B60] transition-colors"
+                />
+
+                <div className="h-6 w-px bg-gray-200 hidden md:block"></div>
+
+                <div className="w-full md:w-48">
+                  <Select
+                    value={filterStatus}
+                    onValueChange={(value) =>
+                      setFilterStatus(value as OrderStatus | "all")
+                    }
+                  >
+                    <SelectTrigger
+                      className="w-full border-0 bg-transparent focus:ring-0 text-right"
+                      dir="rtl"
+                    >
+                      <SelectValue placeholder="وضعیت سفارش" />
+                    </SelectTrigger>
+                    <SelectContent dir="rtl">
+                      <SelectItem value="all">همه وضعیت‌ها</SelectItem>
+                      <SelectItem value="processing">
+                        {STATUS_META.processing.label}
+                      </SelectItem>
+                      <SelectItem value="shipped">
+                        {STATUS_META.shipped.label}
+                      </SelectItem>
+                      <SelectItem value="delivered">
+                        {STATUS_META.delivered.label}
+                      </SelectItem>
+                      <SelectItem value="cancelled">
+                        {STATUS_META.cancelled.label}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Orders Table */}
+              <Card className="overflow-hidden shadow-sm border-gray-100" dir="ltr">
+                <Table>
+                  <TableHeader className="bg-gray-50/50">
+                    <TableRow>
+                      <TableHead className="text-center font-bold text-gray-700 py-5">
                         جزئیات
-                      </Button>
-                    </DialogTrigger>
-                    <OrderDetailsDialog order={order} />
-                  </Dialog>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Card>
-    </div>
+                      </TableHead>
+                      <TableHead className="text-center font-bold text-gray-700 py-5">
+                        وضعیت سفارش
+                      </TableHead>
+                      <TableHead className="text-center font-bold text-gray-700 py-5">
+                        مبلغ(تومان)
+                      </TableHead>
+                      <TableHead className="text-center font-bold text-gray-700 py-5">
+                        تعداد
+                      </TableHead>
+                      <TableHead className="text-center font-bold text-gray-700 py-5">
+                        تاریخ
+                      </TableHead>
+                      <TableHead className="text-center font-bold text-gray-700 py-5">
+                        نام سفارش
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {loading && (
+                      <TableRow>
+                        <TableCell
+                          className="text-center text-muted-foreground"
+                          colSpan={6}
+                        >
+                          در حال دریافت اطلاعات...
+                        </TableCell>
+                      </TableRow>
+                    )}
+
+                    {error && !loading && (
+                      <TableRow>
+                        <TableCell
+                          className="text-center text-red-500"
+                          colSpan={6}
+                        >
+                          {error}
+                        </TableCell>
+                      </TableRow>
+                    )}
+
+                    {!loading && !error && filteredOrders.length === 0 && (
+                      <TableRow>
+                        <TableCell
+                          className="text-center text-muted-foreground"
+                          colSpan={6}
+                        >
+                          سفارشی یافت نشد.
+                        </TableCell>
+                      </TableRow>
+                    )}
+
+                    {!loading &&
+                      !error &&
+                      filteredOrders.map((order) => {
+                        const statusMeta = STATUS_META[order.status];
+
+                        return (
+                          <TableRow
+                            key={order.id}
+                            className="hover:bg-gray-50/50"
+                          >
+                            <TableCell className="text-center">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="text-gray-500 hover:text-gray-700"
+                                  >
+                                    <Eye className="w-5 h-5" />
+                                  </Button>
+                                </DialogTrigger>
+                                <OrderDetailsDialog order={order} />
+                              </Dialog>
+                            </TableCell>
+                            <TableCell className="text-center">
+                              <Badge
+                                className={`${statusMeta.badgeTone} text-white border-0 px-4 py-1.5 rounded-lg text-xs font-normal`}
+                              >
+                                {statusMeta.label}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-center font-medium text-gray-700">
+                              {formatCurrency(order.amount)}
+                            </TableCell>
+                            <TableCell className="text-center font-medium text-gray-700">
+                              {order.items}
+                            </TableCell>
+                            <TableCell className="text-center text-gray-600 font-medium">
+                              {order.date}
+                            </TableCell>
+                            <TableCell className="text-center font-medium text-gray-800">
+                              {order.productName}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </Card>
+            </div>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }

@@ -5,6 +5,7 @@ import ProductList from "@/pages/ProductListing"; // کاما اضافه شد
 //import Temp from "@/pages/Temp";
 import Error404 from "@/pages/Error404";
 import Error500 from "@/pages/Error500";
+import OrderManagementPage from "@/pages/BrandDash/OrderManagementPage";
 // فرض می‌کنیم کامپوننت‌های کامنت شده نیز وجود دارند و آن‌ها را وارد می‌کنیم.
 // import PrivateLayout from "@/layouts/PrivateLayout/PrivateLayout";
 // import AnotherLayout from "@/layouts/AnotherLayout/AnotherLayout";
@@ -34,10 +35,13 @@ export const router = createBrowserRouter([
                 path: "/productList",
                 element: <ProductList/>
             },
-            // شیء مسیریابی زیر برای /error500 اصلاح شد و در داخل آرایه children قرار گرفت
             {
                 path: "/error500",
                 element: <Error500 />
+            },
+            {
+                path: "/OrderManagement",
+                element: <OrderManagementPage />
             },
             // {
             //  path: "/AboutUs",
