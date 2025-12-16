@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 // import { getOrderHistory } from "@/services/orderService";
 
 // ✅ فقط این را ایمپورت کن (Switcher خودش انتخاب می‌کند Mock یا API)
-import { getOrderHistory } from "@/services/brandService.mock.ts"; // CHANGED
+import { getOrderHistory } from "@/services/orderService.api"; // CHANGED
 
 import { OrderHistory } from "@/components/OrderHistory/OrderHistory";
 import { Spinner } from "@/components/ui/Spinner.tsx";

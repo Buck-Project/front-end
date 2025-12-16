@@ -20,7 +20,7 @@ import { translateNumber } from "@/utils/translateNumber";
 import type { OrderHistoryData, OrderDetailsType } from "@/types/orderTypes";
 
 // 🔵 NEW — گرفتن جزئیات سفارش از سرویس Mock یا API
-import { getOrderDetails } from "@/services/brandService.mock.ts";
+import { getOrderDetails } from "@/services/orderService.api";
 
 // 🔵 NEW — مدال
 import { OrderDetailsModal } from "@/components/OrderHistory/OrderDetailsModal";
@@ -247,7 +247,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
           onClose={() => setIsModalOpen(false)}
           order={
             loadingDetails
-              ? { orderId: "", orderDate: "", totalPrice: "", items: [] }
+              ? { id: "", orderDate: "", totalPrice: "", details: [] }
               : (selectedOrder as OrderDetailsType)
           }
         />

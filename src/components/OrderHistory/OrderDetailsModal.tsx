@@ -34,7 +34,7 @@ export function OrderDetailsModal({ isOpen, onClose, order }: OrderDetailsModalP
         {/* هدر */}
         <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between z-10">
           <div>
-            <h2 className="text-lg font-bold">جزئیات سفارش #{order.orderId}</h2>
+            <h2 className="text-lg font-bold">جزئیات سفارش #{order.id}</h2>
             <p className="text-gray-600 text-sm mt-1">تاریخ: {order.orderDate}</p>
           </div>
           <button
@@ -48,7 +48,7 @@ export function OrderDetailsModal({ isOpen, onClose, order }: OrderDetailsModalP
 
         {/* محتوای اصلی */}
         <div className="mt-4 space-y-3">
-          {order.items.map((item) => (
+          {order.details.map((item) => (
             <div
               key={item.id}
               onClick={() => handleItemClick(item.id)}
@@ -72,14 +72,14 @@ export function OrderDetailsModal({ isOpen, onClose, order }: OrderDetailsModalP
                     <span>رنگ: <span className="text-gray-900">{item.color}</span></span>
                   </div>
                   <div>
-                    تعداد: <span className="text-gray-900">{item.quantity}</span>
+                    تعداد: <span className="text-gray-900">{item.count}</span>
                   </div>
                 </div>
               </div>
 
               {/* قیمت */}
               <div className="flex-shrink-0 text-left text-sm font-semibold text-blue-600">
-                {item.price} تومان
+                {item.cost} تومان
               </div>
             </div>
           ))}

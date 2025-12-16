@@ -1,17 +1,24 @@
 import type { VariantProps } from "class-variance-authority";
 import { badgeVariants } from "@/components/ui/badge";
 
-export const getOrderStatusVariant = (status: string): VariantProps<typeof badgeVariants>["variant"] => {
-  switch (status) {
+// Map API status strings (English or Persian) to badge variants
+export const getOrderStatusVariant = (
+  status: string
+): VariantProps<typeof badgeVariants>["variant"] => {
+  const normalized = status?.trim().toLowerCase();
+
+  switch (normalized) {
+    case "processing":
     case "در حال پردازش":
-      return "secondary"; // نارنجی
-    case "در حال ارسال":
-      return "default"; // آبی
-    case "تحویل داده شده":
-      return "destructive"; // سبز (می‌تونی تغییر بدی)
+      return "secondary";
+    case "delivered":
+    case "تحویل شده":
+      return "default";
+    case "cancelled":
     case "لغو شده":
-      return "destructive"; // قرمز
+      return "destructive";
     default:
-      return "outline"; // خاکستری
+      // keep badge colored so text (white) stays visible
+      return "secondary";
   }
 };

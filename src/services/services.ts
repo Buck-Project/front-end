@@ -1,19 +1,22 @@
-// src/apiClient.ts
 import axios from "axios";
 import type {
 	AxiosInstance,
 	AxiosResponse,
 	InternalAxiosRequestConfig,
 } from "axios";
-import type {
-	DeleteParams,
-	GetParams,
-	PatchParams,
-	PostParams,
-	PutParams,
-} from "../types/apiTypes";
 
-export const baseURL = "http://1.2.3.4:8000"; // backend URL
+import type {
+	GetParams,
+	PostParams,
+	PatchParams,
+	PutParams,
+	DeleteParams,
+} from "@/types/apiTypes";
+
+// 🟢 NEW
+import { getToken, setToken } from "@/services/tokenProvider";
+
+export const baseURL = "https://6940f4cd993d68afba6e11f0.mockapi.io/api/testapi"; // TODO: backend
 
 const apiClient: AxiosInstance = axios.create({
 	baseURL,
@@ -23,97 +26,63 @@ const apiClient: AxiosInstance = axios.create({
 	},
 });
 
+// 🟡 CHANGED — ارسال Bearer Token
 apiClient.interceptors.request.use(
 	(config: InternalAxiosRequestConfig) => {
-		// const token = getTokenFromStore();
-		// if (token) config.headers.Authorization = `Bearer ${token}`;
+		const token = getToken();
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`;
+		}
 		return config;
 	},
 	(error) => Promise.reject(error)
 );
 
+// 🟡 CHANGED — گرفتن Token از homepage یا هر API
 apiClient.interceptors.response.use(
-	(response: AxiosResponse) => response,
-	(error) => {
-		console.error(error);
-		return Promise.reject(error);
-	}
+	(response: AxiosResponse) => {
+		const authHeader = response.headers["authorization"];
+		if (authHeader?.startsWith("Bearer ")) {
+			setToken(authHeader.replace("Bearer ", ""));
+		}
+		return response;
+	},
+	(error) => Promise.reject(error)
 );
 
-// ✅ GET
+
+
+
+// ================= HTTP METHODS =================
+
 export const getData = async ({ endPoint, headers, params }: GetParams) => {
-	try {
-		const response: AxiosResponse = await apiClient.get(endPoint, {
-			params,
-			headers,
-		});
-		return response.data;
-	} catch (error) {
-		console.error("error in getData", error);
-		throw error;
-	}
+	const response = await apiClient.get(endPoint, { headers, params });
+	return response.data;
 };
 
-// ✅ POST
 export const postData = async ({ endPoint, data, headers }: PostParams) => {
-	try {
-		const response: AxiosResponse = await apiClient.post(endPoint, data, {
-			headers,
-		});
-		return response.data;
-	} catch (error) {
-		console.error("error in postData", error);
-		throw error;
-	}
+	const response = await apiClient.post(endPoint, data, { headers });
+	return response.data;
 };
 
-// ✅ POST image/form-data
-export const postImageData = async ({ endPoint, data }: PostParams) => {
-	try {
-		const response: AxiosResponse = await apiClient.post(endPoint, data, {
-			headers: { "Content-Type": "multipart/form-data" },
-		});
-		return response.data;
-	} catch (error) {
-		console.error("error in postImageData", error);
-		throw error;
-	}
-};
-
-// ✅ PATCH
 export const patchData = async ({ endPoint, data, headers }: PatchParams) => {
-	try {
-		const response: AxiosResponse = await apiClient.patch(endPoint, data, {
-			headers,
-		});
-		return response.data;
-	} catch (error) {
-		console.error("error in patchData", error);
-		throw error;
-	}
+	const response = await apiClient.patch(endPoint, data, { headers });
+	return response.data;
 };
 
-// ✅ PUT
 export const putData = async ({ endPoint, data }: PutParams) => {
-	try {
-		const response: AxiosResponse = await apiClient.put(endPoint, data);
-		return response.data;
-	} catch (error) {
-		console.error("error in putData", error);
-		throw error;
-	}
+	const response = await apiClient.put(endPoint, data);
+	return response.data;
 };
 
-// ✅ DELETE
 export const deleteData = async ({ endPoint, data, headers }: DeleteParams) => {
-	try {
-		const response: AxiosResponse = await apiClient.delete(endPoint, {
-			data,
-			headers,
-		});
-		return response.data;
-	} catch (error) {
-		console.error("error in deleteData", error);
-		throw error;
-	}
+	const response = await apiClient.delete(endPoint, { data, headers });
+	return response.data;
+};
+
+export const putImageData = async ({ endPoint, data }: PutParams) => {
+	const response = await apiClient.put(endPoint, data, {
+		headers: { "Content-Type": "multipart/form-data" },
+	});
+	return response.data;
 };

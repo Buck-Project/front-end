@@ -55,9 +55,9 @@ export const getOrderHistory = async (): Promise<OrderHistoryData> => {
   };
 };
 
-export const getOrderDetails = async (orderId: string): Promise<OrderDetailsType> => {
+export const getOrderDetails = async (id: string): Promise<OrderDetailsType> => {
   return {
-    orderId,
+    id,
     orderDate: "۱۴۰۳/۰۸/۱۰",
     totalPrice: "۱,۲۴۰,۰۰۰",
     items: [
