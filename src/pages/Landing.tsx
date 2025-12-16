@@ -1,7 +1,17 @@
+import { Formik, Form } from "formik";
+import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom";
 
+
+const validationSchema = Yup.object({
+	email: Yup.string()
+		.email('ایمیل نامعتبر است')
+		.required('ایمیل الزامی است'),
+});
+
+
 function Landing() {
-	const Navigate = useNavigate();
+	// const Navigate = useNavigate();
 
 	return (
 		<div className="w-full h-screen font-3xl flex flex-col place-self-center justify-center">
