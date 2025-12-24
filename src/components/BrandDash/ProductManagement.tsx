@@ -44,6 +44,7 @@ export function ProductManagement() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("list");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const initialValues: CreateProductPayload = {
     name: "",
@@ -81,6 +82,25 @@ export function ProductManagement() {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const filteredProducts = normalizedSearch
+    ? products.filter((product) => {
+        const fields = [
+          product.name,
+          product.category,
+          product.sku,
+          product.price,
+          product.stock,
+        ];
+
+        return fields.some((field) =>
+          String(field ?? "")
+            .toLowerCase()
+            .includes(normalizedSearch)
+        );
+      })
+    : products;
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 py-8 lg:px-8 py-10">
@@ -246,14 +266,26 @@ export function ProductManagement() {
                   </Button>
                 </div>
 
-                <div className="relative w-64">
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    name="search"
-                    className="pr-10 rounded-full"
+                <div className="relative w-64 sm:w-72">
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") event.preventDefault();
+                    }}
                     dir="rtl"
                     placeholder="محصول خود را جستجو کنید"
+                    className="w-full rounded-full border border-input/60 bg-muted/60 py-2.5 pr-12 pl-4 text-sm text-foreground shadow-inner placeholder:text-muted-foreground/80 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    aria-label="جستجو"
                   />
+                  <button
+                    type="button"
+                    className="absolute right-1 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-orange-500 text-white shadow-sm"
+                    aria-label="جستجو"
+                  >
+                    <Search className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
             </Card>
@@ -277,7 +309,7 @@ export function ProductManagement() {
               </TableHeader>
 
               <TableBody>
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <TableRow key={product.id}>
                     <TableCell className="flex items-center gap-3">
                       <ImageWithFallback
@@ -343,7 +375,7 @@ export function ProductManagement() {
           </Card>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <Card key={product.id} className="p-4 space-y-3">
                 <ImageWithFallback
                   src={product.image || "/placeholder.png"} // ✅ fallback
