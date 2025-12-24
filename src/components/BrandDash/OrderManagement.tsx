@@ -30,6 +30,7 @@ import {
 } from "../ui/dialog";
 import { getOrdersService } from "@/services/orderService";
 import type { Order, OrderStatus, OrderStats } from "@/types/orderType";
+import { translateNumber } from "@/utils/translateNumber";
 
 const STATUS_META: Record<
   OrderStatus,
@@ -109,19 +110,19 @@ export function OrderManagement() {
     return [
       {
         label: "کل سفارشات",
-        value: statsFromApi?.allorders ?? orders.length,
+        value: statsFromApi?.allorders?.toLocaleString("fa-IR") ?? translateNumber(orders.length),
       },
       {
         label: STATUS_META.processing.label,
-        value: statsFromApi?.inprocess ?? counts.processing,
+        value: statsFromApi?.inprocess?.toLocaleString("fa-IR") ?? translateNumber(counts.processing),
       },
       {
         label: STATUS_META.shipped.label,
-        value: statsFromApi?.onroute ?? counts.shipped,
+        value: statsFromApi?.onroute?.toLocaleString("fa-IR") ?? translateNumber(counts.shipped),
       },
       {
         label: STATUS_META.delivered.label,
-        value: statsFromApi?.delivered ?? counts.delivered,
+        value: statsFromApi?.delivered?.toLocaleString("fa-IR") ?? translateNumber(counts.delivered),
       },
     ];
   }, [orders, statsFromApi]);
@@ -231,8 +232,8 @@ export function OrderManagement() {
                   icon={Search}
                   forceRTL
                   containerClassName="w-full md:w-64"
-                  inputClassName="w-full border-0 bg-transparent text-right pr-4 focus-visible:ring-0 focus:ring-0 focus:border-transparent placeholder:text-gray-400"
-                  iconClassName="left-1 top-1/2 -translate-y-1/2 bg-[#E91E63] p-2 rounded-full text-white hover:bg-[#D81B60] transition-colors"
+                  inputClassName="w-full border-0 bg-muted mr-2 text-right pr-4 focus-visible:ring-0 focus:ring-0 focus:border-transparent placeholder:text-gray-400 text-sm"
+                  iconClassName="w-8 h-8 right-1 top-1/2 -translate-y-1/2 bg-[#E91E63] p-1 mr--5 rounded-full text-white hover:bg-[#D81B60] transition-colors"
                 />
 
                 <div className="h-6 w-px bg-gray-200 hidden md:block"></div>
@@ -245,7 +246,7 @@ export function OrderManagement() {
                     }
                   >
                     <SelectTrigger
-                      className="w-full border-0 bg-transparent focus:ring-0 text-right"
+                      className="w-full border-0 bg-muted focus:ring-0 text-right"
                       dir="rtl"
                     >
                       <SelectValue placeholder="وضعیت سفارش" />

@@ -13,7 +13,7 @@ import type {
 	PutParams,
 } from "../types/apiTypes";
 
-export const baseURL = import.meta.env.VITE_API_URL // backend URL
+export const baseURL = "https://693fdc01993d68afba69f54c.mockapi.io/api/testapi" // backend URL
 
 const apiClient: AxiosInstance = axios.create({
 	baseURL,
