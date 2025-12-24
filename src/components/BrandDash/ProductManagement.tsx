@@ -59,7 +59,7 @@ export function ProductManagement() {
     setLoading(true);
     try {
       const data = await getProductsService();
-      setProducts(data.products); // ✅ FIX: unwrap products
+      setProducts(data.products);
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ export function ProductManagement() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 py-8 lg:px-8 py-10">
+    <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 py-8 lg:px-8 py-10">
       <div className="space-y-6">
         <Formik
           initialValues={initialValues}
