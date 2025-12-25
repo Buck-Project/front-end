@@ -37,7 +37,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Plus, Edit2, Trash2, Grid, List, Search } from "lucide-react";
 import { ImageWithFallback } from "../ui/ImageWithFallback";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 
 export function ProductManagement() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -49,11 +49,13 @@ export function ProductManagement() {
   const initialValues: CreateProductPayload = {
     name: "",
     category: "",
+    sex: "",
+    model: "",
     sku: "",
     price: 0,
     stock: 0,
     description: "",
-    image: "",
+    images: [],
   };
 
   const fetchProducts = async () => {
@@ -173,6 +175,39 @@ export function ProductManagement() {
                           placeholder="دسته‌بندی"
                           forceRTL
                         />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>جنسیت</Label>
+                        <Field
+                          as="select"
+                          name="sex"
+                          dir="rtl"
+                          className="w-full px-4 py-2 rounded-md border border-input bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary transition text-right"
+                        >
+                          <option value="" disabled>
+                            جنسیت را انتخاب کنید
+                          </option>
+                          <option value="male">مردانه</option>
+                          <option value="female">زنانه</option>
+                          <option value="unisex">یونیسکس</option>
+                        </Field>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>استایل</Label>
+                        <Field
+                          as="select"
+                          name="model"
+                          dir="rtl"
+                          className="w-full px-4 py-2 rounded-md border border-input bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary transition text-right"
+                        >
+                          <option value="" disabled>
+                            استایل را انتخاب کنید
+                          </option>
+                          <option value="casual">کژوال</option>
+                          <option value="formal">رسمی</option>
+                          <option value="classic">کلاسیک</option>
+                          <option value="street">استریت</option>
+                        </Field>
                       </div>
                       <div className="space-y-2">
                         <Input
@@ -313,7 +348,7 @@ export function ProductManagement() {
                   <TableRow key={product.id}>
                     <TableCell className="flex items-center gap-3">
                       <ImageWithFallback
-                        src={product.image || "/placeholder.png"} // ✅ fallback
+                        src={product.images?.[0] || "/placeholder.png"} // ✅ fallback
                         alt={product.name}
                         className="w-12 h-12 rounded"
                       />
@@ -348,7 +383,7 @@ export function ProductManagement() {
                             name: product.name,
                             price: product.price,
                             stock: product.stock,
-                            image: product.image,
+                            images: product.images,
                           })
                         }
                       >
@@ -378,7 +413,7 @@ export function ProductManagement() {
             {filteredProducts.map((product) => (
               <Card key={product.id} className="p-4 space-y-3">
                 <ImageWithFallback
-                  src={product.image || "/placeholder.png"} // ✅ fallback
+                  src={product.images?.[0] || "/placeholder.png"} // ✅ fallback
                   alt={product.name}
                   className="w-full h-40 object-cover rounded"
                 />
@@ -410,7 +445,7 @@ export function ProductManagement() {
                         name: product.name,
                         price: product.price,
                         stock: product.stock,
-                        image: product.image,
+                        images: product.images,
                       })
                     }
                   >

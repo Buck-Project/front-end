@@ -10,6 +10,18 @@ import { getData, postData, putData, deleteData } from "./services";
 
 const PRODUCTS_ENDPOINT = "/table";
 
+const normalizeProduct = (product: any): Product => {
+  const images = Array.isArray(product?.images)
+    ? product.images
+    : product?.image
+    ? [product.image]
+    : [];
+  return {
+    ...product,
+    images,
+  };
+};
+
 /**
  * GET /products
  * MockAPI returns: Product[]
@@ -20,8 +32,12 @@ export const getProductsService = async (): Promise<GetProductsResponse> => {
     endPoint: PRODUCTS_ENDPOINT,
   });
 
+  const normalizedProducts = Array.isArray(products)
+    ? products.map(normalizeProduct)
+    : [];
+
   return {
-    products: products as Product[],
+    products: normalizedProducts,
   };
 };
 
@@ -40,7 +56,7 @@ export const createProductService = async (
   });
 
   return {
-    product: product as Product,
+    product: normalizeProduct(product),
   };
 };
 
@@ -51,10 +67,12 @@ export const updateProductService = async (
   productId: string,
   payload: UpdateProductPayload
 ): Promise<Product> => {
-  return putData({
+  const product = await putData({
     endPoint: `${PRODUCTS_ENDPOINT}/${productId}`,
     data: payload,
   });
+
+  return normalizeProduct(product);
 };
 
 /**
