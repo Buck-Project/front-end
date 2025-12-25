@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+﻿import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 const config: Config = {
@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // ✅ فونت اصلی پروژه
+        // âœ… ÙÙˆÙ†Øª Ø§ØµÙ„ÛŒ Ù¾Ø±ÙˆÚ˜Ù‡
         vazir: ["Vazirmatn", "sans-serif"],
       },
       colors: {
@@ -56,6 +56,11 @@ const config: Config = {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+        order: {
+          current: "rgb(var(--order-current) / <alpha-value>)",
+          complete: "rgb(var(--order-complete) / <alpha-value>)",
+          cancel: "rgb(var(--order-cancel) / <alpha-value>)",
+        },
       },
       borderRadius: {
         sm: "calc(var(--radius) - 4px)",
@@ -69,3 +74,6 @@ const config: Config = {
 };
 
 export default config;
+
+
+

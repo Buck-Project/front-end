@@ -8,7 +8,7 @@ import type { OrderHistoryData, OrderDetailsType, Order, OrderItem } from "@/typ
 const END_POINT = "/orders-consumer";
 
 const mapToOrderHistory = (order: any): Order => ({
-  id: order?.id ?? order?.id ?? "",
+  id: order?.orderID ?? order?.id ?? "",
   date: order?.orderDate ?? "",
   amount: order?.totalprice !== undefined ? String(order.totalprice) : "",
   status: order?.status ?? order?.orderStatus ?? "processing",
@@ -20,6 +20,28 @@ const mapToOrderHistory = (order: any): Order => ({
       : Number(order?.items?.length ?? 0),
   // statusColor: "bg-blue-500",
 });
+
+const normalizeStatusKey = (status: string): "processing" | "delivered" | "cancelled" => {
+  const normalized = status?.trim().toLowerCase();
+  if (normalized.includes("cancel")) return "cancelled";
+  if (normalized.includes("لغو")) return "cancelled";
+  if (normalized.includes("deliver")) return "delivered";
+  if (normalized.includes("تحویل")) return "delivered";
+  return "processing";
+};
+
+const bucketOrdersByStatus = (orders: Order[]): OrderHistoryData => {
+  const buckets: OrderHistoryData = { current: [], past: [], cancelled: [] };
+
+  orders.forEach((o) => {
+    const key = normalizeStatusKey(o.status);
+    if (key === "cancelled") buckets.cancelled.push(o);
+    else if (key === "delivered") buckets.past.push(o);
+    else buckets.current.push(o);
+  });
+
+  return buckets;
+};
 
 const mapItems = (items: any): OrderItem[] => {
   // Accept array, { items: [] }, object with keyed items (details), or single object; ignore numeric counts
@@ -43,8 +65,18 @@ const mapItems = (items: any): OrderItem[] => {
     image: item?.image ?? "",
     size: item?.size ?? "",
     color: item?.color ?? "",
-    cost: item?.cost !== undefined ? String(item.cost) : "",
-    count: item?.count !== undefined ? Number(item.count) : 0,
+    cost:
+      item?.cost !== undefined
+        ? String(item.cost)
+        : item?.price !== undefined
+        ? String(item.price)
+        : "",
+    count:
+      item?.count !== undefined
+        ? Number(item.count)
+        : item?.quantity !== undefined
+        ? Number(item.quantity)
+        : 0,
   }));
 };
 
@@ -54,23 +86,23 @@ export const getOrderHistory = async (): Promise<OrderHistoryData> => {
     endPoint: END_POINT,
   })) as any;
 
+  let collected: Order[] = [];
+
   if (Array.isArray(response)) {
-    return {
-      current: response.map(mapToOrderHistory),
-      past: [],
-      cancelled: [],
-    };
+    collected = response.map(mapToOrderHistory);
+  } else {
+    if (Array.isArray(response?.current)) {
+      collected = collected.concat(response.current.map(mapToOrderHistory));
+    }
+    if (Array.isArray(response?.past)) {
+      collected = collected.concat(response.past.map(mapToOrderHistory));
+    }
+    if (Array.isArray(response?.cancelled)) {
+      collected = collected.concat(response.cancelled.map(mapToOrderHistory));
+    }
   }
 
-  return {
-    current: Array.isArray(response?.current)
-      ? response.current.map(mapToOrderHistory)
-      : [],
-    past: Array.isArray(response?.past) ? response.past.map(mapToOrderHistory) : [],
-    cancelled: Array.isArray(response?.cancelled)
-      ? response.cancelled.map(mapToOrderHistory)
-      : [],
-  };
+  return bucketOrdersByStatus(collected);
 };
 
 /**
@@ -89,13 +121,14 @@ export const getOrderDetails = (
       normalizedOrder?.items;
 
     return {
-      orderId: normalizedOrder?.orderID ?? normalizedOrder?.id ?? "",
+      id: normalizedOrder?.orderID ?? normalizedOrder?.id ?? "",
       orderDate: normalizedOrder?.orderDate ?? "",
+      status: normalizedOrder?.status ?? normalizedOrder?.orderStatus,
       totalPrice:
         normalizedOrder?.totalprice !== undefined
           ? String(normalizedOrder.totalprice)
           : "",
-      items: mapItems(candidateItems),
+      details: mapItems(candidateItems ?? []),
     };
   }) as Promise<OrderDetailsType>;
 };

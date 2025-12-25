@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
@@ -39,7 +39,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
   const [loadingDetails, setLoadingDetails] = useState<boolean>(false);
 
   const userData = {
-    fullName: "علی رضایی",
+    fullName: "نام کاربر",
     profileUrl: "/images/sample-user.jpg",
   };
 
@@ -59,18 +59,64 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
     }
   };
 
+  const renderOrderList = (orders: OrderHistoryData["current"]) => (
+    <div className="grid gap-2">
+      {orders.map((order) => (
+        <Card key={order.id} className="p-5 sm:p-6 space-y-2 shadow-md">
+          <div className="flex flex-row-reverse items-center justify-between gap-3">
+            <span className="text-sm text-muted-foreground text-right leading-tight">شماره سفارش</span>
+            <span className="font-bold text-sm text-left leading-tight">{order.id}</span>
+          </div>
+
+          <div className="flex flex-row-reverse items-center justify-between gap-3">
+            <span className="text-sm text-muted-foreground text-right leading-tight">وضعیت</span>
+            <Badge className="text-white border-0 vazir text-xs" variant={getOrderStatusVariant(order.status)}>
+              {order.status}
+            </Badge>
+          </div>
+
+          <div className="flex flex-row-reverse items-center justify-between gap-3">
+            <span className="text-sm text-muted-foreground text-right leading-tight">مبلغ</span>
+            <span className="font-bold text-sm text-left leading-tight">{translateNumber(order.amount)} تومان</span>
+          </div>
+
+          <div className="flex flex-row-reverse items-center justify-between gap-3">
+            <span className="text-sm text-muted-foreground text-right leading-tight">تعداد اقلام</span>
+            <span className="text-sm text-left leading-tight">{translateNumber(order.items)}</span>
+          </div>
+
+          <div className="flex flex-row-reverse items-center justify-between gap-3">
+            <span className="text-sm text-muted-foreground text-right leading-tight">تاریخ</span>
+            <span className="text-sm text-left leading-tight">{translateNumber(order.date)}</span>
+          </div>
+
+          <div className="pt-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="vazir w-full"
+              onClick={() => openOrderModal(order)}
+            >
+              مشاهده جزئیات
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+
   const renderOrderTable = (orders: OrderHistoryData["current"]) => (
     <Card className="overflow-hidden rounded-[5px]">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50">
-              <TableHead className="text-right vazir font-medium text-foreground py-3 px-4 whitespace-nowrap">جزئیات</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground py-3 px-4 whitespace-nowrap">وضعیت</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground py-3 px-4 whitespace-nowrap">مبلغ</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground py-3 px-4 whitespace-nowrap">تعداد اقلام</TableHead>
-              <TableHead className="text-right vazir text-muted-foreground text-sm py-3 px-4 whitespace-nowrap">تاریخ</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground py-3 px-4 whitespace-nowrap">شماره سفارش</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">جزئیات</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">وضعیت</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">مبلغ</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap hidden md:table-cell">تعداد اقلام</TableHead>
+              <TableHead className="text-right vazir text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap hidden md:table-cell">تاریخ</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">شماره سفارش</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -78,7 +124,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
             {orders.map((order) => (
               <TableRow key={order.id} className="vazir hover:bg-muted/30">
 
-                <TableCell className="text-right py-3 px-4">
+                <TableCell className="text-right text-xs md:text-sm py-2 md:py-3 px-3 md:px-4">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -89,7 +135,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                   </Button>
                 </TableCell>
 
-                <TableCell className="text-right py-3 px-4">
+                <TableCell className="text-right text-xs md:text-sm py-2 md:py-3 px-3 md:px-4">
                   {/* 🔹 اینجا تغییر دادیم: رنگ Badge بر اساس وضعیت */}
                   <Badge
                     className="text-white border-0 vazir"
@@ -99,19 +145,19 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                   </Badge>
                 </TableCell>
 
-                <TableCell className="text-right font-bold py-3 px-4">
+                <TableCell className="text-right text-xs md:text-sm font-bold py-2 md:py-3 px-3 md:px-4">
                   {translateNumber(order.amount)} تومان
                 </TableCell>
 
-                <TableCell className="text-right py-3 px-4">
+                <TableCell className="text-right text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 hidden md:table-cell">
                   {translateNumber(order.items)}
                 </TableCell>
 
-                <TableCell className="text-right text-muted-foreground text-sm py-3 px-4">
+                <TableCell className="text-right text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 hidden md:table-cell">
                   {translateNumber(order.date)}
                 </TableCell>
 
-                <TableCell className="text-right font-bold py-3 px-4 whitespace-nowrap">
+                <TableCell className="text-right text-xs md:text-sm font-bold py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">
                   {order.id}
                 </TableCell>
 
@@ -125,11 +171,11 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-6 space-y-8 rtl vazir">
+      <div className="container mx-auto px-5 md:px-6 py-4 md:py-6 space-y-6 md:space-y-8 rtl vazir">
 
         {/* هدر */}
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-start items-center sm:items-start gap-4 mb-6 rtl">
-          <div className="w-12 h-12 rounded-full border border-border overflow-hidden flex-shrink-0">
+        <div className="max-w-5xl mx-auto flex flex-row justify-start items-center sm:items-start gap-3 md:gap-4 mb-4 md:mb-6 rtl">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-border overflow-hidden flex-shrink-0">
             {userData?.profileUrl ? (
               <img
                 src={userData.profileUrl}
@@ -143,97 +189,92 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
             )}
           </div>
 
-          <div className="flex flex-col items-start flex-1 min-w-0">
-            <h3 className="font-extrabold text-foreground text-xl truncate">
+          <div className="flex flex-col items-start text-right flex-1 min-w-0">
+            <h3 className="font-extrabold text-foreground text-lg md:text-xl truncate">
               {userData?.fullName || "نام کاربر"}
             </h3>
-            <p className="text-muted-foreground text-sm truncate mt-0.5">
-              تاریخچه سفارشات و پیگیری
-            </p>
+            <p className="text-muted-foreground text-xs md:text-sm truncate mt-0.5">سفارش های شما در فروشگاه</p>
           </div>
         </div>
 
         {/* Cards */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-blue-500/60 flex items-center justify-center">
-                <Clock className="w-6 h-6 text-white" />
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <Card className="p-5 md:p-6 shadow-sm">
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-blue-500/60 flex items-center justify-center">
+                <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs md:text-sm">سفارشات فعال</p>
-                <p className="text-2xl font-bold">{translateNumber(data.current.length)}</p>
+                <p className="text-muted-foreground text-xs md:text-sm">سفارش های جاری</p>
+                <p className="text-xl md:text-2xl font-bold">{translateNumber(data.current.length)}</p>
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-green-500/60 flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-white" />
+          <Card className="p-5 md:p-6 shadow-sm">
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-green-500/60 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs md:text-sm">تکمیل شده</p>
-                <p className="text-2xl font-bold">{translateNumber(data.past.length)}</p>
+                <p className="text-muted-foreground text-xs md:text-sm">سفارش های تحویل شده</p>
+                <p className="text-xl md:text-2xl font-bold">{translateNumber(data.past.length)}</p>
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-red-500/60 flex items-center justify-center">
-                <XCircle className="w-6 h-6 text-white" />
+          <Card className="p-5 md:p-6 shadow-sm">
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-red-500/60 flex items-center justify-center">
+                <XCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs md:text-sm">لغو شده</p>
-                <p className="text-2xl font-bold">{translateNumber(data.cancelled.length)}</p>
+                <p className="text-muted-foreground text-xs md:text-sm">سفارش های لغو شده</p>
+                <p className="text-xl md:text-2xl font-bold">{translateNumber(data.cancelled.length)}</p>
               </div>
             </div>
           </Card>
         </div>
 
         {/* Tabs */}
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mx-auto w-full max-w-md flex justify-center rounded-xl-50 bg-muted p-1 vazir">
-              <TabsTrigger value="current" className="flex-1 px-3 py-2 text-sm font-medium">
-                در حال پردازش
-              </TabsTrigger>
-              <TabsTrigger value="past" className="flex-1 px-3 py-2 text-sm font-medium">
-                تحویل شده
-              </TabsTrigger>
-              <TabsTrigger value="cancelled" className="flex-1 px-3 py-2 text-sm font-medium">
-                لغو شده
-              </TabsTrigger>
+              <TabsTrigger value="current" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">سفارش های جاری</TabsTrigger>
+              <TabsTrigger value="past" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">سفارش های گذشته</TabsTrigger>
+              <TabsTrigger value="cancelled" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">سفارش های لغو شده</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="current" className="mt-6">
+            <TabsContent value="current" className="mt-4 md:mt-6">
               {data.current.length > 0 ? (
-                renderOrderTable(data.current)
+                <>
+                  <div className="md:hidden">{renderOrderList(data.current)}</div>
+                  <div className="hidden md:block">{renderOrderTable(data.current)}</div>
+                </>
               ) : (
-                <Card className="py-12 text-center text-muted-foreground vazir">
-                  سفارشی در حال پردازش وجود ندارد.
-                </Card>
+                <Card className="py-12 text-center text-muted-foreground vazir">سفارش فعالی وجود ندارد.</Card>
               )}
             </TabsContent>
 
-            <TabsContent value="past" className="mt-6">
+            <TabsContent value="past" className="mt-4 md:mt-6">
               {data.past.length > 0 ? (
-                renderOrderTable(data.past)
+                <>
+                  <div className="md:hidden">{renderOrderList(data.past)}</div>
+                  <div className="hidden md:block">{renderOrderTable(data.past)}</div>
+                </>
               ) : (
-                <Card className="py-12 text-center text-muted-foreground vazir">
-                  هیچ سفارش تحویل‌شده‌ای وجود ندارد.
-                </Card>
+                <Card className="py-12 text-center text-muted-foreground vazir">سفارش تحویل شده ای وجود ندارد.</Card>
               )}
             </TabsContent>
 
-            <TabsContent value="cancelled" className="mt-6">
+            <TabsContent value="cancelled" className="mt-4 md:mt-6">
               {data.cancelled.length > 0 ? (
-                renderOrderTable(data.cancelled)
+                <>
+                  <div className="md:hidden">{renderOrderList(data.cancelled)}</div>
+                  <div className="hidden md:block">{renderOrderTable(data.cancelled)}</div>
+                </>
               ) : (
-                <Card className="py-12 text-center text-muted-foreground vazir">
-                  سفارش لغو‌شده‌ای وجود ندارد.
-                </Card>
+                <Card className="py-12 text-center text-muted-foreground vazir">سفارش لغو شده ای وجود ندارد.</Card>
               )}
             </TabsContent>
           </Tabs>
@@ -262,3 +303,4 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
     </>
   );
 }
+
