@@ -1,44 +1,9 @@
 import { Target, Heart, Award, Users } from 'lucide-react';
+import { aboutStats } from '@/data/about-stats';
+import { aboutValues } from '@/data/about-values';
+import { teamMembers } from '@/data/team-members';
 
-export default function App() {
-  const stats = [
-    { number: '+۵', label: 'فروشگاه و برند فعال' },
-    { number: '+۱۰۰', label: 'فروش' },
-    { number: '+۱۰۰', label: 'مشتری راضی' },
-    { number: '+۱', label: 'سال تجربه' },
-  ];
-
-  const values = [
-    {
-      icon: Award,
-      title: 'تعهد به برتری',
-      description: 'همیشه در تلاش برای ارائه بهترین خدمات و محصولات هستیم',
-      colorClass: 'bg-[var(--teal)]', // ✅
-    },
-    {
-      icon: Target,
-      title: 'تمرکز بر کیفیت',
-      description: 'ما به کیفیت بالا و جزئیات دقیق در تمام پروژه‌ها متعهد هستیم',
-      colorClass: 'bg-[var(--olive)]', // ✅
-    },
-    {
-      icon: Heart,
-      title: 'مشتری محوری',
-      description: 'رضایت شما اولویت اول ماست و همیشه در کنار شما خواهیم بود',
-      colorClass: 'bg-[var(--bg-section1)]', // ✅ ED775A
-    },
-  ];
-
-  const team = [
-    { name: 'امیر امرائی', role: 'فرانت', image: '1' },
-    { name: 'امیر عباد تیمور پور', role: 'فرانت', image: '2' },
-    { name: 'علی جباری', role: 'بک اند', image: '3' },
-    { name: 'آریان دارپوی', role: 'بک اند', image: '4' },
-    { name: 'فاطمه کردگاری', role: 'فرانت و دیزاین', image: '5' },
-    { name: 'حسین مجیدی', role: 'فرانت و دیزاین', image: '6' },
-    { name: 'ایلیا موسوی', role: 'فرانت و دیزاین', image: '7' },
-  ];
-
+export default function AboutUs() {
   return (
     <div className="py-16 bg-background text-foreground">
       {/* Hero */}
@@ -59,8 +24,8 @@ export default function App() {
         </div>
       </div>
 
-      {/* Stats - Gradient from bg-section1 to bg-section2 */}
-      <div 
+      {/* Stats */}
+      <div
         className="py-8 mb-20"
         style={{
           background: 'linear-gradient(to right, var(--bg-section1), var(--bg-section2))',
@@ -68,10 +33,10 @@ export default function App() {
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {stats.map((s, i) => (
-              <div key={i} className="flex flex-col items-center justify-center h-40">
-                <div className="text-xl font-bold text-white mb-1">{s.number}</div>
-                <div className="text-white text-xs font-medium text-center">{s.label}</div>
+            {aboutStats.map((stat, index) => (
+              <div key={index} className="flex flex-col items-center justify-center h-40">
+                <div className="text-xl font-bold text-white mb-1">{stat.number}</div>
+                <div className="text-white text-xs font-medium text-center">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -91,23 +56,35 @@ export default function App() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {values.map((value, index) => (
-            <div
-              key={index}
-              className="bg-card rounded-2xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-2 p-6"
-            >
-              <div className="flex flex-row-reverse justify-between items-start gap-4">
-                <div className={`${value.colorClass} w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0`}>
-                  <value.icon className="w-6 h-6 text-white" />
-                </div>
+          {aboutValues.map((value, index) => {
+            // تعیین رنگ بر اساس اندیس — بدون hard-code در داده
+            const colorClass =
+              index === 0
+                ? 'bg-[var(--teal)]'
+                : index === 1
+                ? 'bg-[var(--olive)]'
+                : 'bg-[var(--bg-section1)]'; // index === 2
 
-                <div className="text-right flex-grow">
-                  <h3 className="text-xl font-semibold mb-2 text-titr">{value.title}</h3>
-                  <p className="text-text">{value.description}</p>
+            return (
+              <div
+                key={index}
+                className="bg-card rounded-2xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-2 p-6"
+              >
+                <div className="flex flex-row-reverse justify-between items-start gap-4">
+                  <div
+                    className={`${colorClass} w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0`}
+                  >
+                    <value.icon className="w-6 h-6 text-white" />
+                  </div>
+
+                  <div className="text-right flex-grow">
+                    <h3 className="text-xl font-semibold mb-2 text-titr">{value.title}</h3>
+                    <p className="text-text">{value.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -123,10 +100,10 @@ export default function App() {
           </h2>
         </div>
 
-        {/* Row 1 - 4 cards with 240px padding on sides */}
+        {/* Row 1 - 4 cards */}
         <div className="flex justify-center mb-10">
           <div className="flex gap-10" style={{ width: 'calc(100% - 480px)' }}>
-            {team.slice(0, 4).map((member, index) => (
+            {teamMembers.slice(0, 4).map((member, index) => (
               <div
                 key={index}
                 className="bg-card rounded-3xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] transition-all duration-300"
@@ -144,10 +121,10 @@ export default function App() {
           </div>
         </div>
 
-        {/* Row 2 - 3 cards with 425px padding on sides */}
+        {/* Row 2 - 3 cards */}
         <div className="flex justify-center">
           <div className="flex gap-10" style={{ width: 'calc(100% - 850px)' }}>
-            {team.slice(4).map((member, index) => (
+            {teamMembers.slice(4).map((member, index) => (
               <div
                 key={index + 4}
                 className="bg-card rounded-3xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] transition-all duration-300"
