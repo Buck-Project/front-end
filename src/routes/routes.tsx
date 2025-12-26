@@ -2,9 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import PublicLayout from "@/layouts/PublicLayout/PublicLayout";
 import Landing from "@/pages/Landing";
 import Temp from "@/pages/Temp";
-import AboutUs from "@/pages/AboutUs";
+import EnhancedProductPage from "@/pages/EnhancedProductPage";
 
 export const router = createBrowserRouter([
+
 	{
 		path: "/",
 		element: <PublicLayout />,
@@ -20,17 +21,17 @@ export const router = createBrowserRouter([
 				path: "/temp",
 				element: <Temp />,
 			},
-			{
-				path: "/aboutus",
-				element: <AboutUs />,
-			},
-			// {
-			// 	path: "/AboutUs",
-			// 	element: <AboutUs />,
-			// },
-			// {
+			
 		],
 	},
+
+  			{
+    			path: "/product/:id",
+    			element: <EnhancedProductPage />,
+  			},
+]);
+
+
 	// {
 	// 	element: <PrivateLayout />,
 	// 	children: [
@@ -56,5 +57,4 @@ export const router = createBrowserRouter([
 	// 			element: <Temp />,
 	// 		},
 	// 	],
-	// },
-]);
+	// }
