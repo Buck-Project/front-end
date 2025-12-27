@@ -16,7 +16,8 @@ const mockProduct = {
     images: [
         "https://via.placeholder.com/600x800?text=Image+1",
         "https://via.placeholder.com/600x800?text=Image+2",
-        "https://via.placeholder.com/600x800?text=Image+3"
+        "https://via.placeholder.com/600x800?text=Image+3",
+        "https://via.placeholder.com/600x800?text=Image+4"
     ],
     brand: {
         name: "برند مدآوران",
@@ -157,9 +158,11 @@ const ProductImageGallery: React.FC<{
         setCurrentIndex(index);
     };
 
+    const thumbnailImages = images.slice(0, 4);
+
     return (
         <div className="space-y-4">
-            <div className="relative w-full h-[400px] bg-gray-100 rounded-xl overflow-hidden">
+            <div className="relative w-[500px] h-[500px] bg-gray-100 rounded-xl overflow-hidden mx-auto">
                 <img
                     src={images[currentIndex]}
                     alt={`Product Image ${currentIndex + 1}`}
@@ -178,12 +181,12 @@ const ProductImageGallery: React.FC<{
                     <ChevronRightIcon className="w-6 h-6 text-gray-700" />
                 </button>
             </div>
-            <div className="flex space-x-2 overflow-x-auto">
-                {images.map((image, index) => (
+            <div className="flex gap-[10px] overflow-x-auto justify-center">
+                {thumbnailImages.map((image, index) => (
                     <button
                         key={index}
                         onClick={() => selectImage(index)}
-                        className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${currentIndex === index ? 'border-pink-500' : 'border-gray-200'
+                        className={`w-[90px] h-[90px] rounded-lg overflow-hidden border-2 transition-all ${currentIndex === index ? 'border-pink-500' : 'border-gray-200'
                             }`}
                     >
                         <img
@@ -743,8 +746,8 @@ const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
 // Main Product Page Component
 const ProductPage: React.FC = () => {
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-6 py-8 max-w-6xl text-right" dir="rtl">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 <div className="lg:col-span-2">
                     <ProductDetails product={mockProduct} />
                     <ProductTabs product={mockProduct} />

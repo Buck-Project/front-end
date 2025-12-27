@@ -26,10 +26,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { EnhancedProductGallery } from "@/components/product/EnhancedProductGallery";
-import ProductCard from "/src/components/product/ProductCard";
-import { ReviewCard } from "@/components/product/ReviewCard";
-import { SizeGuide } from "@/components/product/SizeGuide";
+import { EnhancedProductGallery } from "@/components/Product_tmp/EnhancedProductGallery";
+import ProductCard from "@/components/Product_tmp/ProductCard";
+import { ReviewCard } from "@/components/Product_tmp/ReviewCard";
+import { SizeGuide } from "@/components/Product_tmp/SizeGuide";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Main from "@/components/product/main"
+import Main from "@/components/Product_tmp/main"
 
 function Landing() {
     // const Navigate = useNavigate(); // 👈 حذف شد
