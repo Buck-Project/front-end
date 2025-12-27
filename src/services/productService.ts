@@ -8,7 +8,7 @@ import type {
 
 import { getData, postData, putData, deleteData } from "./services";
 
-const PRODUCTS_ENDPOINT = "/table";
+const PRODUCTS_ENDPOINT = "/manager";
 
 const normalizeProduct = (product: any): Product => {
   const images = Array.isArray(product?.images)

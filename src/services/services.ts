@@ -1,5 +1,5 @@
 // src/apiClient.ts
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import type {
   AxiosInstance,
   AxiosResponse,
@@ -14,7 +14,7 @@ import type {
 } from "../types/apiTypes";
 
 export const baseURL =
-  "https://693fedb0993d68afba6a3b08.mockapi.io/api/ProductManagement"; // backend URL
+  "http://185.60.136.225/api/"; // backend URL
 
 const getTokenFromStore = (): string | null => {
   if (typeof window === "undefined") {
@@ -44,10 +44,11 @@ apiClient.interceptors.request.use(
       return config;
     }
 
-    const headers = { ...(config.headers ?? {}) } as Record<string, string>;
-    const existingAuth = headers.Authorization ?? headers.authorization;
+    const headers = AxiosHeaders.from(config.headers ?? {});
+    const existingAuth =
+      headers.get("Authorization") ?? headers.get("authorization");
     if (!existingAuth) {
-      headers.Authorization = `Bearer ${token}`;
+      headers.set("Authorization", `Bearer ${token}`);
       config.headers = headers;
     }
     return config;
