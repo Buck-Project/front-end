@@ -237,7 +237,7 @@ const ProductDetails: React.FC<{
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-[720px] mx-auto">
             {/* Header with Favorite */}
             <div className="flex justify-between items-start mb-4">
                 <h1 className="text-2xl font-bold">{product.name}</h1>
@@ -254,7 +254,7 @@ const ProductDetails: React.FC<{
             <ProductImageGallery images={product.images} />
 
             {/* Brand Section */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg w-full max-w-[720px] mx-auto">
                 <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-blue-600 font-bold">B</span>
@@ -291,7 +291,7 @@ const ProductDetails: React.FC<{
 
             {/* Discount Banner */}
             {product.discountPercent > 0 && (
-                <div className="mt-4 p-4 bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg text-white">
+                <div className="mt-4 p-4 bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg text-white w-full max-w-[720px] mx-auto">
                     <div className="flex items-center justify-between">
                         <Badge variant="secondary" className="bg-white/30 text-white">تخفیف {product.discountPercent}%</Badge>
                         <div className="flex items-center gap-2">
@@ -305,7 +305,7 @@ const ProductDetails: React.FC<{
             )}
 
             {/* Price Section */}
-            <div className="mt-6">
+            <div className="mt-6 w-full max-w-[720px] mx-auto">
                 <div className="flex items-center gap-4">
                     <span className="text-3xl font-bold text-pink-600">{product.price.toLocaleString()} تومان</span>
                     {product.originalPrice > product.price && (
@@ -327,7 +327,7 @@ const ProductDetails: React.FC<{
             </div>
 
             {/* Selection Options */}
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-[720px] mx-auto">
                 <div>
                     <Label className="block mb-2">رنگ: سفید</Label>
                     <div className="flex gap-2">
@@ -382,7 +382,7 @@ const ProductDetails: React.FC<{
 
             {/* Add to Cart Button */}
             <Button
-                className="mt-6 w-full bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white"
+                className="mt-6 w-full max-w-[720px] mx-auto bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white"
                 onClick={handleAddToCart}
             >
                 <ShoppingCartIcon className="ml-2 w-5 h-5" />
@@ -390,7 +390,7 @@ const ProductDetails: React.FC<{
             </Button>
 
             {/* Trust Icons */}
-            <div className="mt-6 flex justify-around">
+            <div className="mt-6 flex justify-around w-full max-w-[720px] mx-auto">
                 <div className="text-center">
                     <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                         <CheckIcon className="w-6 h-6 text-purple-600" />
@@ -443,7 +443,7 @@ const ProductTabs: React.FC<{
     };
 
     return (
-        <div className="mt-6 bg-white rounded-xl shadow-md">
+        <div className="mt-6 bg-white rounded-xl shadow-md mx-auto w-full max-w-[720px]">
             <div className="border-b">
                 <div className="flex">
                     <button
@@ -675,7 +675,7 @@ const RelatedProducts: React.FC<{
     const visibleProducts = products.slice(currentIndex, currentIndex + 4);
 
     return (
-        <div className="mt-6">
+        <div className="mt-6 mx-auto w-full max-w-[720px]">
             <h2 className="text-xl font-bold mb-4">محصولات مرتبط</h2>
             <div className="relative">
                 <div className="flex gap-4">
@@ -747,14 +747,11 @@ const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
 const ProductPage: React.FC = () => {
     return (
         <div className="container mx-auto px-6 py-8 max-w-6xl text-right" dir="rtl">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 gap-8 items-start">
+                <div className="flex flex-col items-center">
                     <ProductDetails product={mockProduct} />
                     <ProductTabs product={mockProduct} />
                     <RelatedProducts products={mockProduct.relatedProducts} />
-                </div>
-                <div className="lg:col-span-1">
-                    {/* Sidebar content can be added here if needed */}
                 </div>
             </div>
         </div>
