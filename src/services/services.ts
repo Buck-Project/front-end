@@ -16,6 +16,19 @@ import type {
 export const baseURL =
   "https://693fedb0993d68afba6a3b08.mockapi.io/api/ProductManagement"; // backend URL
 
+const getTokenFromStore = (): string | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return (
+    sessionStorage.getItem("accessToken") ??
+    localStorage.getItem("accessToken") ??
+    sessionStorage.getItem("token") ??
+    localStorage.getItem("token")
+  );
+};
+
 const apiClient: AxiosInstance = axios.create({
   baseURL,
   timeout: 20000,
@@ -26,8 +39,17 @@ const apiClient: AxiosInstance = axios.create({
 
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // const token = getTokenFromStore();
-    // if (token) config.headers.Authorization = `Bearer ${token}`;
+    const token = getTokenFromStore();
+    if (!token) {
+      return config;
+    }
+
+    const headers = { ...(config.headers ?? {}) } as Record<string, string>;
+    const existingAuth = headers.Authorization ?? headers.authorization;
+    if (!existingAuth) {
+      headers.Authorization = `Bearer ${token}`;
+      config.headers = headers;
+    }
     return config;
   },
   (error) => Promise.reject(error)

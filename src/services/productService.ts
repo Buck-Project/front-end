@@ -22,11 +22,6 @@ const normalizeProduct = (product: any): Product => {
   };
 };
 
-/**
- * GET /products
- * MockAPI returns: Product[]
- * App expects: { products: Product[] }
- */
 export const getProductsService = async (): Promise<GetProductsResponse> => {
   const products = await getData({
     endPoint: PRODUCTS_ENDPOINT,
@@ -41,9 +36,6 @@ export const getProductsService = async (): Promise<GetProductsResponse> => {
   };
 };
 
-/**
- * POST /products
- */
 export const createProductService = async (
   payload: CreateProductPayload
 ): Promise<CreateProductResponse> => {
@@ -60,9 +52,6 @@ export const createProductService = async (
   };
 };
 
-/**
- * PUT /products/:id
- */
 export const updateProductService = async (
   productId: string,
   payload: UpdateProductPayload
@@ -75,9 +64,6 @@ export const updateProductService = async (
   return normalizeProduct(product);
 };
 
-/**
- * DELETE /products/:id
- */
 export const deleteProductService = async (
   productId: string
 ): Promise<void> => {
