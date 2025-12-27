@@ -1,4 +1,3 @@
-// src/apiClient.ts
 import axios from "axios";
 import type {
 	AxiosInstance,
@@ -13,7 +12,7 @@ import type {
 	PutParams,
 } from "../types/apiTypes";
 
-export const baseURL = "http://1.2.3.4:8000"; // backend URL
+export const baseURL = "http://185.60.136.225"; // backend URL
 
 const apiClient: AxiosInstance = axios.create({
 	baseURL,
