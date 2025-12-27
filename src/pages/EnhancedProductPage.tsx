@@ -27,7 +27,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { EnhancedProductGallery } from "@/components/product/EnhancedProductGallery";
-import { ProductCard } from "@/components/product/ProductCard";
+import ProductCard from "/src/components/product/ProductCard";
 import { ReviewCard } from "@/components/product/ReviewCard";
 import { SizeGuide } from "@/components/product/SizeGuide";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
