@@ -21,6 +21,7 @@ export const router = createBrowserRouter([
 				path: "/temp",
 				element: <Temp />,
 			},
+	
 			
 		],
 	},
