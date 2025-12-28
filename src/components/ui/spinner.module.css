@@ -2,15 +2,9 @@
   width: 50px;
   aspect-ratio: 1;
   display: grid;
-<<<<<<< HEAD
   border: 4px solid transparent;
   border-radius: 50%;
   border-right-color: var(--spinner-color);
-=======
-  border: 4px solid #0000;
-  border-radius: 50%;
-  border-right-color: #25b09b;
->>>>>>> fa86678ab61aa91ab92299ddf7f1d0a95b18bacd
   animation: l15 1s infinite linear;
 }
 .loader::before,

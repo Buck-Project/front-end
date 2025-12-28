@@ -1,6 +1,7 @@
 // src/pages/OrderHistoryPage.tsx
 
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ❌ حذف کن — دیگر لازم نیست
 // import { getOrderHistory } from "@/services/brandService.mock.ts";
@@ -18,6 +19,7 @@ const OrderHistoryPage = () => {
   const [data, setData] = useState<OrderHistoryData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const fetchOrderHistory = useCallback(async () => {
     setLoading(true);
@@ -28,11 +30,11 @@ const OrderHistoryPage = () => {
       setData(res);
     } catch (err) {
       console.error("Error fetching order history:", err);
-      setError("خطا در دریافت تاریخچه سفارشات. لطفاً دوباره تلاش کنید.");
+      navigate("/error500");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     fetchOrderHistory();
