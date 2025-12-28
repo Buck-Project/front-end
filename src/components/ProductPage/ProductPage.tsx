@@ -38,7 +38,7 @@ const mockProduct = {
         { id: 2, name: "آبی", hex: "#0000FF" },
         { id: 3, name: "مشکی", hex: "#000000" }
     ],
-    sizes: ["XXL", "XL", "L", "M", "S"],
+    sizes: ["XXXL","XXL", "XL", "L", "M", "S"],
     features: [
         "پارچه کتان ۱۰۰٪ طبیعی و ارگانیک",
         "مقاوم در برابر چروک و پارگی",
@@ -237,7 +237,7 @@ const ProductDetails: React.FC<{
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-[720px] mx-auto">
+        <div className="bg-white rounded-xl shadow-md p-6 w-full w-[720px] mx-auto">
             {/* Header with Favorite */}
             <div className="flex justify-between items-start mb-4">
                 <h1 className="text-2xl font-bold">{product.name}</h1>
@@ -254,7 +254,7 @@ const ProductDetails: React.FC<{
             <ProductImageGallery images={product.images} />
 
             {/* Brand Section */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg w-full max-w-[720px] mx-auto">
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg w-full w-[720px] mx-auto">
                 <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-blue-600 font-bold">B</span>
@@ -305,7 +305,7 @@ const ProductDetails: React.FC<{
             )}
 
             {/* Price Section */}
-            <div className="mt-6 w-full max-w-[720px] mx-auto">
+            <div className="mt-6 w-full w-[720px] mx-auto">
                 <div className="flex items-center gap-4">
                     <span className="text-3xl font-bold text-pink-600">{product.price.toLocaleString()} تومان</span>
                     {product.originalPrice > product.price && (
@@ -327,7 +327,7 @@ const ProductDetails: React.FC<{
             </div>
 
             {/* Selection Options */}
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-[720px] mx-auto">
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 w-full w-[720px] mx-auto">
                 <div>
                     <Label className="block mb-2">رنگ: سفید</Label>
                     <div className="flex gap-2">
@@ -390,7 +390,7 @@ const ProductDetails: React.FC<{
             </Button>
 
             {/* Trust Icons */}
-            <div className="mt-6 flex justify-around w-full max-w-[720px] mx-auto">
+            <div className="mt-6 flex justify-around w-full w-[720px] mx-auto">
                 <div className="text-center">
                     <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                         <CheckIcon className="w-6 h-6 text-purple-600" />
@@ -443,7 +443,7 @@ const ProductTabs: React.FC<{
     };
 
     return (
-        <div className="mt-6 bg-white rounded-xl shadow-md mx-auto w-full max-w-[720px]">
+        <div className="mt-6 bg-white rounded-xl shadow-md mx-auto w-full w-[720px]">
             <div className="border-b">
                 <div className="flex">
                     <button
@@ -675,7 +675,7 @@ const RelatedProducts: React.FC<{
     const visibleProducts = products.slice(currentIndex, currentIndex + 4);
 
     return (
-        <div className="mt-6 mx-auto w-full max-w-[720px]">
+        <div className="mt-6 mx-auto w-full w-[720px]">
             <h2 className="text-xl font-bold mb-4">محصولات مرتبط</h2>
             <div className="relative">
                 <div className="flex gap-4">
@@ -746,7 +746,7 @@ const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
 // Main Product Page Component
 const ProductPage: React.FC = () => {
     return (
-        <div className="container mx-auto px-6 py-8 max-w-6xl text-right" dir="rtl">
+        <div className="container mx-auto px-6 py-8 max-w-5xl text-right" dir="rtl">
             <div className="grid grid-cols-1 gap-8 items-start">
                 <div className="flex flex-col items-center">
                     <ProductDetails product={mockProduct} />
