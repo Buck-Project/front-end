@@ -10,6 +10,7 @@
     "start": "vite"
   },
   "dependencies": {
+    "@fontsource/vazirmatn": "^5.2.8",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",

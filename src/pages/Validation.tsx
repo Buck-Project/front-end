@@ -20,6 +20,7 @@ import { translateNumber } from '@/utils/translateNumber'
 import type ValidationFormValues from '@/types/loginTypes';
 import BackToLogin from '@/components/ui/toLeftSvg';
 import SubmitSpinner from '@/components/login/submitSpinner';
+import useUserStore from '@/store/userStore/userStore';
 import ToRight from '@/components/ui/toRightSvg';
 import useAuthStore from '@/store/authStore/authStore';
 
@@ -32,7 +33,7 @@ const Validation: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
-  const setToken = useAuthStore((state) => state.setToken);
+  const setToken = useUserStore((state) => state.setToken);
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
