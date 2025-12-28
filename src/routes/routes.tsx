@@ -7,7 +7,7 @@ import Error500 from "@/pages/Error500";
 import ProductListing from "@/components/ProductListing/productListing";
 import LoginForm from "@/pages/Login";
 import Validation from "@/pages/Validation";
-// import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
+import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
 import WishlistPage from "@/pages/WishList";
 import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
 
@@ -32,12 +32,22 @@ export const router = createBrowserRouter([
                 element: <ProductListing />
             },
             {
-                path: "/dash/wishList",
-                element: <WishlistPage />,
-            },
-            {
-                path: "/dash/product-management",
-                element: <ProductManagementPage />,
+                path: "dash",
+                element: <SidebarLayout />,
+                children: [
+                    {
+                        index: true,
+                        element: <WishlistPage />,
+                    },
+                    {
+                        path: "wishList",
+                        element: <WishlistPage />,
+                    },
+                    {
+                        path: "product-management",
+                        element: <ProductManagementPage />,
+                    },
+                ],
             },
 
         ],
@@ -60,23 +70,4 @@ export const router = createBrowserRouter([
             },
         ],
     },
-    // {
-    //     path: "/dash",
-    //     element: <SidebarLayout />,
-    //     errorElement: <Error404 />,
-    //     children: [
-    //         // {
-    //         //     index: true,
-    //         //     element: <DashboardHome />,
-    //         // },
-    //         {
-    //             path: "/dash/wishList",
-    //             element: <WishlistPage />,
-    //         },
-    //         // {
-    //         //     path: "settings",
-    //         //     element: <Settings />,
-    //         // },
-    //     ],
-    // }
 ]);

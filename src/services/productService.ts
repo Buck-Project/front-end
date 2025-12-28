@@ -8,8 +8,6 @@ import type {
 
 import { getData, postData, putData, deleteData } from "./services";
 
-const PRODUCTS_ENDPOINT = "/manager";
-
 const normalizeProduct = (product: any): Product => {
   const images = Array.isArray(product?.images)
     ? product.images
@@ -24,7 +22,7 @@ const normalizeProduct = (product: any): Product => {
 
 export const getProductsService = async (): Promise<GetProductsResponse> => {
   const products = await getData({
-    endPoint: PRODUCTS_ENDPOINT,
+    endPoint: "/api/manager/Rproduct",
   });
 
   const normalizedProducts = Array.isArray(products)
@@ -40,7 +38,7 @@ export const createProductService = async (
   payload: CreateProductPayload
 ): Promise<CreateProductResponse> => {
   const product = await postData({
-    endPoint: PRODUCTS_ENDPOINT,
+    endPoint: "/api/manager/Cproduct",
     data: {
       ...payload,
       status: "active", // default
@@ -57,7 +55,7 @@ export const updateProductService = async (
   payload: UpdateProductPayload
 ): Promise<Product> => {
   const product = await putData({
-    endPoint: `${PRODUCTS_ENDPOINT}/${productId}`,
+    endPoint: `${"/api/manager/Uproduct"}/${productId}`,
     data: payload,
   });
 
@@ -68,6 +66,6 @@ export const deleteProductService = async (
   productId: string
 ): Promise<void> => {
   await deleteData({
-    endPoint: `${PRODUCTS_ENDPOINT}/${productId}`,
+    endPoint: `${"/api/manager/Dproduct"}/${productId}`,
   });
 };

@@ -1,6 +1,7 @@
 export interface BaseParams {
 	endPoint: string;
 	headers?: Record<string, string>;
+	skipAuth?: boolean;
 }
 
 export interface GetParams extends BaseParams {
