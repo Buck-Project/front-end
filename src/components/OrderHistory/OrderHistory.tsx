@@ -201,7 +201,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           <Card className="p-5 md:p-6 shadow-sm">
             <div className="flex items-center gap-3 md:gap-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-blue-500/60 flex items-center justify-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-order-current/60 flex items-center justify-center">
                 <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
@@ -213,7 +213,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
           <Card className="p-5 md:p-6 shadow-sm">
             <div className="flex items-center gap-3 md:gap-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-green-500/60 flex items-center justify-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-order-complete/60 flex items-center justify-center">
                 <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
@@ -225,7 +225,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
           <Card className="p-5 md:p-6 shadow-sm">
             <div className="flex items-center gap-3 md:gap-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-red-500/60 flex items-center justify-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-order-cancel/60 flex items-center justify-center">
                 <XCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
