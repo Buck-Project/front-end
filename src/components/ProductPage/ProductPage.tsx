@@ -608,7 +608,9 @@ const ProductTabs: React.FC<{
                                     onChange={(e) => setReviewText(e.target.value)}
                                     className="mb-4 rounded-[30px] placeholder:text-gray-400"
                                 />
-                                <Button onClick={submitReview} className="mt-2 bg-[#E4004B] text-white rounded-[30px] hover:bg-[#E4004B]/90">{"\u062b\u0628\u062a \u0646\u0638\u0631 \u062c\u062f\u06cc\u062f"}</Button>
+                                <div className="mt-2 flex justify-end">
+                                    <Button onClick={submitReview} className="bg-[#E4004B] text-white rounded-[30px] hover:bg-[#E4004B]/90">{"\u062b\u0628\u062a \u0646\u0638\u0631 \u062c\u062f\u06cc\u062f"}</Button>
+                                </div>
                             </CardContent>
                         </Card>
 
