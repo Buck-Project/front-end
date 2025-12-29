@@ -382,7 +382,7 @@ const ProductDetails: React.FC<{
 
             {/* Add to Cart Button */}
             <Button
-                className="mt-6 w-full max-w-[720px] mx-auto bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white"
+                className="mt-6 w-full mx-auto bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white"
                 onClick={handleAddToCart}
             >
                 <ShoppingCartIcon className="ml-2 w-5 h-5" />
