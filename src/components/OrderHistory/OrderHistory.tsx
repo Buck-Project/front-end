@@ -175,7 +175,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
         {/* هدر */}
         <div className="max-w-5xl mx-auto flex flex-row justify-start items-center sm:items-start gap-3 md:gap-4 mb-4 md:mb-6 rtl">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-border overflow-hidden flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-border overflow-hidden shrink-0">
             {userData?.profileUrl ? (
               <img
                 src={userData.profileUrl}
@@ -296,7 +296,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
       {/* اسپینر هنگام لود */}
       {isModalOpen && loadingDetails && (
-        <div className="fixed inset-0 flex items-center justify-center z-[60]">
+        <div className="fixed inset-0 flex items-center justify-center z-60">
           <Spinner />
         </div>
       )}
