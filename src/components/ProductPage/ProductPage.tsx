@@ -536,7 +536,7 @@ const ProductTabs: React.FC<{
                             این پیراهن کتان با طراحی مینیمال و مدرن، انتخابی عالی برای استایل روزمره شماست. پارچه کتان با کیفیت بالا، نرم و راحتی فوق‌العاده‌ای را به شما هدیه می‌دهد. مناسب برای فصل بهار و تابستان.
                         </p>
                         <h3 className="text-lg font-semibold mb-3">ویژگی‌های برجسته</h3>
-                        <ul className="space-y-2">
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {product.features.map((feature, index) => (
                                 <li key={index} className="flex items-center gap-2">
                                     <CheckIcon className="w-5 h-5 text-green-500" />
