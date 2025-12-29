@@ -466,6 +466,7 @@ const ProductTabs: React.FC<{
     const [reviewText, setReviewText] = useState('');
     const [questionText, setQuestionText] = useState('');
     const [reviews, setReviews] = useState(() => product.reviews);
+    const [showAllReviews, setShowAllReviews] = useState(false);
 
     const submitReview = () => {
         if (reviewRating === 0 || reviewText.trim() === '') {
@@ -484,6 +485,31 @@ const ProductTabs: React.FC<{
         setReviewRating(0);
         setReviewText('');
     };
+
+    const toggleReviewVote = (reviewId: number, vote: "helpful" | "notHelpful") => {
+        setReviews((prev) =>
+            prev.map((review) => {
+                if (review.id !== reviewId) {
+                    return review;
+                }
+                let { helpful, notHelpful, userVote } = review as { helpful: number; notHelpful: number; userVote?: "helpful" | "notHelpful" | null };
+                if (userVote === vote) {
+                    userVote = null;
+                    if (vote === "helpful") helpful = Math.max(0, helpful - 1);
+                    if (vote === "notHelpful") notHelpful = Math.max(0, notHelpful - 1);
+                } else {
+                    if (userVote === "helpful") helpful = Math.max(0, helpful - 1);
+                    if (userVote === "notHelpful") notHelpful = Math.max(0, notHelpful - 1);
+                    userVote = vote;
+                    if (vote === "helpful") helpful += 1;
+                    if (vote === "notHelpful") notHelpful += 1;
+                }
+                return { ...review, helpful, notHelpful, userVote };
+            })
+        );
+    };
+
+    const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 2);
 
     const submitQuestion = () => {
         if (questionText.trim() === '') {
@@ -624,7 +650,7 @@ const ProductTabs: React.FC<{
                         </Card>
 
                         {/* Reviews List */}
-                        {reviews.map((review) => (
+                        {visibleReviews.map((review) => (
                             <Card key={review.id} className="mb-4">
                                 <CardHeader>
                                     <div className="flex items-center gap-2">
@@ -644,10 +670,20 @@ const ProductTabs: React.FC<{
                                 <CardContent>
                                     <p className="mb-4">{review.text}</p>
                                     <div className="flex gap-2">
-                                        <Button variant="outline" size="sm" className="flex items-center gap-1">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => toggleReviewVote(review.id, "helpful")}
+                                            className={`flex items-center gap-1 ${review.userVote === "helpful" ? "bg-green-500 text-white border-green-500" : ""}`}
+                                        >
                                             <ThumbsUpIcon className="w-4 h-4" /> مفید بود ({review.helpful})
                                         </Button>
-                                        <Button variant="outline" size="sm" className="flex items-center gap-1">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => toggleReviewVote(review.id, "notHelpful")}
+                                            className={`flex items-center gap-1 ${review.userVote === "notHelpful" ? "bg-red-500 text-white border-red-500" : ""}`}
+                                        >
                                             <ThumbsDownIcon className="w-4 h-4" /> مفید نبود ({review.notHelpful})
                                         </Button>
                                     </div>
@@ -655,7 +691,11 @@ const ProductTabs: React.FC<{
                             </Card>
                         ))}
 
-                        <Button variant="outline" className="w-full">مشاهده نظرات بیشتر</Button>
+                        {!showAllReviews && reviews.length > 2 && (
+                            <Button variant="outline" className="w-full" onClick={() => setShowAllReviews(true)}>
+                                U.O'O\u001dURO_UR U+O,OnO\u001dOS O"UOO'OSOn
+                            </Button>
+                        )}
                     </div>
                 )}
 
