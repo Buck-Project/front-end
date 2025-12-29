@@ -12,6 +12,7 @@ import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
 // import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
 import WishlistPage from "@/pages/WishList";
 import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
+import OrderHistoryPage from "@/pages/OrderHistoryPage";
 
 export const router = createBrowserRouter([
     {
@@ -26,10 +27,6 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
-				path: "/brandProfileEdit",
-				element: <BrandProfileEditPage />,
-			},
-            {
                 path: "/error500",
                 element: <Error500 />
             },
@@ -38,20 +35,38 @@ export const router = createBrowserRouter([
                 element: <ProductListing />
             },
             {
-                path: "dash",
+                path: "user-dash",
                 element: <SidebarLayout />,
                 children: [
                     {
                         index: true,
-                        element: <WishlistPage />,
+                        element: <OrderHistoryPage />,
                     },
                     {
                         path: "wishList",
                         element: <WishlistPage />,
                     },
                     {
+                        path: "orders",
+                        element: <OrderHistoryPage />,
+                    },
+                ],
+            },
+            {
+                path: "brand-dash",
+                element: <SidebarLayout />,
+                children: [
+                    // {
+                    //     index: true,
+                    //     element: <OrderHistoryPage />,
+                    // },
+                     }
                         path: "product-management",
                         element: <ProductManagementPage />,
+                    },
+                    {
+                        path: "/profile-edit",
+                        element: <BrandProfileEditPage />,
                     },
                 ],
             },
