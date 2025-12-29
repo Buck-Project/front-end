@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { baseURL } from './services';
 
 // ۱. تعریف Interface ها برای جلوگیری از ارورهای تایپ اسکریپت
 export interface Product {
@@ -25,7 +26,7 @@ export interface Review {
 }
 
 // ۲. تنظیم آدرس پایه
-const BASE_URL = 'http://buckgallery.ir/api';
+const BASE_URL = baseURL;
 
 /**
  * دریافت اطلاعات کامل محصول و نظرات (مطابق روت‌های ۲ و ۳ شما)
