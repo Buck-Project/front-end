@@ -465,13 +465,22 @@ const ProductTabs: React.FC<{
     const [reviewRating, setReviewRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const [questionText, setQuestionText] = useState('');
+    const [reviews, setReviews] = useState(() => product.reviews);
 
     const submitReview = () => {
         if (reviewRating === 0 || reviewText.trim() === '') {
             alert('لطفاً امتیاز و نظر خود را وارد کنید.');
             return;
         }
-        alert('نظر شما با موفقیت ثبت شد.');
+        const newReview = {
+            id: Math.max(0, ...reviews.map((review) => review.id)) + 1,
+            user: "You",
+            rating: reviewRating,
+            text: reviewText,
+            helpful: 0,
+            notHelpful: 0,
+        };
+        setReviews((prev) => [newReview, ...prev]);
         setReviewRating(0);
         setReviewText('');
     };
@@ -615,7 +624,7 @@ const ProductTabs: React.FC<{
                         </Card>
 
                         {/* Reviews List */}
-                        {product.reviews.map((review) => (
+                        {reviews.map((review) => (
                             <Card key={review.id} className="mb-4">
                                 <CardHeader>
                                     <div className="flex items-center gap-2">
