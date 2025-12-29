@@ -11,6 +11,12 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 export default function SidebarLayout() {
+  const location = useLocation();
+  const isBrandRoute = location.pathname.startsWith("/brand-dash");
+  const items = isBrandRoute
+    ? BRAND_DASHBOARD_SIDEBAR_ITEMS
+    : USER_DASHBOARD_SIDEBAR_ITEMS;
+
   return (
     <div className="bg-background">
       <div className="flex min-h-screen w-full flex-row-reverse">
