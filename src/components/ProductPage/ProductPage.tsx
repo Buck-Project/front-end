@@ -674,7 +674,7 @@ const ProductTabs: React.FC<{
                                             variant="outline"
                                             size="sm"
                                             onClick={() => toggleReviewVote(review.id, "helpful")}
-                                            className={`flex items-center gap-1 ${review.userVote === "helpful" ? "bg-green-500 text-white border-green-500" : ""}`}
+                                            className={`flex items-center gap-1 hover:text-black ${review.userVote === "helpful" ? "bg-green-500 text-white border-green-500" : ""}`}
                                         >
                                             <ThumbsUpIcon className="w-4 h-4" /> مفید بود ({review.helpful})
                                         </Button>
@@ -682,7 +682,7 @@ const ProductTabs: React.FC<{
                                             variant="outline"
                                             size="sm"
                                             onClick={() => toggleReviewVote(review.id, "notHelpful")}
-                                            className={`flex items-center gap-1 ${review.userVote === "notHelpful" ? "bg-red-500 text-white border-red-500" : ""}`}
+                                            className={`flex items-center gap-1 hover:text-black ${review.userVote === "notHelpful" ? "bg-red-500 text-white border-red-500" : ""}`}
                                         >
                                             <ThumbsDownIcon className="w-4 h-4" /> مفید نبود ({review.notHelpful})
                                         </Button>
@@ -692,8 +692,8 @@ const ProductTabs: React.FC<{
                         ))}
 
                         {!showAllReviews && reviews.length > 2 && (
-                            <Button variant="outline" className="w-full" onClick={() => setShowAllReviews(true)}>
-                                U.O'O\u001dURO_UR U+O,OnO\u001dOS O"UOO'OSOn
+                            <Button variant="outline" className="w-full bg-gradient-to-r from-[#ED775A] to-[#E4004B] text-white hover:from-[#ED775A]/90 hover:to-[#E4004B]/90" onClick={() => setShowAllReviews(true)}>
+                                {"\u0645\u0634\u0627\u0647\u062f\u0647 \u06cc \u0647\u0645\u0647 \u0646\u0638\u0631\u0627\u062a"}
                             </Button>
                         )}
                     </div>
