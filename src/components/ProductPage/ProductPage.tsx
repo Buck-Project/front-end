@@ -718,13 +718,18 @@ const ProductTabs: React.FC<{
                                 </div>
                             </CardHeader>
                             <CardContent>
+                                <div className="mb-4">
+                                    <StarRating value={reviewRating} onChange={setReviewRating} />
+                                </div>
                                 <Input
-                                    placeholder="\u0646\u0638\u0631 \u062e\u0648\u062f \u0631\u0627 \u062b\u0628\u062a \u06a9\u0646\u06cc\u062f ..."
+                                    placeholder="\u067e\u0631\u0633\u0634 \u062e\u0648\u062f \u0631\u0627 \u062b\u0628\u062a \u06a9\u0646\u06cc\u062f ..."
                                     value={questionText}
                                     onChange={(e) => setQuestionText(e.target.value)}
-                                    className="mb-4"
+                                    className="mb-4 rounded-[30px] placeholder:text-gray-400"
                                 />
-                                <Button onClick={submitQuestion}>ثبت پرسش جدید</Button>
+                                <div className="mt-2 flex justify-end">
+                                    <Button onClick={submitQuestion} className="bg-[#E4004B] text-white rounded-[30px] hover:bg-[#E4004B]/90">{"\u062b\u0628\u062a \u067e\u0631\u0633\u0634 \u062c\u062f\u06cc\u062f"}</Button>
+                                </div>
                             </CardContent>
                         </Card>
 
