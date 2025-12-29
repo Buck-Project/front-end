@@ -312,7 +312,7 @@ const ProductDetails: React.FC<{
 
             {/* Discount Banner */}
             {product.discountPercent > 0 && (
-                <div className="mt-4 p-4 bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg text-white w-full mx-auto">
+                <div className="mt-4 p-4 bg-gradient-to-r from-[#ED775A] to-[#E4004B] rounded-lg text-white w-full mx-auto">
                     <div className="flex items-center justify-between">
                         <Badge variant="secondary" className="bg-white/30 text-white">تخفیف {product.discountPercent}%</Badge>
                         <div className="flex items-center gap-2">
@@ -403,7 +403,7 @@ const ProductDetails: React.FC<{
 
             {/* Add to Cart Button */}
             <Button
-                className="mt-6 w-full mx-auto bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white"
+                className="mt-6 w-full mx-auto bg-gradient-to-r from-[#ED775A] to-[#E4004B] hover:from-[#ED775A]/90 hover:to-[#E4004B]/90 text-white"
                 onClick={handleAddToCart}
             >
                 <ShoppingCartIcon className="ml-2 w-5 h-5" />
@@ -780,3 +780,4 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
