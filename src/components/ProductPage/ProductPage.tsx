@@ -264,10 +264,10 @@ const ProductDetails: React.FC<{
                 <h1 className="text-2xl font-bold">{product.name}</h1>
                 <button
                     onClick={toggleFavorite}
-                    className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-red-500 bg-red-100' : 'text-gray-500 hover:text-red-500'
+                    className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-gray-500 bg-transparent hover:text-red-500' : 'text-gray-500 hover:text-red-500'
                         }`}
                 >
-                    <HeartIcon className="w-6 h-6" />
+                    <HeartIcon className={`w-6 h-6 transition-colors ${isFavorite ? "fill-red-500" : "fill-none"}`} />
                 </button>
             </div>
 
