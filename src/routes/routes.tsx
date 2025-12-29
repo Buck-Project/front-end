@@ -61,6 +61,10 @@ export const router = createBrowserRouter([
                     //     element: <OrderHistoryPage />,
                     // },
                     {
+                        path: "product-management",
+                        element: <ProductManagementPage />,
+                    },
+                    {
                         path: "/product-management",
                         element: <ProductManagementPage />,
                     },
@@ -70,7 +74,6 @@ export const router = createBrowserRouter([
                     },
                 ],
             },
-
         ],
     },
 
