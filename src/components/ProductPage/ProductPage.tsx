@@ -9,6 +9,21 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon, CheckIcon, RepeatIcon, ShieldIcon, MessageSquareIcon, ThumbsUpIcon, ThumbsDownIcon } from 'lucide-react';
 
+const isDarkColor = (hex: string) => {
+    const normalized = hex.replace("#", "");
+    const value = normalized.length === 3
+        ? normalized.split("").map((c) => c + c).join("")
+        : normalized;
+    if (value.length !== 6) {
+        return false;
+    }
+    const r = parseInt(value.slice(0, 2), 16);
+    const g = parseInt(value.slice(2, 4), 16);
+    const b = parseInt(value.slice(4, 6), 16);
+    const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return luminance < 140;
+};
+
 // Mock Data
 const mockProduct = {
     id: 1,
@@ -207,7 +222,9 @@ const ProductDetails: React.FC<{
 }> = ({ product }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
-    const [selectedColor, setSelectedColor] = useState<number | null>(null);
+      const [selectedColor, setSelectedColor] = useState<number | null>(
+          () => product.colors[0]?.id ?? null
+      );
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'reviews' | 'questions'>('description');
@@ -352,23 +369,28 @@ const ProductDetails: React.FC<{
                 <div>
                     <Label className="block mb-2">رنگ: سفید</Label>
                     <div className="flex gap-2">
-                        {product.colors.map((color) => (
-                            <button
-                                key={color.id}
-                                onClick={() => setSelectedColor(color.id)}
-                                className={`w-8 h-8 rounded-full border-2 transition-all ${selectedColor === color.id ? 'border-black' : 'border-gray-300'
-                                    }`}
-                                style={{ backgroundColor: color.hex }}
-                            ></button>
-                        ))}
-                        <button
-                            onClick={() => setSelectedColor(null)}
-                            className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${selectedColor === null ? 'border-black' : 'border-gray-300'
-                                }`}
-                        >
-                            <CheckIcon className="w-4 h-4" />
-                        </button>
-                    </div>
+                          {product.colors.map((color) => (
+                              <button
+                                  key={color.id}
+                                  type="button"
+                                  onClick={() => setSelectedColor(color.id)}
+                                  className={`relative w-8 h-8 rounded-full border-2 transition-all ${selectedColor === color.id ? 'border-black' : 'border-gray-300'
+                                      }`}
+                                  style={{ backgroundColor: color.hex }}
+                              >
+                                  {selectedColor === color.id && (
+                                      <span
+                                          className={`absolute inset-0 flex items-center justify-center ${isDarkColor(color.hex)
+                                              ? "text-white"
+                                              : "text-gray-800"
+                                              }`}
+                                      >
+                                          <CheckIcon className="w-4 h-4" />
+                                      </span>
+                                  )}
+                              </button>
+                          ))}
+                      </div>
                 </div>
 
                 <div>
