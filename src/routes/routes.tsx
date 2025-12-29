@@ -65,10 +65,6 @@ export const router = createBrowserRouter([
                         element: <ProductManagementPage />,
                     },
                     {
-                        path: "/product-management",
-                        element: <ProductManagementPage />,
-                    },
-                    {
                         path: "/profile-edit",
                         element: <BrandProfileEditPage />,
                     },
