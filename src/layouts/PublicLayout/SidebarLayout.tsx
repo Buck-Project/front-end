@@ -34,7 +34,8 @@ export default function SidebarLayout() {
   }));
 
   return (
-    <div className="bg-background">
+    <div className="bg-background relative">
+      
       <div className="flex min-h-screen w-full flex-row-reverse">
         <aside className="sticky top-0 h-screen self-start">
           <Sidebar items={items} className="rounded-none" />

@@ -52,7 +52,7 @@ export const BRAND_DASHBOARD_SIDEBAR_ITEMS: Omit<NavItem, "onClick">[] = [
     id: "products",
     label: "محصولات",
     icon: <Banana size={24} />,
-    path: "/dash/",
+    path: "/brand-dash/product-management",
   },
   {
     id: "orders",
@@ -64,13 +64,13 @@ export const BRAND_DASHBOARD_SIDEBAR_ITEMS: Omit<NavItem, "onClick">[] = [
     id: "profile",
     label: "ویرایش اطلاعات",
     icon: <CircleUserRound size={24} />,
-    path: "/dash/",
+    path: "/brand-dash/profile-edit",
   },
     {
     id: "settings",
     label: "تنظیمات",
     icon: <Settings size={24} />,
-    path: "/dash/",
+    path: "/brand-dash/settings",
   },
   { 
     id: "logout", 
