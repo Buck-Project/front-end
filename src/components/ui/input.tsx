@@ -71,6 +71,11 @@ export const Input = forwardRef<HTMLInputElement, FormikInputProps>(
             )}
           />
         </div>
+        {hasError && (
+            <span className={cn("text-sm text-destructive", errorClassName)}>
+                {meta.error}
+            </span>
+        )} 
       </div>
     );
   }
