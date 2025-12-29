@@ -691,10 +691,16 @@ const ProductTabs: React.FC<{
                             </Card>
                         ))}
 
-                        {!showAllReviews && reviews.length > 2 && (
-                            <Button variant="outline" className="w-full bg-gradient-to-r from-[#ED775A] to-[#E4004B] text-white hover:from-[#ED775A]/90 hover:to-[#E4004B]/90" onClick={() => setShowAllReviews(true)}>
-                                {"\u0645\u0634\u0627\u0647\u062f\u0647 \u06cc \u0647\u0645\u0647 \u0646\u0638\u0631\u0627\u062a"}
-                            </Button>
+                        {!showAllReviews && (
+                            <div className="flex justify-center">
+                                <Button
+                                    variant="outline"
+                                    className="bg-gradient-to-r from-[#ED775A] to-[#E4004B] text-white rounded-[30px] hover:from-[#ED775A]/90 hover:to-[#E4004B]/90"
+                                    onClick={() => setShowAllReviews(true)}
+                                >
+                                    {"\u0645\u0634\u0627\u0647\u062f\u0647 \u06cc \u0647\u0645\u0647 \u0646\u0638\u0631\u0627\u062a"}
+                                </Button>
+                            </div>
                         )}
                     </div>
                 )}
