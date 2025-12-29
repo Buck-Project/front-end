@@ -366,37 +366,23 @@ const ProductDetails: React.FC<{
             </div>
 
             {/* Selection Options */}
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 w-full w-[720px] mx-auto">
-                <div>
-                    <Label className="block mb-2">رنگ: سفید</Label>
-                    <div className="flex gap-2">
-                          {product.colors.map((color) => (
-                              <button
-                                  key={color.id}
-                                  type="button"
-                                  onClick={() => setSelectedColor(color.id)}
-                                  className={`relative w-8 h-8 rounded-full border-2 transition-all ${selectedColor === color.id ? 'border-black' : 'border-gray-300'
-                                      }`}
-                                  style={{ backgroundColor: color.hex }}
-                              >
-                                  {selectedColor === color.id && (
-                                      <span
-                                          className={`absolute inset-0 flex items-center justify-center ${isDarkColor(color.hex)
-                                              ? "text-white"
-                                              : "text-gray-800"
-                                              }`}
-                                      >
-                                          <CheckIcon className="w-4 h-4" />
-                                      </span>
-                                  )}
-                              </button>
-                          ))}
-                      </div>
+            <div className="mt-6 flex flex-col md:flex-row-reverse gap-16 w-full max-w-[720px] mx-auto">
+                <div className="flex-1 p-3">
+                    <Label className="block mb-2 text-right">تعداد:</Label>
+                    <div className="flex items-center justify-start gap-2">
+                        <Button variant="outline" size="icon" onClick={decreaseQuantity} disabled={quantity <= 1}>
+                            -
+                        </Button>
+                        <span className="w-8 text-center">{quantity}</span>
+                        <Button variant="outline" size="icon" onClick={increaseQuantity} disabled={quantity >= product.stock}>
+                            +
+                        </Button>
+                    </div>
                 </div>
 
-                <div>
-                    <Label className="block mb-2">انتخاب سایز</Label>
-                    <div className="flex gap-2">
+                <div className="flex-1 p-3">
+                    <Label className="block mb-2 text-right">انتخاب سایز:</Label>
+                    <div className="flex justify-center gap-2">
                         {product.sizes.map((size) => (
                             <button
                                 key={size}
@@ -410,20 +396,33 @@ const ProductDetails: React.FC<{
                     </div>
                 </div>
 
-                <div>
-                    <Label className="block mb-2">تعداد</Label>
-                    <div className="flex items-center gap-2">
-                        <Button variant="outline" size="icon" onClick={decreaseQuantity} disabled={quantity <= 1}>
-                            -
-                        </Button>
-                        <span className="w-8 text-center">{quantity}</span>
-                        <Button variant="outline" size="icon" onClick={increaseQuantity} disabled={quantity >= product.stock}>
-                            +
-                        </Button>
+                <div className="flex-1 p-3">
+                    <Label className="block mb-2 text-right">رنگ:</Label>
+                    <div className="flex justify-end gap-2">
+                        {product.colors.map((color) => (
+                            <button
+                                key={color.id}
+                                type="button"
+                                onClick={() => setSelectedColor(color.id)}
+                                className={`relative w-8 h-8 rounded-full border-2 transition-all ${selectedColor === color.id ? 'border-black' : 'border-gray-300'
+                                    }`}
+                                style={{ backgroundColor: color.hex }}
+                            >
+                                {selectedColor === color.id && (
+                                    <span
+                                        className={`absolute inset-0 flex items-center justify-center ${isDarkColor(color.hex)
+                                            ? "text-white"
+                                            : "text-gray-800"
+                                            }`}
+                                    >
+                                        <CheckIcon className="w-4 h-4" />
+                                    </span>
+                                )}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
-
             {/* Add to Cart Button */}
             <Button
                 className="mt-6 w-full mx-auto bg-gradient-to-r from-[#ED775A] to-[#E4004B] hover:from-[#ED775A]/90 hover:to-[#E4004B]/90 text-white"
@@ -803,5 +802,6 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
 
 
