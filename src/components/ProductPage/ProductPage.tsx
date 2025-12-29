@@ -211,6 +211,7 @@ const ProductDetails: React.FC<{
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'reviews' | 'questions'>('description');
+    const [discountEndsIn, setDiscountEndsIn] = useState(product.discountEndsIn);
 
     const handleAddToCart = () => {
         alert(`محصول ${product.name} با تعداد ${quantity} به سبد خرید اضافه شد.`);
@@ -235,6 +236,26 @@ const ProductDetails: React.FC<{
             setQuantity(quantity - 1);
         }
     };
+
+    useEffect(() => {
+        if (!product.discountEndsIn) return;
+        const parts = product.discountEndsIn.split(":").map(Number);
+        if (parts.length !== 3 || parts.some((part) => Number.isNaN(part))) return;
+
+        let remaining = parts[0] * 3600 + parts[1] * 60 + parts[2];
+        const tick = () => {
+            const clamped = Math.max(0, remaining);
+            const hours = String(Math.floor(clamped / 3600)).padStart(2, "0");
+            const minutes = String(Math.floor((clamped % 3600) / 60)).padStart(2, "0");
+            const seconds = String(clamped % 60).padStart(2, "0");
+            setDiscountEndsIn(`${hours}:${minutes}:${seconds}`);
+            remaining -= 1;
+        };
+
+        tick();
+        const intervalId = window.setInterval(tick, 1000);
+        return () => window.clearInterval(intervalId);
+    }, [product.discountEndsIn]);
 
     return (
         <div className="bg-white rounded-xl shadow-md p-6 w-full w-[720px] mx-auto">
@@ -291,7 +312,7 @@ const ProductDetails: React.FC<{
 
             {/* Discount Banner */}
             {product.discountPercent > 0 && (
-                <div className="mt-4 p-4 bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg text-white w-full max-w-[720px] mx-auto">
+                <div className="mt-4 p-4 bg-gradient-to-r from-orange-400 to-pink-500 rounded-lg text-white w-full mx-auto">
                     <div className="flex items-center justify-between">
                         <Badge variant="secondary" className="bg-white/30 text-white">تخفیف {product.discountPercent}%</Badge>
                         <div className="flex items-center gap-2">
@@ -299,7 +320,7 @@ const ProductDetails: React.FC<{
                             <ClockIcon className="w-5 h-5" />
                         </div>
                     </div>
-                    <div className="mt-2 text-xl font-bold">{product.discountEndsIn}</div>
+                    <div className="mt-2 text-xl font-bold">{discountEndsIn}</div>
                     <div className="mt-1 text-sm">تا پایان تخفیف باقی مانده ...</div>
                 </div>
             )}
