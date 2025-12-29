@@ -12,6 +12,11 @@ import Payment from "@/pages/PaymentPage";
 import ShoppingCart from "@/pages/shoppingCart";
 import ProductPages from "@/pages/ProductPage";
 import EnhancedProductPage from "@/pages/EnhancedProductPage";
+// import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
+// import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
+// import WishlistPage from "@/pages/WishList";
+// import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
+// import OrderHistoryPage from "@/pages/OrderHistoryPage";
 
 export const router = createBrowserRouter([
     {
@@ -45,14 +50,39 @@ export const router = createBrowserRouter([
                 path: "/ProductPage",
                 element: <ProductPages />
             },
-			{
-    			path: "/product/:id",
-    			element: <EnhancedProductPage />,
-  			},
+            {
+                path: "/product/:id",
+                element: <EnhancedProductPage />,
+            },
 
         ],
     },
-
+    {
+        path: "/dash",
+        element: <SidebarLayout />,
+        children: [
+            // {
+            //     index: true,
+            //     element: <OrderHistoryPage />,
+            // },
+            // {
+            //     path: "/dash/product-management",
+            //     element: <ProductManagementPage />,
+            // },
+            // {
+            //     path: "/dash/wishList",
+            //     element: <WishlistPage />,
+            // },
+            // {
+            //     path: "/dash/profile-edit",
+            //     element: <BrandProfileEditPage />,
+            // },
+            // {
+            //     path: "/dash/orders",
+            //     element: <OrderHistoryPage />,
+            // },
+        ],
+    },
     {
         path: "/login",
         element: <LoginLayout />,
@@ -70,23 +100,4 @@ export const router = createBrowserRouter([
             },
         ],
     },
-    {
-        path: "/dash",
-        element: <SidebarLayout />,
-        errorElement: <Error404 />,
-        children: [
-            // {
-            //     index: true,
-            //     element: <DashboardHome />,
-            // },
-            // {
-            //     path: "profile",
-            //     element: <Profile />,
-            // },
-            // {
-            //     path: "settings",
-            //     element: <Settings />,
-            // },
-        ],
-    }
 ]);
