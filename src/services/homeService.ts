@@ -4,7 +4,7 @@ import type { HomePageResponse } from "@/types/homeTypes";
 export const fetchHomePageData = async (): Promise<HomePageResponse> => {
   try {
     const data = await getData({
-      endPoint: "/api/homepage", 
+      endPoint: "/homepage",
     });
     return data;
   } catch (error) {
@@ -24,7 +24,7 @@ export interface UserAction {
 export const sendUserAction = async (action: UserAction): Promise<void> => {
   try {
     await postData({
-      endPoint: "/api/user-actions",
+      endPoint: "/user-actions",
       data: action,
     });
   } catch (error) {

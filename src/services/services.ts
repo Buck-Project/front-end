@@ -12,7 +12,8 @@ import type {
 	PutParams,
 } from "../types/apiTypes";
 
-export const baseURL = "http://185.60.136.225"; // backend URL
+export const baseURL =
+	import.meta.env.VITE_API_BASE_URL ?? "/api"; // backend URL (proxied in dev)
 
 const apiClient: AxiosInstance = axios.create({
 	baseURL,

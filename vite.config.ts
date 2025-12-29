@@ -8,6 +8,12 @@ export default defineConfig({
 	plugins: [react(), tailwindcss()],
 	server: {
 		port: 3002,
+		proxy: {
+			"/api": {
+				target: "http://185.60.136.225",
+				changeOrigin: true,
+			},
+		},
 	},
 	resolve: {
 		alias: {
