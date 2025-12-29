@@ -1,4 +1,3 @@
-// components/ui/input.tsx
 import { forwardRef } from "react";
 import { useField } from "formik";
 import { cn } from "@/lib/utils";
@@ -10,7 +9,10 @@ const isRTL = (text: string | undefined): boolean => {
   return rtlChars.test(text);
 };
 
-export const Input = forwardRef<HTMLInputElement, FormikInputProps>(
+export const Input = forwardRef<
+  HTMLInputElement,
+  FormikInputProps & { forceRTL?: boolean }
+>(
   (
     {
       label,
@@ -22,7 +24,6 @@ export const Input = forwardRef<HTMLInputElement, FormikInputProps>(
       inputClassName = "",
       iconClassName = "",
       errorClassName = "",
-      disabled,
       ...props
     },
     ref
@@ -30,17 +31,13 @@ export const Input = forwardRef<HTMLInputElement, FormikInputProps>(
     const [field, meta] = useField(props.name);
     const hasError = meta.touched && meta.error;
     const value = field.value ?? "";
+
     const isRightToLeft = forceRTL || isRTL(value);
 
     return (
       <div className={cn("flex flex-col gap-1", containerClassName)}>
         {label && (
-          <label
-            className="text-sm font-medium text-foreground"
-            htmlFor={props.id || props.name}
-          >
-            {label}
-          </label>
+          <label className="text-sm font-medium text-foreground">{label}</label>
         )}
 
         <div className="relative">
@@ -55,18 +52,21 @@ export const Input = forwardRef<HTMLInputElement, FormikInputProps>(
           )}
 
           <input
-            {...field}       
-            {...props}         
+            {...field}
+            {...props}
             ref={ref}
             dir={isRightToLeft ? "rtl" : "ltr"}
-            disabled={disabled}
+            onChange={(e) => {
+              const newValue = e.target.value;
+              if (onlyNumbers && !/^\d*$/.test(newValue)) return;
+              field.onChange(e);
+            }}
             className={cn(
-              "w-full px-4 py-2 rounded-md border border-input bg-card text-foreground",
-              "placeholder:text-muted-foreground focus:outline-none",
-              "focus:ring-2 focus:ring-ring/50 focus:border-primary transition",
+              `w-full px-4 py-2 rounded-md border border-input bg-card text-foreground 
+               placeholder:text-muted-foreground focus:outline-none 
+               focus:ring-2 focus:ring-ring/50 focus:border-primary transition`,
               Icon ? "pl-10" : "",
               isRightToLeft ? "text-right" : "text-left",
-              disabled && "opacity-50 cursor-not-allowed",
               inputClassName
             )}
           />
