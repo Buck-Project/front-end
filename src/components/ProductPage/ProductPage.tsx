@@ -51,7 +51,8 @@ const mockProduct = {
     colors: [
         { id: 1, name: "سبز", hex: "#008000" },
         { id: 2, name: "آبی", hex: "#0000FF" },
-        { id: 3, name: "مشکی", hex: "#000000" }
+        { id: 3, name: "مشکی", hex: "#000000" },
+        { id: 4, name: "O3U?UOO_", hex: "#FFFFFF" }
     ],
     sizes: ["XXXL","XXL", "XL", "L", "M", "S"],
     features: [
@@ -802,4 +803,5 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
 
