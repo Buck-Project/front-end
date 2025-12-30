@@ -1,19 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
 import PublicLayout from "@/layouts/PublicLayout/PublicLayout";
-import Landing from "@/pages/Landing";
-import ProductList from "@/pages/ProductListing"; // کاما اضافه شد
-//import Temp from "@/pages/Temp";
+import LoginLayout from "@/layouts/PublicLayout/LoginLayout";
+import Home from "@/pages/Home";
 import Error404 from "@/pages/Error404";
 import Error500 from "@/pages/Error500";
-import OrderManagementPage from "@/pages/BrandDash/OrderManagementPage";
-// فرض می‌کنیم کامپوننت‌های کامنت شده نیز وجود دارند و آن‌ها را وارد می‌کنیم.
-// import PrivateLayout from "@/layouts/PrivateLayout/PrivateLayout";
-// import AnotherLayout from "@/layouts/AnotherLayout/AnotherLayout";
-// import EditProfile from "@/pages/EditProfile";
-// import DashBoard from "@/pages/DashBoard";
-// import Login from "@/pages/Login";
-// import AboutUs from "@/pages/AboutUs";
-
+import ProductListing from "@/components/ProductListing/productListing";
+import LoginForm from "@/pages/Login";
+import Validation from "@/pages/Validation";
+import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
+import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
+// import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
+import WishlistPage from "@/pages/WishList";
+import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
+import OrderHistoryPage from "@/pages/OrderHistoryPage";
 
 export const router = createBrowserRouter([
     {
@@ -25,54 +24,61 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Landing />,
-            },
-            {
-                path: "/temp",
-//                element: <Temp />,
-            },
-            {
-                path: "/productList",
-                element: <ProductList/>
+                element: <Home />
             },
             {
                 path: "/error500",
                 element: <Error500 />
             },
             {
-                path: "/OrderManagement",
-                element: <OrderManagementPage />
+                path: "/products-list",
+                element: <ProductListing />
             },
-            // {
-            //  path: "/AboutUs",
-            //  element: <AboutUs />,
-            // },
+
         ],
     },
-    // {
-    //  element: <PrivateLayout />,
-    //  children: [
-    //      {
-    //          path: "/EditProfile",
-    //          element: <EditProfile />,
-    //      },
-    //      {
-    //          path: "/DashBoard",
-    //          element: <DashBoard />,
-    //      },
-    //  ],
-    // },
-    // {
-    //  element: <AnotherLayout />,
-    //  children: [
-    //      {
-    //          path: "/login",
-    //          element: <Login />,
-    //      },
-    //      {
-    //          path: "/temp",
-    //          element: <Temp />,
-    //      },
-    //  ],
-    // },
+    {
+        path: "/dash",
+        element: <SidebarLayout />,
+        children: [
+            // {
+            //     index: true,
+            //     element: <OrderHistoryPage />,
+            // },
+            {
+                path: "/dash/product-management",
+                element: <ProductManagementPage />,
+            },
+            {
+                path: "/dash/wishList",
+                element: <WishlistPage />,
+            },
+            {
+                path: "/dash/profile-edit",
+                element: <BrandProfileEditPage />,
+            },
+            {
+                path: "/dash/orders",
+                element: <OrderHistoryPage />,
+            },
+        ],
+    },
+
+    {
+        path: "/login",
+        element: <LoginLayout />,
+        errorElement: (
+            <Error404 />
+        ),
+        children: [
+            {
+                index: true,
+                element: <LoginForm />,
+            },
+            {
+                path: "/login/verify",
+                element: <Validation />,
+            },
+        ],
+    },
 ]);
