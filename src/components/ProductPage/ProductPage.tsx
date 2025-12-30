@@ -301,7 +301,8 @@ const ProductDetails: React.FC<{
 
             {/* Brand Section */}
             <div className="mt-6 p-4 bg-gray-50 rounded-lg w-full w-[720px] mx-auto">
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-start justify-between gap-6 mb-4">
+                    <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-blue-600 font-bold">B</span>
                     </div>
@@ -314,8 +315,8 @@ const ProductDetails: React.FC<{
                         </div>
                         <p className="text-sm text-gray-600">{product.brand.description}</p>
                     </div>
-                </div>
-                <div className="flex items-center gap-6 text-sm">
+                    </div>
+                    <div className="flex items-center gap-6 text-sm">
                     <div className="flex items-center gap-1">
                         <span className="font-semibold">{product.rating}</span>
                         <StarIcon className="w-5 h-5 text-yellow-500 fill-yellow-500" />
@@ -332,6 +333,7 @@ const ProductDetails: React.FC<{
                     <Button variant="outline" size="sm" onClick={toggleFollow}>
                         {isFollowing ? 'دنبال می‌کنید' : 'دنبال کردن'}
                     </Button>
+                    </div>
                 </div>
             </div>
 
@@ -637,7 +639,7 @@ const ProductTabs: React.FC<{
                 {activeTab === 'reviews' && (
                     <div>
                         <h2 className="text-xl font-bold mb-4">نظرات مشتریان</h2>
-                        <div className="flex items-center gap-4 mb-4">
+                        <div className="flex items-center gap-4">
                             <div className="text-2xl font-bold">{averageRating}</div>
                             <div className="flex items-center gap-1">
                                 <StarIcon className="w-5 h-5 text-yellow-500 fill-yellow-500" />
@@ -926,6 +928,7 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
 
 
 
