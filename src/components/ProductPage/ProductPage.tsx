@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon, CheckIcon, RepeatIcon, ShieldIcon, MessageSquareIcon, ThumbsUpIcon, ThumbsDownIcon, HomeIcon, UsersIcon, ShirtIcon, PackageIcon } from 'lucide-react';
+import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon, CheckIcon, RepeatIcon, ShieldIcon, MessageSquareIcon, ThumbsUpIcon, ThumbsDownIcon, HomeIcon, UsersIcon, ShirtIcon, PackageIcon, Store } from 'lucide-react';
 
 const isDarkColor = (hex: string) => {
     const normalized = hex.replace("#", "");
@@ -330,9 +330,13 @@ const ProductDetails: React.FC<{
                         <span className="font-semibold">{product.stock}</span>
                         <span>فروش</span>
                     </div>
-                    <Button variant="outline" size="sm" onClick={toggleFollow}>
-                        {isFollowing ? 'دنبال می‌کنید' : 'دنبال کردن'}
-                    </Button>
+                    <Button
+    onClick={toggleFollow}
+    className="inline-flex items-center gap-2 rounded-full bg-[#E4004B] px-6 py-2 text-white shadow-sm hover:bg-[#E4004B]/90"
+>
+    <Store className="w-5 h-5" />
+    {isFollowing ? 'دنبال می‌کنید' : 'دنبال کردن'}
+</Button>
                     </div>
                 </div>
             </div>
