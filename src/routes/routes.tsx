@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
                 element: <BrandProfileEditPage />,
             },
             {
-                path: "/dash/orders",
+                path: "orders",
                 element: <OrderHistoryPage />,
             },
             {

@@ -1,4 +1,5 @@
 import type { GetOrdersResponse, Order, OrderStats } from "@/types/orderType";
+import type { OrderHistoryData, Order as OrderHistoryOrder, OrderDetailsType } from "@/types/orderTypes";
 
 const mockOrders: Order[] = [
   {
@@ -59,9 +60,69 @@ const mockStats: OrderStats = {
   cancelled: mockOrders.filter((order) => order.status === "cancelled").length,
 };
 
+const mockHistoryOrders: OrderHistoryOrder[] = mockOrders.map((order) => ({
+  id: order.id,
+  date: order.date,
+  amount: order.amount,
+  status: order.status,
+  items: order.items,
+}));
+
+const buildOrderDetails = (order: OrderHistoryOrder): OrderDetailsType => ({
+  id: order.id,
+  orderDate: order.date,
+  status: order.status,
+  totalPrice: order.amount,
+  details: [
+    {
+      id: `${order.id}-1`,
+      name: "Sample Item",
+      image: "/images/sample-product.jpg",
+      size: "M",
+      color: "Black",
+      cost: order.amount,
+      count: order.items,
+    },
+  ],
+});
+
+const buildOrderHistory = (orders: OrderHistoryOrder[]): OrderHistoryData => {
+  const buckets: OrderHistoryData = { current: [], past: [], cancelled: [] };
+
+  orders.forEach((order) => {
+    if (order.status === "delivered") buckets.past.push(order);
+    else if (order.status === "cancelled") buckets.cancelled.push(order);
+    else buckets.current.push(order);
+  });
+
+  return buckets;
+};
+
 export const getOrdersService = async (): Promise<GetOrdersResponse> => {
   return {
     orders: mockOrders,
     stats: mockStats,
   };
 };
+
+export const getOrderHistory = async (): Promise<OrderHistoryData> => {
+  return buildOrderHistory(mockHistoryOrders);
+};
+
+export const getOrderDetails = async (orderId: string): Promise<OrderDetailsType> => {
+  const order = mockHistoryOrders.find((item) => item.id === orderId);
+
+  if (!order) {
+    return {
+      id: orderId,
+      orderDate: "",
+      status: "",
+      totalPrice: "",
+      details: [],
+    };
+  }
+
+  return buildOrderDetails(order);
+};
+
+
