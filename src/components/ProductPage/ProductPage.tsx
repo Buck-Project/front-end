@@ -566,7 +566,7 @@ const ProductTabs: React.FC<{
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                     >
-                        نظرات ({product.reviewsCount})
+                        نظرات ({reviews.length})
                     </button>
                     <button
                         onClick={() => setActiveTab('questions')}
@@ -575,7 +575,7 @@ const ProductTabs: React.FC<{
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                     >
-                        پرسش و پاسخ ({product.questionsCount})
+                        پرسش و پاسخ ({questions.length})
                     </button>
                 </div>
             </div>
@@ -638,7 +638,7 @@ const ProductTabs: React.FC<{
                             <div className="text-2xl font-bold">{product.rating}</div>
                             <div className="flex items-center gap-1">
                                 <StarIcon className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                                <span>از {product.reviewsCount} نظر</span>
+                                <span>از {reviews.length} نظر</span>
                             </div>
                         </div>
 
