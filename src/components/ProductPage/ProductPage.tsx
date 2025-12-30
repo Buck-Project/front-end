@@ -343,7 +343,7 @@ const ProductDetails: React.FC<{
 
             {/* Discount Banner */}
             {product.discountPercent > 0 && (
-                <div className="mt-4 p-4 bg-gradient-to-r from-[#ED775A] to-[#E4004B] rounded-lg text-white w-full mx-auto">
+                <div className="mt-4 p-4 bg-gradient-to-r from-[#ED775A] to-[#E4004B] rounded-lg text-white w-full mx-auto shadow-md">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <ClockIcon className="w-5 h-5" />
@@ -438,7 +438,7 @@ const ProductDetails: React.FC<{
             </div>
             {/* Add to Cart Button */}
             <Button
-                className="mt-6 w-full mx-auto bg-gradient-to-r from-[#ED775A] to-[#E4004B] hover:from-[#ED775A]/90 hover:to-[#E4004B]/90 text-white"
+                className="mt-6 w-full mx-auto bg-gradient-to-r from-[#ED775A] to-[#E4004B] hover:from-[#ED775A]/90 hover:to-[#E4004B]/90 text-white shadow-md"
                 onClick={handleAddToCart}
             >
                 <ShoppingCartIcon className="ml-2 w-5 h-5" />
