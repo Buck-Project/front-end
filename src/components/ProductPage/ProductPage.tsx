@@ -467,6 +467,7 @@ const ProductTabs: React.FC<{
     const [questionText, setQuestionText] = useState('');
     const [reviews, setReviews] = useState(() => product.reviews);
     const [showAllReviews, setShowAllReviews] = useState(false);
+    const [showAllQuestions, setShowAllQuestions] = useState(false);
 
     const submitReview = () => {
         if (reviewRating === 0 || reviewText.trim() === '') {
@@ -510,6 +511,7 @@ const ProductTabs: React.FC<{
     };
 
     const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 2);
+    const visibleQuestions = showAllQuestions ? product.questions : product.questions.slice(0, 2);
 
     const submitQuestion = () => {
         if (questionText.trim() === '') {
@@ -734,7 +736,7 @@ const ProductTabs: React.FC<{
                         </Card>
 
                         {/* Questions List */}
-                        {product.questions.map((q) => (
+                        {visibleQuestions.map((q) => (
                             <Card key={q.id} className="mb-4 bg-green-50">
                                 <CardHeader>
                                     <div className="flex items-center gap-2">
@@ -755,7 +757,17 @@ const ProductTabs: React.FC<{
                             </Card>
                         ))}
 
-                        <Button variant="outline" className="w-full">مشاهده پرسش‌های بیشتر</Button>
+                        {!showAllQuestions && product.questions.length > 2 && (
+                            <div className="flex justify-center">
+                                <Button
+                                    variant="outline"
+                                    className="bg-gradient-to-r from-[#ED775A] to-[#E4004B] text-white rounded-[30px] hover:from-[#ED775A]/90 hover:to-[#E4004B]/90"
+                                    onClick={() => setShowAllQuestions(true)}
+                                >
+                                    {"\u0645\u0634\u0627\u0647\u062f\u0647 \u06cc \u0647\u0645\u0647 \u067e\u0631\u0633\u0634 \u0647\u0627"}
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
