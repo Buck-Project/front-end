@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { getOrdersService } from "@/services/orderService";
+import { getOrdersService } from "@/services/orderService.mock";
 import type { Order, OrderStatus, OrderStats } from "@/types/orderType";
 import { translateNumber } from "@/utils/translateNumber";
 
@@ -385,3 +385,4 @@ export function OrderManagement() {
     </Formik>
   );
 }
+
