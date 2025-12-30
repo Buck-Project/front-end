@@ -735,11 +735,8 @@ const ProductTabs: React.FC<{
                                 </div>
                             </CardHeader>
                             <CardContent>
-                                <div className="mb-4">
-                                    <StarRating value={reviewRating} onChange={setReviewRating} />
-                                </div>
                                 <Input
-                                    placeholder="سوال خود را بپرسید ..."
+                                    placeholder={"\u067e\u0631\u0633\u0634 \u062e\u0648\u062f \u0631\u0627 \u062b\u0628\u062a \u06a9\u0646\u06cc\u062f ..."}
                                     value={questionText}
                                     onChange={(e) => setQuestionText(e.target.value)}
                                     className="mb-4 rounded-[30px] placeholder:text-gray-400"
@@ -756,18 +753,21 @@ const ProductTabs: React.FC<{
                                 <CardHeader>
                                     <div className="flex items-center gap-2">
                                         <MessageSquareIcon className="w-5 h-5 text-green-600" />
-                                        <span>{q.question}</span>
+                                        <span>{"\u0634\u0645\u0627"}</span>
                                     </div>
                                     <div className="text-xs text-green-600 mt-1">پیش {q.daysAgo} روز</div>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="bg-white p-3 rounded-lg">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <CheckIcon className="w-4 h-4 text-green-600" />
-                                            <span className="text-green-600">{q.answeredBy}</span>
+                                    <p className="text-sm text-gray-700 mb-2">{q.question}</p>
+                                    {q.answer && (
+                                        <div className="bg-white p-3 rounded-lg">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <CheckIcon className="w-4 h-4 text-green-600" />
+                                                <span className="text-green-600">{q.answeredBy}</span>
+                                            </div>
+                                            <p>{q.answer}</p>
                                         </div>
-                                        <p>{q.answer}</p>
-                                    </div>
+                                    )}
                                 </CardContent>
                             </Card>
                         ))}
