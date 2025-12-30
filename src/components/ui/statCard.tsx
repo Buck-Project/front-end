@@ -20,17 +20,18 @@ export function StatCard({
   iconColor = "#4DA6FF",
 }: StatCardProps) {
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow duration-200">
-      <div className="flex items-start justify-between flex-row-reverse">
+    <Card className="p-6 hover:shadow-lg transition-shadow transition duration-200">
+      <div className="flex items-center justify-between gap-4 flex-row-reverse">
         <div className="flex-1 text-right">
-          <p className="text-muted-foreground mb-2" style={{ fontSize: "14px" }}>
+          <p className="text-muted-foreground mb-1 text-sm">
             {title}
           </p>
-          <h3 style={{ fontSize: "28px", fontWeight: 700 }}>{value}</h3>
+          <h3 className="text-2xl font-bold leading-tight">{value}</h3>
           {trend && (
             <div
-              className={`mt-2 inline-flex items-center gap-1 ${trend.isPositive ? "text-green-600" : "text-red-600"}`}
-              style={{ fontSize: "12px", fontWeight: 500 }}
+              className={`mt-2 inline-flex items-center gap-1 text-xs font-medium ${
+                trend.isPositive ? "text-green-600" : "text-red-600"
+              }`}
             >
               {trend.isPositive ? (
                 <ArrowUpRight className="w-3 h-3" />
@@ -42,10 +43,10 @@ export function StatCard({
           )}
         </div>
         <div
-          className="w-12 h-12 rounded-lg flex items-center justify-center"
-          style={{ backgroundColor: `${iconColor}20` }}
+          className="w-16 h-16 rounded-2xl flex items-center justify-center"
+          style={{ backgroundColor: iconColor }}
         >
-          <Icon className="w-6 h-6" style={{ color: iconColor }} />
+          <Icon className="w-9 h-9 text-white" />
         </div>
       </div>
     </Card>

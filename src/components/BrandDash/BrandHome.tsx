@@ -131,7 +131,8 @@ export function BrandHome({ brandId, brandSlug }: BrandHomeProps) {
   const summary = data?.summary ?? {};
 
   return (
-    <div dir="rtl" className="space-y-8 font-vazirmatn">
+    <div dir="rtl" className="w-full bg-white font-vazirmatn">
+      <div className="mx-auto w-full max-w-6xl px-6 py-8 space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -148,7 +149,6 @@ export function BrandHome({ brandId, brandSlug }: BrandHomeProps) {
             )}
           </div>
           <div>
-            <h1 className="text-xl font-bold">سلام، {brandName}</h1>
             <p className="text-muted-foreground text-sm mt-1">{brandSubtitle}</p>
           </div>
         </div>
@@ -357,6 +357,7 @@ export function BrandHome({ brandId, brandSlug }: BrandHomeProps) {
             </p>
           )}
         </Card>
+      </div>
       </div>
     </div>
   );
