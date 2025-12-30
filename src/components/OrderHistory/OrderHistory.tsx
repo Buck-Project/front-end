@@ -18,6 +18,7 @@ import {
 
 import { translateNumber } from "@/utils/translateNumber";
 import type { OrderHistoryData, OrderDetailsType } from "@/types/orderTypes";
+import { useBrandProfileHeader } from "@/hooks/useBrandProfileHeader";
 
 // 🔵 NEW — گرفتن جزئیات سفارش از سرویس Mock یا API
 import { getOrderDetails } from "@/services/orderService.api";
@@ -37,11 +38,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
   const [selectedOrder, setSelectedOrder] = useState<OrderDetailsType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [loadingDetails, setLoadingDetails] = useState<boolean>(false);
-
-  const userData = {
-    fullName: "نام کاربر",
-    profileUrl: "/images/sample-user.jpg",
-  };
+  const { brandName, logoUrl } = useBrandProfileHeader();
 
   const openOrderModal = async (order: any) => {
     try {
@@ -176,10 +173,10 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
         {/* هدر */}
         <div className="max-w-5xl mx-auto flex flex-row justify-start items-center sm:items-start gap-3 md:gap-4 mb-4 md:mb-6 rtl">
           <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-border overflow-hidden shrink-0">
-            {userData?.profileUrl ? (
+            {logoUrl ? (
               <img
-                src={userData.profileUrl}
-                alt="User Profile"
+                src={logoUrl}
+                alt="Brand Profile"
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -191,7 +188,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
           <div className="flex flex-col items-start text-right flex-1 min-w-0">
             <h3 className="font-extrabold text-foreground text-lg md:text-xl truncate">
-              {userData?.fullName || "نام کاربر"}
+              {brandName || "نام برند"}
             </h3>
             <p className="text-muted-foreground text-xs md:text-sm truncate mt-0.5">سفارش های شما در فروشگاه</p>
           </div>
