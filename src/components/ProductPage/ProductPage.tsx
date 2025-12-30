@@ -466,6 +466,7 @@ const ProductTabs: React.FC<{
     const [reviewText, setReviewText] = useState('');
     const [questionText, setQuestionText] = useState('');
     const [reviews, setReviews] = useState(() => product.reviews);
+    const [questions, setQuestions] = useState(() => product.questions);
     const [showAllReviews, setShowAllReviews] = useState(false);
     const [showAllQuestions, setShowAllQuestions] = useState(false);
 
@@ -511,14 +512,21 @@ const ProductTabs: React.FC<{
     };
 
     const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 2);
-    const visibleQuestions = showAllQuestions ? product.questions : product.questions.slice(0, 2);
+    const visibleQuestions = showAllQuestions ? questions : questions.slice(0, 2);
 
     const submitQuestion = () => {
         if (questionText.trim() === '') {
-            alert('لطفاً سوال خود را وارد کنید.');
+            alert('لطفا سوال خود را وارد کنید.');
             return;
         }
-        alert('سوال شما با موفقیت ثبت شد.');
+        const newQuestion = {
+            id: Math.max(0, ...questions.map((question) => question.id)) + 1,
+            question: questionText,
+            answer: "",
+            answeredBy: "",
+            daysAgo: 0,
+        };
+        setQuestions((prev) => [newQuestion, ...prev]);
         setQuestionText('');
     };
 
@@ -724,7 +732,7 @@ const ProductTabs: React.FC<{
                                     <StarRating value={reviewRating} onChange={setReviewRating} />
                                 </div>
                                 <Input
-                                    placeholder="\u067e\u0631\u0633\u0634 \u062e\u0648\u062f \u0631\u0627 \u062b\u0628\u062a \u06a9\u0646\u06cc\u062f ..."
+                                    placeholder="سوال خود را بپرسید ..."
                                     value={questionText}
                                     onChange={(e) => setQuestionText(e.target.value)}
                                     className="mb-4 rounded-[30px] placeholder:text-gray-400"
@@ -757,7 +765,7 @@ const ProductTabs: React.FC<{
                             </Card>
                         ))}
 
-                        {!showAllQuestions && product.questions.length > 2 && (
+                        {!showAllQuestions && questions.length > 2 && (
                             <div className="flex justify-center">
                                 <Button
                                     variant="outline"
