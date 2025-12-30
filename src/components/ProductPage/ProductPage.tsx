@@ -540,10 +540,10 @@ const ProductTabs: React.FC<{
     return (
         <div className="mt-6 bg-white rounded-xl shadow-md mx-auto w-full w-[720px]">
             <div className="border-b">
-                <div className="flex">
+                <div className="flex w-full">
                     <button
                         onClick={() => setActiveTab('description')}
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'description'
+                        className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'description'
                                 ? 'bg-blue-100 text-blue-800 border-b-2 border-blue-500'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
@@ -552,7 +552,7 @@ const ProductTabs: React.FC<{
                     </button>
                     <button
                         onClick={() => setActiveTab('specifications')}
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'specifications'
+                        className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'specifications'
                                 ? 'bg-orange-100 text-orange-800 border-b-2 border-orange-500'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
@@ -561,7 +561,7 @@ const ProductTabs: React.FC<{
                     </button>
                     <button
                         onClick={() => setActiveTab('reviews')}
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'reviews'
+                        className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'reviews'
                                 ? 'bg-green-100 text-green-800 border-b-2 border-green-500'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
@@ -570,7 +570,7 @@ const ProductTabs: React.FC<{
                     </button>
                     <button
                         onClick={() => setActiveTab('questions')}
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'questions'
+                        className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'questions'
                                 ? 'bg-purple-100 text-purple-800 border-b-2 border-purple-500'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
