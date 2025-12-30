@@ -919,25 +919,26 @@ const ProductPage: React.FC = () => {
             <div className="w-full border-b border-gray-200">
                 <nav className="relative flex items-center text-sm text-gray-700 py-3">
                     <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                            <span>خانه</span>
                             <HomeIcon className="w-5 h-5 text-gray-800" />
+                        <div className="flex items-center gap-2 text-right">
+                            <span className="text-right">خانه</span>
+                        
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
-                        <div className="flex items-center gap-2">
-                            <span>مردانه</span>
+                        <div className="flex items-center gap-2 text-right">
                             <UsersIcon className="w-5 h-5 text-gray-800" />
+                            <span className="text-right">مردانه</span>
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
-                        <div className="flex items-center gap-2">
-                            <span>تیشرت</span>
+                        <div className="flex items-center gap-2 text-right">
                             <ShirtIcon className="w-5 h-5 text-gray-800" />
+                            <span className="text-right">تیشرت</span>
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
                     </div>
-                    <span className="absolute left-1/2 -translate-x-1/2 bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm flex items-center gap-2">
-                        <span>CATWAREHOUSE تیشرت</span>
+                    <span className="absolute left-1/2 -translate-x-1/2 bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm flex items-center gap-2 text-right">
                         <PackageIcon className="w-4 h-4" />
+                        <span className="text-right">تیشرت CATWAREHOUSE</span>
                     </span>
                 </nav>
             </div>
