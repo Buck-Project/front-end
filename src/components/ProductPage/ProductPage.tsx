@@ -520,6 +520,9 @@ const ProductTabs: React.FC<{
 
     const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 2);
     const visibleQuestions = showAllQuestions ? questions : questions.slice(0, 2);
+    const averageRating = reviews.length
+        ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+        : "0.0";
 
     const submitQuestion = () => {
         if (questionText.trim() === '') {
@@ -635,7 +638,7 @@ const ProductTabs: React.FC<{
                     <div>
                         <h2 className="text-xl font-bold mb-4">نظرات مشتریان</h2>
                         <div className="flex items-center gap-4 mb-4">
-                            <div className="text-2xl font-bold">{product.rating}</div>
+                            <div className="text-2xl font-bold">{averageRating}</div>
                             <div className="flex items-center gap-1">
                                 <StarIcon className="w-5 h-5 text-yellow-500 fill-yellow-500" />
                                 <span>از {reviews.length} نظر</span>
