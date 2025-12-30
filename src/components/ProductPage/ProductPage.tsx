@@ -349,7 +349,7 @@ const ProductDetails: React.FC<{
                             <ClockIcon className="w-5 h-5" />
                             <span>پیشنهاد ویژه محدود</span>
                         </div>
-                        <Badge variant="secondary" className="bg-white/30 text-white">تخفیف {product.discountPercent}%</Badge>
+                        <Badge variant="secondary" className="bg-white text-black rounded-full px-3 py-1 text-sm font-semibold">% {product.discountPercent} تخفیف!</Badge>
                     </div>
                     <div className="mt-2 text-xl font-bold">{discountEndsIn}</div>
                     <div className="mt-1 text-sm">تا پایان تخفیف باقی مانده ...</div>
@@ -958,6 +958,7 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
 
 
 
