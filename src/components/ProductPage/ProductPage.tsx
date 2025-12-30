@@ -916,8 +916,8 @@ const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
 const ProductPage: React.FC = () => {
     return (
         <div className="container mx-auto px-6 pb-8 pt-0 max-w-5xl text-right" dir="rtl">
-            <div className="w-full border-b border-gray-200">
-                <nav className="relative flex items-center text-sm text-gray-700 py-3">
+            <div className="w-screen border-b border-gray-200 relative left-1/2 right-1/2 -ml-[50vw] -mr-[49vw]">
+                <nav className="relative flex items-center justify-start w-full text-sm text-gray-700 py-3">
                     <div className="flex items-center gap-4">
                             <HomeIcon className="w-5 h-5 text-gray-800" />
                         <div className="flex items-center gap-2 text-right">
@@ -936,7 +936,7 @@ const ProductPage: React.FC = () => {
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
                     </div>
-                    <span className="absolute left-1/2 -translate-x-1/2 bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm flex items-center gap-2 text-right">
+                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right">
                         <PackageIcon className="w-4 h-4" />
                         <span className="text-right">تیشرت CATWAREHOUSE</span>
                     </span>
