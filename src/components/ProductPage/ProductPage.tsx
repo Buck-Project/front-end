@@ -340,8 +340,8 @@ const ProductDetails: React.FC<{
                 <div className="mt-4 p-4 bg-gradient-to-r from-[#ED775A] to-[#E4004B] rounded-lg text-white w-full mx-auto">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <span>پیشنهاد ویژه محدود</span>
                             <ClockIcon className="w-5 h-5" />
+                            <span>پیشنهاد ویژه محدود</span>
                         </div>
                         <Badge variant="secondary" className="bg-white/30 text-white">تخفیف {product.discountPercent}%</Badge>
                     </div>
