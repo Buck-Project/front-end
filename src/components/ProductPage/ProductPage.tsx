@@ -72,11 +72,18 @@ const mockProduct = {
         season: "بهار و تابستان"
     },
     relatedProducts: [
-        { id: 2, name: "CATWAREHOUSE Bussiness Not Boomin مدل", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+1", colors: ["#FF6B6B", "#008000", "#000000"] },
-        { id: 3, name: "CATWAREHOUSE Bussiness Not Boomin مدل", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+2", colors: ["#FF6B6B", "#008000", "#000000"] },
-        { id: 4, name: "CATWAREHOUSE Bussiness Not Boomin مدل", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+3", colors: ["#FF6B6B", "#008000", "#000000"] },
-        { id: 5, name: "CATWAREHOUSE Bussiness Not Boomin مدل", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+4", colors: ["#FF6B6B", "#008000", "#000000"] },
-        { id: 6, name: "CATWAREHOUSE Bussiness Not Boomin مدل", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+5", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 2, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+1", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 3, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+2", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 4, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+3", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 5, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+4", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 6, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+5", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 7, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+6", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 8, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+7", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 9, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+8", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 10, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+9", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 11, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+10", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 12, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+11", colors: ["#FF6B6B", "#008000", "#000000"] },
+        { id: 13, name: "CATWAREHOUSE Bussiness Not Boomin U.O_U,", price: 531999, originalPrice: 699999, discount: 24, image: "https://via.placeholder.com/200x250?text=Related+12", colors: ["#FF6B6B", "#008000", "#000000"] }
     ],
     reviews: [
         {
@@ -797,13 +804,16 @@ const RelatedProducts: React.FC<{
         setCurrentIndex((prev) => (prev === products.length - 1 ? 0 : prev + 1));
     };
 
-    const visibleProducts = products.slice(currentIndex, currentIndex + 4);
+    const visibleCount = Math.min(4, products.length);
+    const visibleProducts = Array.from({ length: visibleCount }, (_, index) =>
+        products[(currentIndex + index) % products.length]
+    );
 
     return (
         <div className="mt-6 mx-auto w-full w-[720px]">
             <h2 className="text-xl font-bold mb-4">محصولات مرتبط</h2>
             <div className="relative">
-                <div className="flex gap-4">
+                <div className="flex justify-center gap-4">
                     {visibleProducts.map((product) => (
                         <Card key={product.id} className="w-48 flex-shrink-0">
                             <div className="relative">
@@ -884,6 +894,7 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
 
 
 
