@@ -539,7 +539,7 @@ const ProductTabs: React.FC<{
 
     return (
         <div className="mt-6 bg-white rounded-xl shadow-md mx-auto w-full w-[720px]">
-            <div className="border-b">
+            <div className="border-b rounded-t-[20px] overflow-hidden">
                 <div className="flex w-full">
                     <button
                         onClick={() => setActiveTab('description')}
