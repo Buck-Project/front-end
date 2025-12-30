@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon, CheckIcon, RepeatIcon, ShieldIcon, MessageSquareIcon, ThumbsUpIcon, ThumbsDownIcon } from 'lucide-react';
+import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon, CheckIcon, RepeatIcon, ShieldIcon, MessageSquareIcon, ThumbsUpIcon, ThumbsDownIcon, HomeIcon, UsersIcon, ShirtIcon, PackageIcon } from 'lucide-react';
 
 const isDarkColor = (hex: string) => {
     const normalized = hex.replace("#", "");
@@ -915,7 +915,32 @@ const ClockIcon: React.FC<{ className?: string }> = ({ className }) => (
 // Main Product Page Component
 const ProductPage: React.FC = () => {
     return (
-        <div className="container mx-auto px-6 py-8 max-w-5xl text-right" dir="rtl">
+        <div className="container mx-auto px-6 pb-8 pt-0 max-w-5xl text-right" dir="rtl">
+            <div className="w-full border-b border-gray-200">
+                <nav className="relative flex items-center text-sm text-gray-700 py-3">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <span>خانه</span>
+                            <HomeIcon className="w-5 h-5 text-gray-800" />
+                        </div>
+                        <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
+                        <div className="flex items-center gap-2">
+                            <span>مردانه</span>
+                            <UsersIcon className="w-5 h-5 text-gray-800" />
+                        </div>
+                        <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
+                        <div className="flex items-center gap-2">
+                            <span>تیشرت</span>
+                            <ShirtIcon className="w-5 h-5 text-gray-800" />
+                        </div>
+                        <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
+                    </div>
+                    <span className="absolute left-1/2 -translate-x-1/2 bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm flex items-center gap-2">
+                        <span>CATWAREHOUSE تیشرت</span>
+                        <PackageIcon className="w-4 h-4" />
+                    </span>
+                </nav>
+            </div>
             <div className="grid grid-cols-1 gap-8 items-start">
                 <div className="flex flex-col items-center">
                     <ProductDetails product={mockProduct} />
