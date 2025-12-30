@@ -936,7 +936,7 @@ const ProductPage: React.FC = () => {
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
                     </div>
-                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right">
+                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right mr-6">
                         <PackageIcon className="w-4 h-4" />
                         <span className="text-right">تیشرت CATWAREHOUSE</span>
                     </span>
