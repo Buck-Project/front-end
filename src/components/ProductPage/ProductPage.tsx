@@ -310,7 +310,7 @@ const ProductDetails: React.FC<{
                         <div className="flex items-center gap-2">
                             <span className="font-bold text-lg">{product.brand.name}</span>
                             {product.brand.isOfficial && (
-                                <Badge variant="secondary" className="bg-pink-500 text-white">برند رسمی</Badge>
+                                <Badge variant="secondary" className="bg-[#E4004B] text-white hover:bg-[#E4004B] hover:text-white">برند رسمی</Badge>
                             )}
                         </div>
                         <p className="text-sm text-gray-600">{product.brand.description}</p>
@@ -400,7 +400,7 @@ const ProductDetails: React.FC<{
                             <button
                                 key={size}
                                 onClick={() => setSelectedSize(size)}
-                                className={`px-3 py-1 border rounded-md transition-all ${selectedSize === size ? 'bg-pink-100 border-pink-500' : 'border-gray-300'
+                                className={`px-3 py-1 border rounded-md transition-all ${selectedSize === size ? 'bg-[#E4004B] text-white border-[#E4004B]' : 'border-gray-300'
                                     }`}
                             >
                                 {size}
@@ -958,6 +958,7 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
+
 
 
 
