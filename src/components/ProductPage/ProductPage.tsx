@@ -795,6 +795,23 @@ const RelatedProducts: React.FC<{
     products: typeof mockProduct.relatedProducts;
 }> = ({ products }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [wishlistedIds, setWishlistedIds] = useState<number[]>([]);
+
+    useEffect(() => {
+        const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+        setWishlistedIds(wishlist);
+    }, []);
+
+    const handleToggleWishlist = (productId: number) => {
+        setWishlistedIds((prev) => {
+            const isWishlisted = prev.includes(productId);
+            const updated = isWishlisted
+                ? prev.filter((id) => id !== productId)
+                : [...prev, productId];
+            localStorage.setItem("wishlist", JSON.stringify(updated));
+            return updated;
+        });
+    };
 
     const goToPrev = () => {
         setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
@@ -814,7 +831,9 @@ const RelatedProducts: React.FC<{
             <h2 className="text-xl font-bold mb-4">محصولات مرتبط</h2>
             <div className="relative">
                 <div className="flex justify-center gap-4">
-                    {visibleProducts.map((product) => (
+                    {visibleProducts.map((product) => {
+                        const isWishlisted = wishlistedIds.includes(product.id);
+                        return (
                         <Card key={product.id} className="w-48 flex-shrink-0">
                             <div className="relative">
                                 {product.discount > 0 && (
@@ -828,8 +847,17 @@ const RelatedProducts: React.FC<{
                                         alt={product.name}
                                         className="w-full h-48 object-cover rounded-t-lg"
                                     />
-                                    <button className="absolute top-2 right-2 p-1 bg-white/70 rounded-full">
-                                        <HeartIcon className="w-4 h-4 text-gray-600" />
+                                    <button
+                                        onClick={() => handleToggleWishlist(product.id)}
+                                        className="absolute top-2 right-2 p-1 bg-white/70 rounded-full"
+                                        aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                                    >
+                                        <HeartIcon
+                                            className={`w-4 h-4 transition-colors ${isWishlisted
+                                                ? "fill-red-500 text-muted-foreground"
+                                                : "fill-none text-muted-foreground hover:fill-primary"
+                                                }`}
+                                        />
                                     </button>
                                 </div>
                             </div>
@@ -852,7 +880,8 @@ const RelatedProducts: React.FC<{
                                 </div>
                             </CardContent>
                         </Card>
-                    ))}
+                        );
+                    })}
                 </div>
                 <button
                     onClick={goToPrev}
