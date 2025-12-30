@@ -544,7 +544,7 @@ const ProductTabs: React.FC<{
                     <button
                         onClick={() => setActiveTab('description')}
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'description'
-                                ? 'bg-blue-100 text-blue-800 border-b-2 border-blue-500'
+                                ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                     >
@@ -553,7 +553,7 @@ const ProductTabs: React.FC<{
                     <button
                         onClick={() => setActiveTab('specifications')}
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'specifications'
-                                ? 'bg-orange-100 text-orange-800 border-b-2 border-orange-500'
+                                ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                     >
@@ -562,7 +562,7 @@ const ProductTabs: React.FC<{
                     <button
                         onClick={() => setActiveTab('reviews')}
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'reviews'
-                                ? 'bg-green-100 text-green-800 border-b-2 border-green-500'
+                                ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                     >
@@ -571,7 +571,7 @@ const ProductTabs: React.FC<{
                     <button
                         onClick={() => setActiveTab('questions')}
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'questions'
-                                ? 'bg-purple-100 text-purple-800 border-b-2 border-purple-500'
+                                ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
                             }`}
                     >
