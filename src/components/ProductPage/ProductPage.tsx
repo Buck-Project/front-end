@@ -283,7 +283,7 @@ const ProductDetails: React.FC<{
     }, [product.discountEndsIn]);
 
     return (
-        <div className="bg-white rounded-xl shadow-md p-6 w-full w-[720px] mx-auto">
+        <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 w-full w-[720px] mx-auto">
             {/* Header with Favorite */}
             <div className="flex justify-between items-start mb-4">
                 <h1 className="text-2xl font-bold">{product.name}</h1>
@@ -547,7 +547,7 @@ const ProductTabs: React.FC<{
     };
 
     return (
-        <div className="mt-6 bg-white rounded-xl shadow-md mx-auto w-full w-[720px]">
+        <div className="mt-6 bg-white rounded-t-[20px] shadow-md border border-gray-200 mx-auto w-full w-[720px]">
             <div className="border-b rounded-t-[20px] overflow-hidden">
                 <div className="flex w-full">
                     <button
