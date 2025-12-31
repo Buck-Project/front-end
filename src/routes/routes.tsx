@@ -1,10 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import PublicLayout from "@/layouts/PublicLayout/PublicLayout";
-<<<<<<< HEAD
-import LoginLayout from "@/layouts/PublicLayout/LoginLayout";
-=======
 import AuthLayout from "@/layouts/PublicLayout/AuthLayout";
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 import Home from "@/pages/Home";
 // import Temp from "@/pages/Temp";
 import Error404 from "@/pages/Error404";
@@ -12,34 +8,19 @@ import Error500 from "@/pages/Error500";
 import ProductListing from "@/components/ProductListing/productListing";
 import LoginForm from "@/pages/Login";
 import Validation from "@/pages/Validation";
-<<<<<<< HEAD
 import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
 import Payment from "@/pages/PaymentPage";
 import ShoppingCart from "@/pages/shoppingCart";
 import ProductPages from "@/pages/ProductPage";
 import EnhancedProductPage from "@/pages/EnhancedProductPage";
+import FAQ from "@/pages/FAQ";
+import AboutUs from "@/pages/AboutUs";
+import ContactUs from "@/components/ContactUs/ContactUs";
 // import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
 // import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
 // import WishlistPage from "@/pages/WishList";
 // import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
 // import OrderHistoryPage from "@/pages/OrderHistoryPage";
-=======
-import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
-import WishlistPage from "@/pages/WishList";
-import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
-import OrderHistoryPage from "@/pages/OrderHistoryPage";
-import UserDashInformation from "@/pages/userDashInfo";
-import FAQ from "@/pages/FAQ";
-import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
-import AboutUs from "@/pages/AboutUs";
-import ContactUs from "@/components/ContactUs/ContactUs";
-import Payment from "@/pages/PaymentPage";
-import ShoppingCart from "@/pages/shoppingCart";
-import ProductPages from "@/pages/ProductPage";
-import SettingsPage from "@/pages/SettingsPage";
-import OrderManagementPage from "@/pages/BrandDash/OrderManagementPage";
-import BrandHomePage from "@/pages/BrandDash/Home";
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 
 export const router = createBrowserRouter([
     {
@@ -61,10 +42,10 @@ export const router = createBrowserRouter([
                 path: "/productList",
                 element: <ProductListing />
             },
-            {
-                path: "/UserDashboard/Information",
-                element: <UserDashInformation />,
-            },
+            // {
+            //     path: "/UserDashboard/Information",
+            //     element: <UserDashInformation />,
+            // },
             {
                 path: "/FAQ",
                 element: <FAQ />,
@@ -77,10 +58,10 @@ export const router = createBrowserRouter([
                 path: "/ContactUs",
                 element: <ContactUs />,
             },
-            {
-                path: "/brandProfileEdit",
-                element: <BrandProfileEditPage />,
-            },
+            // {
+            //     path: "/brandProfileEdit",
+            //     element: <BrandProfileEditPage />,
+            // },
 
             {
                 path: "/Payment",
@@ -109,7 +90,6 @@ export const router = createBrowserRouter([
             //     index: true,
             //     element: <OrderHistoryPage />,
             // },
-<<<<<<< HEAD
             // {
             //     path: "/dash/product-management",
             //     element: <ProductManagementPage />,
@@ -126,37 +106,6 @@ export const router = createBrowserRouter([
             //     path: "/dash/orders",
             //     element: <OrderHistoryPage />,
             // },
-=======
-            {
-                path: "/dash/product-management",
-                element: <ProductManagementPage />,
-            },
-            {
-                path: "/dash/wishList",
-                element: <WishlistPage />,
-            },
-            {
-                path: "/dash/profile-edit",
-                element: <BrandProfileEditPage />,
-            },
-            {
-                path: "/dash/orders",
-                element: <OrderHistoryPage />,
-            },
-            {
-                path: "settings",
-                element: <SettingsPage />,
-            },
-            {
-                path: "order-management",
-                element: <OrderManagementPage />,
-            },
-            {
-                path: "brand-home",
-                element: <BrandHomePage />,
-            },
-
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
         ],
     },
     {
@@ -176,26 +125,4 @@ export const router = createBrowserRouter([
             },
         ],
     },
-<<<<<<< HEAD
-=======
-    // {
-    //     path: "/dash",
-    //     element: <SidebarLayout />,
-    //     errorElement: <Error404 />,
-    //     children: [
-    //         // {
-    //         //     index: true,
-    //         //     element: <DashboardHome />,
-    //         // },
-    //         {
-    //             path: "/dash/wishList",
-    //             element: <WishlistPage />,
-    //         },
-    //         // {
-    //         //     path: "settings",
-    //         //     element: <Settings />,
-    //         // },
-    //     ],
-    // }
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 ]);

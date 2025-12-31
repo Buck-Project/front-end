@@ -19,10 +19,6 @@ const PublicLayout = () => {
 			<Header />
 			<Outlet />
 			<Footer />
-<<<<<<< HEAD
-=======
-
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 		</>
 	);
 };

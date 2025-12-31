@@ -120,20 +120,9 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-background-color" dir="rtl">
-<<<<<<< HEAD
       <div className="w-full flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-xl h-5/6 bg-card rounded-3xl border-2 border-border shadow-2xl p-8 relative overflow-hidden">
           <div className="text-center mb-8">
-=======
-      <div className={`w-full flex items-center justify-center ${isMobile ? 'p-0' : 'p-6 md:p-10'}`}>
-        <div
-          className={`w-full relative overflow-hidden ${isMobile
-            ? 'h-screen bg-login-card-bg rounded-none'
-            : 'max-w-xl h-5/6 bg-login-card-bg rounded-4xl border-3 border-primary-border p-8'
-            }`}
-        >
-          <div className={`text-center ${isMobile ? 'mt-10 px-4' : 'mb-8'}`}>
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
             <img src={logo} alt="CB Buck Gallery" className="mx-auto w-32 h-auto" />
             <h2 className="text-3xl font-bold text-titr">عضویت/ورود</h2>
             <p className="text-sm text-text mt-2">خوش آمدید!</p>
@@ -176,10 +165,6 @@ const LoginForm: React.FC = () => {
 
                 <div className="flex justify-center">
                   <Button
-<<<<<<< HEAD
-=======
-                    className="bg-bg-section2 rounded-xl hover:bg-bg-section1"
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                     type="submit"
                     disabled={loading || isSubmitting}
                     variant="dialog"
@@ -191,15 +176,9 @@ const LoginForm: React.FC = () => {
 
                 <div className={`text-center text-xs ${isMobile ? 'mt-6' : 'mt-4'}`}>
                   <span className="text-text">ایجاد حساب به معنای پذیرش </span>
-<<<<<<< HEAD
                   <Link to="/terms" className="text-link">قوانین و مقررات</Link>
                   <span className="text-text"> و </span>
                   <Link to="/privacy" className="text-link">حریم‌خصوصی</Link>
-=======
-                  <Link to="/terms" className="text-bg-section2 hover:underline">قوانین و مقررات</Link>
-                  <span className="text-text"> و </span>
-                  <Link to="/privacy" className="text-bg-section2 hover:underline">حریم‌خصوصی</Link>
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                   <span className="text-text"> است.</span>
                 </div>
               </Form>

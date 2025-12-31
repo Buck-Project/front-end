@@ -18,10 +18,7 @@ import {
 import { Button } from '../components/ui/button';
 import { translateNumber } from '@/utils/translateNumber';
 import type ValidationFormValues from '@/types/loginTypes';
-<<<<<<< HEAD
 import BackToLogin from '@/components/login/backToLogin';
-=======
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 import SubmitSpinner from '@/components/login/submitSpinner';
 
 // 🔹 هوک تشخیص موبایل — SSR-safe
@@ -45,12 +42,6 @@ const Validation: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
-<<<<<<< HEAD
-=======
-  const setToken = useUserStore((state) => state.setToken);
-  const setAuth = useUserStore((state) => state.setAuth);
-  const isMobile = useIsMobile();
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
@@ -85,17 +76,7 @@ const Validation: React.FC = () => {
             imageSrc: successCat,
             onButtonClick: () => {
               if (result.data?.token) {
-<<<<<<< HEAD
                 localStorage.setItem('authToken', result.data.token);
-=======
-                setToken(result.data.token);
-                const tempUser = {
-                  id: '',
-                  mobile: phone,
-                  role: 'user' as const,
-                };
-                setAuth(result.data.token, tempUser);
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
               }
               setModalConfig((prev) => ({ ...prev, isOpen: false }));
               navigate('/', { state: { fromValidation: true } });
@@ -147,13 +128,10 @@ const Validation: React.FC = () => {
     try {
       const result = await checkPhone(phone);
       if (result.success) {
-<<<<<<< HEAD
 
         const otpCode = result.data?.message;
         console.log('OTP Code:', otpCode);
         
-=======
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
         setModalConfig({
           isOpen: true,
           title: 'ارسال مجدد',
@@ -216,28 +194,11 @@ const Validation: React.FC = () => {
   const initialValues: ValidationFormValues = { code: '' };
 
   return (
-<<<<<<< HEAD
     <div className="flex min-h-screen" dir="rtl">
       <div className="w-full flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-xl h-5/6 bg-card rounded-3xl border-2 border-border shadow-2xl p-8 relative overflow-hidden">
 
           <BackToLogin />
-=======
-    <div className="flex min-h-screen bg-background-color" dir="rtl">
-      <div className={`w-full flex items-center justify-center ${isMobile ? 'p-0' : 'p-6 md:p-10'}`}>
-        <div
-          className={`w-full relative overflow-hidden ${isMobile
-            ? 'h-screen bg-login-card-bg rounded-none'
-            : 'max-w-xl h-5/6 bg-login-card-bg rounded-4xl border-3 border-primary-border p-8'
-            }`}
-        >
-          <a
-            href="/login"
-            className="absolute top-4 right-4 bg-bg-section1 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
-          >
-            <ToRight />
-          </a>
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 
           <div className={`text-center ${isMobile ? 'mt-10 px-4' : 'mb-8'}`}>
             <img src={logo} alt="CB Buck Gallery" className="mx-auto w-32 h-auto" />

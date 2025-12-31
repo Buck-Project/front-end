@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { fetchHomePageData, sendUserAction, type UserAction } from "@/services/homeService";
-<<<<<<< HEAD
 import type { HomePageResponse, Banner } from "@/types/homeTypes";
-=======
-import { checkProfileCompletion } from "@/services/profileService";
-import type { HomePageResponse } from "@/types/homeTypes";
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 import BannerSecton from "@/components/Home/BannerSection";
 import SurpriseSection from "@/components/Home/SupriseSection";
 import BestBrandsSection from "@/components/Home/BestBrand";
@@ -26,12 +21,6 @@ import style3 from "@/assets/style3.jpg";
 import style4 from "@/assets/style4.jpg";
 import poshtibani from "@/assets/poshtibani.png";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-<<<<<<< HEAD
-=======
-import StyleSection from "@/components/Home/StyleSection";
-import CompleteProfileDialog from "@/components/Home/CompleteProfileDialog";
-import useUserStore from "@/store/userStore/userStore";
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 
 export default function Home() {
   const location = useLocation();
@@ -96,7 +85,6 @@ export default function Home() {
     );
   }
 
-<<<<<<< HEAD
   const fallbackBanners: Banner[] = [
     { id: 1, image_url: bannerFallback },
     { id: 2, image_url: bannerFallback },
@@ -119,8 +107,6 @@ export default function Home() {
     { id: 4, title: "بوهو", slug: "boho", image_url: style4 },
   ];
 
-=======
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
   const banners = homeData.banners ?? fallbackBanners;
   const categories = fallbackCategories; // همیشه از mock استفاده می‌شود
   const style_palettes = fallbackStylePalettes; // همیشه از mock استفاده می‌شود
@@ -182,15 +168,8 @@ export default function Home() {
 
       <div className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto text-center">
-<<<<<<< HEAD
           <h2 className="text-4xl font-bold mb-2">!استایل خود را، مجازی پرو کنید</h2>
           <p className="text-sm text-pink-600 mb-6">
-=======
-          <h2 className="text-4xl font-bold mb-2">
-            !استایل خود را، مجازی پرو کنید
-          </h2>
-          <p className="text-xl text-text mb-6">
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
             .تجربه‌ی خرید از آینده. لباس‌ها را قبل از خرید، آنلاین استایل کنید
           </p>
           <Link to="/style-pro">

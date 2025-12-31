@@ -547,65 +547,41 @@ const ProductTabs: React.FC<{
     };
 
     return (
-        <div className="mt-6 bg-white rounded-t-[20px] shadow-md border border-gray-200 mx-auto w-full w-[720px]">
-            <div className="border-b rounded-t-[20px] overflow-hidden">
+        <div className="mt-6 bg-white rounded-[32px] shadow-md border border-gray-200 mx-auto w-full w-[720px] overflow-hidden">
+            <div className="border-b border-gray-300">
                 <div className="flex w-full">
                     <button
                         onClick={() => setActiveTab('description')}
-<<<<<<< HEAD
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'description'
                                 ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
-=======
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'description'
-                            ? 'bg-blue-100 text-blue-800 border-b-2 border-blue-500'
-                            : 'text-gray-700 hover:bg-gray-100'
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                             }`}
                     >
                         توضیحات
                     </button>
                     <button
                         onClick={() => setActiveTab('specifications')}
-<<<<<<< HEAD
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'specifications'
                                 ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
-=======
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'specifications'
-                            ? 'bg-orange-100 text-orange-800 border-b-2 border-orange-500'
-                            : 'text-gray-700 hover:bg-gray-100'
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                             }`}
                     >
                         مشخصات
                     </button>
                     <button
                         onClick={() => setActiveTab('reviews')}
-<<<<<<< HEAD
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'reviews'
                                 ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
-=======
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'reviews'
-                            ? 'bg-green-100 text-green-800 border-b-2 border-green-500'
-                            : 'text-gray-700 hover:bg-gray-100'
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                             }`}
                     >
                         نظرات ({reviews.length})
                     </button>
                     <button
                         onClick={() => setActiveTab('questions')}
-<<<<<<< HEAD
                         className={`flex-1 px-6 py-3 text-center font-medium transition-colors ${activeTab === 'questions'
                                 ? 'bg-[#ED775A] text-white border-b-2 border-[#ED775A]'
                                 : 'text-gray-700 hover:bg-gray-100'
-=======
-                        className={`px-6 py-3 font-medium transition-colors ${activeTab === 'questions'
-                            ? 'bg-purple-100 text-purple-800 border-b-2 border-purple-500'
-                            : 'text-gray-700 hover:bg-gray-100'
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                             }`}
                     >
                         پرسش و پاسخ ({questions.length})
@@ -982,7 +958,6 @@ const ProductPage: React.FC = () => {
 };
 
 export default ProductPage;
-<<<<<<< HEAD
 
 
 
@@ -990,5 +965,3 @@ export default ProductPage;
 
 
 
-=======
->>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
