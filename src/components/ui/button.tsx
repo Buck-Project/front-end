@@ -10,7 +10,11 @@ export interface ButtonProps
 }
 
 const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
+<<<<<<< HEAD
   default: "bg-white text-white hover:bg-gray-800",
+=======
+  default: "bg-primary text-white hover:bg-primary/80",
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
   simple: "bg-white text-black hover:bg-gray-300",
   destructive: "bg-red-600 text-white hover:bg-red-700",
   outline: "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50",

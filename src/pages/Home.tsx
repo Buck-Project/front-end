@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { fetchHomePageData, sendUserAction, type UserAction } from "@/services/homeService";
+<<<<<<< HEAD
 import type { HomePageResponse, Banner } from "@/types/homeTypes";
+=======
+import { checkProfileCompletion } from "@/services/profileService";
+import type { HomePageResponse } from "@/types/homeTypes";
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 import BannerSecton from "@/components/Home/BannerSection";
 import SurpriseSection from "@/components/Home/SupriseSection";
 import BestBrandsSection from "@/components/Home/BestBrand";
@@ -21,11 +26,21 @@ import style3 from "@/assets/style3.jpg";
 import style4 from "@/assets/style4.jpg";
 import poshtibani from "@/assets/poshtibani.png";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+<<<<<<< HEAD
+=======
+import StyleSection from "@/components/Home/StyleSection";
+import CompleteProfileDialog from "@/components/Home/CompleteProfileDialog";
+import useUserStore from "@/store/userStore/userStore";
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
 
 export default function Home() {
+  const location = useLocation();
   const [homeData, setHomeData] = useState<HomePageResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showProfileDialog, setShowProfileDialog] = useState(false);
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+  const profileCompleted = useUserStore((state) => state.profileCompleted);
 
   useEffect(() => {
     const loadHomeData = async () => {
@@ -45,10 +60,32 @@ export default function Home() {
     loadHomeData();
   }, []);
 
+  // چک کردن اینکه از validation اومدیم و پروفایل تکمیل نشده
+  useEffect(() => {
+    const checkAndShowDialog = async () => {
+      // فقط اگر کاربر لاگین باشه
+      if (!isAuthenticated) return;
+
+      // چک کنیم که از validation اومدیم
+      const fromValidation = location.state?.fromValidation === true;
+      if (!fromValidation) return;
+
+      // چک کنیم پروفایل تکمیل شده یا نه (فعلاً از store)
+      // بعداً می‌تونیم از API هم بخونیم
+      if (!profileCompleted) {
+        // اگر پروفایل تکمیل نشده، دیالوگ رو نشون بده
+        setShowProfileDialog(true);
+      }
+
+      // پاک کردن state تا دفعه بعد که به home میایم دیالوگ نشون نده
+      window.history.replaceState({}, document.title);
+    };
+
+    checkAndShowDialog();
+  }, [location, isAuthenticated, profileCompleted]);
+
   if (loading) {
-    return (
-      <LoadingSpinner />
-    );
+    return <LoadingSpinner />;
   }
 
   if (error || !homeData) {
@@ -59,6 +96,7 @@ export default function Home() {
     );
   }
 
+<<<<<<< HEAD
   const fallbackBanners: Banner[] = [
     { id: 1, image_url: bannerFallback },
     { id: 2, image_url: bannerFallback },
@@ -81,13 +119,15 @@ export default function Home() {
     { id: 4, title: "بوهو", slug: "boho", image_url: style4 },
   ];
 
+=======
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
   const banners = homeData.banners ?? fallbackBanners;
   const categories = fallbackCategories; // همیشه از mock استفاده می‌شود
   const style_palettes = fallbackStylePalettes; // همیشه از mock استفاده می‌شود
   const amazing_products = homeData.special_offers ?? [];
   const best_selling_brands = homeData.best_selling_brands ?? [];
 
-  const logUserAction = (action: Omit<UserAction, 'timestamp'>) => {
+  const logUserAction = (action: Omit<UserAction, "timestamp">) => {
     const userAction: UserAction = {
       ...action,
       timestamp: new Date().toISOString(),
@@ -97,10 +137,18 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen bg-white font-vazir">
+      {/* دیالوگ تکمیل پروفایل */}
+      <CompleteProfileDialog
+        isOpen={showProfileDialog}
+        onClose={() => setShowProfileDialog(false)}
+      />
+
       <BannerSecton banners={banners} />
 
       <div className="mx-8 py-8 px-[40px] max-w-7xl mx-auto">
-        <h2 className="text-xl font-bold mb-6 text-right">خرید بر اساس دسته‌بندی</h2>
+        <h2 className="text-xl font-bold mb-6 text-right">
+          خرید بر اساس دسته‌بندی
+        </h2>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
           {categories.map((cat) => (
             <Link
@@ -134,8 +182,15 @@ export default function Home() {
 
       <div className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto text-center">
+<<<<<<< HEAD
           <h2 className="text-4xl font-bold mb-2">!استایل خود را، مجازی پرو کنید</h2>
           <p className="text-sm text-pink-600 mb-6">
+=======
+          <h2 className="text-4xl font-bold mb-2">
+            !استایل خود را، مجازی پرو کنید
+          </h2>
+          <p className="text-xl text-text mb-6">
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
             .تجربه‌ی خرید از آینده. لباس‌ها را قبل از خرید، آنلاین استایل کنید
           </p>
           <Link to="/style-pro">
@@ -223,7 +278,11 @@ export default function Home() {
           className="w-16 h-16 flex items-center justify-center rounded-full border-2 border-gray-800 bg-white shadow-lg cursor-pointer hover:shadow-xl transition"
           aria-label="پشتیبانی"
         >
-          <img src={poshtibani} alt="پشتیبانی" className="w-10 h-10 object-contain" />
+          <img
+            src={poshtibani}
+            alt="پشتیبانی"
+            className="w-10 h-10 object-contain"
+          />
         </a>
       </div>
     </div>

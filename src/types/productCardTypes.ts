@@ -1,4 +1,4 @@
-import type { Product } from "./productListingTypes";
+// import { number } from "framer-motion";
 
 export interface Size {
   label: string;
@@ -9,20 +9,26 @@ export interface Color {
   label: string;
 }
 
+<<<<<<< HEAD
 export interface ProductData {
+=======
+export interface Product {
+  id: number;
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
   discount: number;
   hasDiscount: boolean;
   image: string;
-  model: string;
+  model: string;             // = brand
   name: string;
   price: number;
-  discountedPrice: number;
   sizes: Size[];
   colors: Color[];
-  rating: number;
-  stock: number;
+  rating: number;            // ✅ وجود دارد
+  stock: number;             // = inventory_Count
   ratingCount: number;
   sales: number;
+  category: string;
+  discountedPrice: number;
 }
 
 export interface ImageData {
@@ -48,5 +54,5 @@ export interface SizeSelectorProps {
 }
 
 export interface ProductCardProps {
-  product: Product;
+  Product: Product;
 }

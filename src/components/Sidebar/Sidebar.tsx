@@ -38,9 +38,14 @@ export default function Sidebar() {
 
   return (
     <div
+<<<<<<< HEAD
       className={`fixed top-0 right-0 h-screen bg-sidebar shadow-lg transition-all duration-300 ease-in-out z-50 ${
         isHovered ? 'w-72' : 'w-20'
       }`}
+=======
+      className={`h-full bg-sidebar shadow-lg transition-all duration-300 ease-in-out ${isHovered ? "w-72" : "w-20"
+        } ${className ?? ""}`}
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ fontFamily: 'vazirmatn, sans-serif' }}
@@ -65,7 +70,11 @@ export default function Sidebar() {
                 >
                   {item.label}
                 </span>
+<<<<<<< HEAD
                 <div className="flex-shrink-0 text-foreground [&>svg]:w-8 [&>svg]:h-8">
+=======
+                <div className="shrink-0 text-foreground [&>svg]:h-8 [&>svg]:w-8">
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                   {item.icon}
                 </div>
               </div>
@@ -93,7 +102,11 @@ export default function Sidebar() {
                   >
                     {bottomItem.label}
                   </span>
+<<<<<<< HEAD
                   <div className="flex-shrink-0 text-foreground [&>svg]:w-8 [&>svg]:h-8">
+=======
+                  <div className="shrink-0 text-foreground [&>svg]:h-8 [&>svg]:w-8">
+>>>>>>> c6af0c5fd7bc08cb87078f213a2f3b071e5b4cbb
                     {bottomItem.icon}
                   </div>
                 </div>
