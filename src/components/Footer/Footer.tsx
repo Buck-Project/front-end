@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer
-      className="relative bg-cover bg-center border-t border-muted mt-20 px-6 py-16 md:px-14"
+      className="relative bg-cover bg-center border-t border-muted px-6 py-16 md:px-14"
       style={{ backgroundImage: `url(${FooterBg})` }}
     >
       <div className="absolute -top-16 left-1/2 -translate-x-1/2 bg-white rounded-full shadow-lg p-4 md:-top-20 md:left-28 md:translate-x-0 md:p-5">
