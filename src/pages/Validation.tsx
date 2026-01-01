@@ -21,7 +21,6 @@ import type ValidationFormValues from '@/types/loginTypes';
 import SubmitSpinner from '@/components/login/submitSpinner';
 import useUserStore from '@/store/userStore/userStore';
 import ToRight from '@/components/ui/toRightSvg';
-import useAuthStore from '@/store/authStore/authStore';
 
 // 🔹 هوک تشخیص موبایل — SSR-safe
 const useIsMobile = () => {

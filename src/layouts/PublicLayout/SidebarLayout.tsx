@@ -6,14 +6,14 @@ import {
   USER_DASHBOARD_SIDEBAR_ITEMS,
 } from "@/pages/SidebarConstant";
 import type { NavItem } from "@/types/sidebarTypes";
-import useAuthStore from "@/store/authStore/authStore";
+import useUserStore from "@/store/userStore/userStore";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 export default function SidebarLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const clearToken = useAuthStore((state) => state.clearToken);
+  const clearAuth = useUserStore((state) => state.clearAuth);
 
   const isBrandDashboard =
     location.pathname.includes("/brand/");
@@ -26,7 +26,7 @@ export default function SidebarLayout() {
     ...item,
     onClick: () => {
       if (item.id === "logout") {
-        clearToken();
+        clearAuth();
         navigate("/login");
         return;
       }
@@ -53,3 +53,5 @@ export default function SidebarLayout() {
     </div>
   );
 }
+
+
