@@ -45,10 +45,6 @@ export const router = createBrowserRouter([
                 element: <ProductListing />
             },
             {
-                path: "/UserDashboard/Information",
-                element: <UserDashInformation />,
-            },
-            {
                 path: "/FAQ",
                 element: <FAQ />,
             },
@@ -64,7 +60,6 @@ export const router = createBrowserRouter([
                 path: "/brandProfileEdit",
                 element: <BrandProfileEditPage />,
             },
-
             {
                 path: "/Payment",
                 element: <Payment />
@@ -89,32 +84,36 @@ export const router = createBrowserRouter([
             //     element: <OrderHistoryPage />,
             // },
             {
-                path: "/dash/product-management",
+                path: "/dash/brand/home",
+                element: <BrandHomePage />,
+            },
+            {
+                path: "/dash/brand/product-management",
                 element: <ProductManagementPage />,
             },
             {
-                path: "/dash/wishList",
-                element: <WishlistPage />,
-            },
-            {
-                path: "/dash/profile-edit",
-                element: <BrandProfileEditPage />,
-            },
-            {
-                path: "/dash/orders",
-                element: <OrderHistoryPage />,
-            },
-            {
-                path: "settings",
-                element: <SettingsPage />,
-            },
-            {
-                path: "order-management",
+                path: "/dash/brand/order-management",
                 element: <OrderManagementPage />,
             },
             {
-                path: "brand-home",
-                element: <BrandHomePage />,
+                path: "/dash/brand/profile-edit",
+                element: <BrandProfileEditPage />,
+            },
+            {
+                path: "/dash/brand/settings",
+                element: <SettingsPage />,
+            },
+            {
+                path: "/dash/wish-list",
+                element: <WishlistPage />,
+            },
+            {
+                path: "/dash/home",
+                element: <OrderHistoryPage />,
+            },
+            {
+                path: "/dash/profile-edit",
+                element: <UserDashInformation />,
             },
 
         ],

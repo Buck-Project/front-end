@@ -16,7 +16,7 @@ export default function SidebarLayout() {
   const clearToken = useAuthStore((state) => state.clearToken);
 
   const isBrandDashboard =
-    location.pathname.includes("/brand-dash");
+    location.pathname.includes("/brand/");
 
   const baseItems = isBrandDashboard
     ? BRAND_DASHBOARD_SIDEBAR_ITEMS
