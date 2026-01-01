@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import PublicLayout from "@/layouts/PublicLayout/PublicLayout";
-import LoginLayout from "@/layouts/PublicLayout/LoginLayout";
+import AuthLayout from "@/layouts/PublicLayout/AuthLayout";
 import Home from "@/pages/Home";
 // import Temp from "@/pages/Temp";
 import Error404 from "@/pages/Error404";
@@ -23,61 +23,88 @@ import ProductPages from "@/pages/ProductPage";
 import SettingsPage from "@/pages/SettingsPage";
 import OrderManagementPage from "@/pages/BrandDash/OrderManagementPage";
 import BrandHomePage from "@/pages/BrandDash/Home";
+import BrandProfile from "@/pages/BrandProfile";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <PublicLayout />,
-        errorElement: (
-            <Error404 />
-        ),
+        errorElement: <Error404 />,
         children: [
             {
                 index: true,
-                element: <Home />
+                element: (
+                    <Home />
+                ),
             },
             {
                 path: "/error500",
                 element: <Error500 />
             },
             {
-                path: "/productList",
-                element: <ProductListing />
+                path: "/product-list",
+                element: (
+                    <ProtectedRoute>
+                        <ProductListing />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/FAQ",
-                element: <FAQ />,
+                path: "/faq",
+                element: (
+                    <ProtectedRoute>
+                        <FAQ />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/aboutus",
-                element: <AboutUs />,
+                path: "/about-us",
+                element: (
+                    <ProtectedRoute>
+                        <AboutUs />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/ContactUs",
-                element: <ContactUs />,
+                path: "contact-us",
+                element: (
+                    <ProtectedRoute>
+                        <ContactUs />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/brandProfileEdit",
-                element: <BrandProfileEditPage />,
+                path: "/payment",
+                element: (
+                    <ProtectedRoute>
+                        <Payment />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/Payment",
-                element: <Payment />
+                path: "/shopping-cart",
+                element: (
+                    <ProtectedRoute>
+                        <ShoppingCart />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/Shopping-Cart",
-                element: <ShoppingCart />
+                path: "/product-page",
+                element: (
+                    <ProtectedRoute>
+                        <ProductPages />
+                    </ProtectedRoute>
+                ),
             },
-            {
-                path: "/ProductPage",
-                element: <ProductPages />
-            },
-
         ],
     },
     {
         path: "/dash",
         element: <SidebarLayout />,
+        errorElement: <Error404 />,
+        
         children: [
             // {
             //     index: true,
@@ -85,46 +112,82 @@ export const router = createBrowserRouter([
             // },
             {
                 path: "/dash/brand/home",
-                element: <BrandHomePage />,
+                element: (
+                    <ProtectedRoute>
+                        <BrandHomePage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/dash/brand/product-management",
-                element: <ProductManagementPage />,
+                element: (
+                    <ProtectedRoute allowedRoles={['brand']}>
+                        <ProductManagementPage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/dash/brand/order-management",
-                element: <OrderManagementPage />,
-            },
-            {
-                path: "/dash/brand/profile-edit",
-                element: <BrandProfileEditPage />,
+                element: (
+                    <ProtectedRoute allowedRoles={['user']}>
+                        <OrderManagementPage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/dash/brand/settings",
-                element: <SettingsPage />,
+                element: (
+                    <ProtectedRoute>
+                        <SettingsPage />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/dash/wish-list",
-                element: <WishlistPage />,
+                path: "/dash/brand/profile-edit",
+                element: (
+                    <ProtectedRoute allowedRoles={['brand']}>
+                        <BrandProfileEditPage />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "/dash/brand/profile/:brandId",
+                element: (
+                    <ProtectedRoute>
+                        <ProductPages />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/dash/home",
-                element: <OrderHistoryPage />,
+                element: (
+                    <ProtectedRoute allowedRoles={['user']}>
+                        <OrderHistoryPage />
+                    </ProtectedRoute>
+                ),
             },
             {
-                path: "/dash/profile-edit",
-                element: <UserDashInformation />,
+                path: "/dash/wish-list",
+                element: (
+                    <ProtectedRoute allowedRoles={['user']}>
+                        <WishlistPage />
+                    </ProtectedRoute>
+                ),
             },
-
+            {
+                path: "/dash/profile",
+                element: (
+                    <ProtectedRoute allowedRoles={['user']}>
+                        <UserDashInformation />
+                    </ProtectedRoute>
+                ),
+            },
         ],
     },
-
     {
         path: "/login",
-        element: <LoginLayout />,
-        errorElement: (
-            <Error404 />
-        ),
+        element: <AuthLayout />,
+        errorElement: <Error404 />,
         children: [
             {
                 index: true,
@@ -136,23 +199,4 @@ export const router = createBrowserRouter([
             },
         ],
     },
-    // {
-    //     path: "/dash",
-    //     element: <SidebarLayout />,
-    //     errorElement: <Error404 />,
-    //     children: [
-    //         // {
-    //         //     index: true,
-    //         //     element: <DashboardHome />,
-    //         // },
-    //         {
-    //             path: "/dash/wishList",
-    //             element: <WishlistPage />,
-    //         },
-    //         // {
-    //         //     path: "settings",
-    //         //     element: <Settings />,
-    //         // },
-    //     ],
-    // }
 ]);

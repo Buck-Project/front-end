@@ -25,7 +25,7 @@ export const USER_DASHBOARD_SIDEBAR_ITEMS: Omit<NavItem, "onClick">[] = [
     id: "profile",
     label: "ویرایش اطلاعات",
     icon: <CircleUserRound size={24} />,
-    path: "/dash/profile-edit",
+    path: "/dash/profile",
   },
   { 
     id: "logout", 

@@ -53,7 +53,7 @@ const Footer = () => {
           </h3>
           <ul className="space-y-2 text-lg mt-2">
             <li className="cursor-pointer hover:font-semibold">
-              <Link to="/FAQ" className="block">سوالات متداول</Link>
+              <Link to="/faq" className="block">سوالات متداول</Link>
             </li>
             <li className="cursor-pointer hover:font-semibold">راهنمای خرید</li>
             <li className="cursor-pointer hover:font-semibold">حریم خصوصی</li>
@@ -69,8 +69,8 @@ const Footer = () => {
             درباره باک گالری
           </h3>
           <ul className="space-y-2 text-lg mt-2">
-            <Link to="/aboutus" className="block">درباره ما</Link>
-            <Link to="/ContactUs" className="block">تماس با ما</Link>
+            <Link to="/about-us" className="block">درباره ما</Link>
+            <Link to="/contact-us" className="block">تماس با ما</Link>
           </ul>
         </div>
 
