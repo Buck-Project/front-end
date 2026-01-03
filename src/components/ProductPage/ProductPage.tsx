@@ -185,7 +185,7 @@ const ProductImageGallery: React.FC<{
 
     return (
         <div className="space-y-4">
-            <div className="relative w-[500px] h-[500px] bg-gray-100 rounded-xl overflow-hidden mx-auto">
+            <div className="relative w-[500px] h-[500px] bg-gray-100 rounded-xl overflow-hidden mx-auto max-md:w-full max-md:h-auto max-md:aspect-[4/5]">
                 <img
                     src={images[currentIndex]}
                     alt={`Product Image ${currentIndex + 1}`}
@@ -300,9 +300,9 @@ const ProductDetails: React.FC<{
             <ProductImageGallery images={product.images} />
 
             {/* Brand Section */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg w-full w-[720px] mx-auto">
-                <div className="flex items-start justify-between gap-6 mb-4">
-                    <div className="flex items-center gap-4">
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg w-full w-[720px] mx-auto max-md:w-full max-md:px-4">
+                <div className="flex items-start justify-between gap-6 mb-4 max-md:flex-col max-md:items-start max-md:gap-4 max-md:w-full">
+                    <div className="flex items-center gap-4 max-md:w-full max-md:flex-wrap">
                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-blue-600 font-bold">B</span>
                     </div>
@@ -316,7 +316,7 @@ const ProductDetails: React.FC<{
                         <p className="text-sm text-gray-600">{product.brand.description}</p>
                     </div>
                     </div>
-                    <div className="flex items-center gap-6 text-sm">
+                    <div className="flex items-center gap-6 text-sm max-md:flex-wrap max-md:gap-3 max-md:w-full max-md:justify-between">
                     <div className="flex items-center gap-1">
                         <span className="font-semibold">{product.rating}</span>
                         <StarIcon className="w-5 h-5 text-yellow-500 fill-yellow-500" />
@@ -332,7 +332,7 @@ const ProductDetails: React.FC<{
                     </div>
                     <Button
     onClick={toggleFollow}
-    className="inline-flex items-center gap-2 rounded-full bg-[#E4004B] px-6 py-2 text-white shadow-sm hover:bg-[#E4004B]/90"
+    className="inline-flex items-center gap-2 rounded-full bg-[#E4004B] px-6 py-2 text-white shadow-sm hover:bg-[#E4004B]/90 max-md:w-full max-md:justify-center"
 >
     <Store className="w-5 h-5" />
     {isFollowing ? 'دنبال می‌کنید' : 'دنبال کردن'}
@@ -359,7 +359,7 @@ const ProductDetails: React.FC<{
             {/* Price Section */}
             <div className="mt-6 w-full w-[720px] mx-auto">
                 <div className="flex items-center gap-4">
-                    <span className="text-3xl font-bold text-pink-600">{product.price.toLocaleString()} تومان</span>
+                    <span className="text-3xl font-bold text-black">{product.price.toLocaleString()} تومان</span>
                     {product.originalPrice > product.price && (
                         <span className="text-gray-500 line-through">{product.originalPrice.toLocaleString()} تومان</span>
                     )}
@@ -383,12 +383,12 @@ const ProductDetails: React.FC<{
                 <div className="flex-1 p-3">
                     <Label className="block mb-2 text-right">تعداد:</Label>
                     <div className="flex items-center justify-start gap-2">
-                        <Button variant="outline" size="icon" onClick={decreaseQuantity} disabled={quantity <= 1}>
-                            -
-                        </Button>
-                        <span className="w-8 text-center">{quantity}</span>
                         <Button variant="outline" size="icon" onClick={increaseQuantity} disabled={quantity >= product.stock}>
                             +
+                        </Button>
+                        <span className="w-8 text-center">{quantity}</span>
+                        <Button variant="outline" size="icon" onClick={decreaseQuantity} disabled={quantity <= 1}>
+                            -
                         </Button>
                     </div>
                 </div>
@@ -764,7 +764,7 @@ const ProductTabs: React.FC<{
                                         <MessageSquareIcon className="w-5 h-5 text-green-600" />
                                         <span>{"\u0634\u0645\u0627"}</span>
                                     </div>
-                                    <div className="text-xs text-green-600 mt-1">پیش {q.daysAgo} روز</div>
+                                    <div className="text-xs text-green-600 mt-1">از {q.daysAgo} روز پیش</div>
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-sm text-gray-700 mb-2">{q.question}</p>
@@ -805,10 +805,24 @@ const RelatedProducts: React.FC<{
 }> = ({ products }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [wishlistedIds, setWishlistedIds] = useState<number[]>([]);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
         setWishlistedIds(wishlist);
+    }, []);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(max-width: 767px)");
+        const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+        updateIsMobile();
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", updateIsMobile);
+            return () => mediaQuery.removeEventListener("change", updateIsMobile);
+        }
+        mediaQuery.addListener(updateIsMobile);
+        return () => mediaQuery.removeListener(updateIsMobile);
     }, []);
 
     const handleToggleWishlist = (productId: number) => {
@@ -830,7 +844,7 @@ const RelatedProducts: React.FC<{
         setCurrentIndex((prev) => (prev === products.length - 1 ? 0 : prev + 1));
     };
 
-    const visibleCount = Math.min(4, products.length);
+    const visibleCount = Math.min(isMobile ? 2 : 4, products.length);
     const visibleProducts = Array.from({ length: visibleCount }, (_, index) =>
         products[(currentIndex + index) % products.length]
     );
@@ -921,8 +935,8 @@ const ProductPage: React.FC = () => {
     return (
         <div className="container mx-auto px-6 pb-8 pt-0 max-w-5xl text-right" dir="rtl">
             <div className="w-screen border-b border-gray-200 relative left-1/2 right-1/2 -ml-[50vw] -mr-[49vw]">
-                <nav className="relative flex items-center justify-start w-full text-sm text-gray-700 py-3">
-                    <div className="flex items-center gap-4">
+                <nav className="relative flex items-center justify-start w-full text-sm text-gray-700 py-3 max-md:flex-wrap max-md:gap-2 max-md:py-2">
+                    <div className="flex items-center gap-4 max-md:flex-wrap max-md:gap-2 max-md:w-full">
                             <HomeIcon className="w-5 h-5 text-gray-800" />
                         <div className="flex items-center gap-2 text-right">
                             <span className="text-right">خانه</span>
@@ -940,7 +954,7 @@ const ProductPage: React.FC = () => {
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
                     </div>
-                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right mr-6">
+                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right mr-6 max-md:mr-0 max-md:mt-2 max-md:w-full max-md:justify-center">
                         <PackageIcon className="w-4 h-4" />
                         <span className="text-right">تیشرت CATWAREHOUSE</span>
                     </span>
