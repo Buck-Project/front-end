@@ -2,7 +2,7 @@ import { getData } from "@/services/services";
 import type { OrderHistoryData, OrderDetailsType, Order, OrderItem } from "@/types/orderTypes";
 import { formatPersianDate } from "@/utils/formatPersianDate";
 
-const LIST_ENDPOINT = "/api/user/orderlist";
+const LIST_ENDPOINT = "/api/user/orderlists";
 const DETAILS_ENDPOINT = "/api/user/orderlist/items";
 
 const mapToOrderHistory = (order: any): Order => ({
@@ -14,7 +14,7 @@ const mapToOrderHistory = (order: any): Order => ({
       : order?.total_price !== undefined
       ? String(order.total_price)
       : "",
-  status: order?.order_status ?? "?? ??? ??????",
+  status: order?.order_status ?? "در حال پردازش",
   items:
     typeof order?.count === "number"
       ? Number(order.count)
@@ -28,13 +28,13 @@ const normalizeStatusKey = (
 ): "processing" | "delivered" | "cancelled" => {
   const normalized = status?.trim().toLowerCase();
   if (!normalized) return "processing";
-  if (normalized.includes("cancel") || normalized.includes("???")) return "cancelled";
-  if (normalized.includes("deliver") || normalized.includes("?????")) return "delivered";
+  if (normalized.includes("cancel") || normalized.includes("لغو")) return "cancelled";
+  if (normalized.includes("deliver") || normalized.includes("تکمیل")) return "delivered";
   if (
     normalized.includes("processing") ||
     normalized.includes("ship") ||
-    normalized.includes("?????") ||
-    normalized.includes("??????")
+    normalized.includes("ارسال") ||
+    normalized.includes("پردازش")
   ) {
     return "processing";
   }

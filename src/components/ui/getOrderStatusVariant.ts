@@ -8,15 +8,15 @@ export const getOrderStatusVariant = (
   const normalized = status?.trim().toLowerCase();
 
   if (!normalized) return "secondary";
-  if (normalized.includes("???") || normalized.includes("cancel")) return "destructive";
-  if (normalized.includes("?????") || normalized.includes("deliver")) return "default";
+  if (normalized.includes("لغو") || normalized.includes("cancel")) return "destructive";
+  if (normalized.includes("تکمیل") || normalized.includes("deliver")) return "default";
   if (
-    normalized.includes("?? ??? ??????") ||
-    normalized.includes("?? ??? ?????") ||
+    normalized.includes("در حال پردازش") ||
+    normalized.includes("در حال ارسال") ||
     normalized.includes("processing") ||
     normalized.includes("ship") ||
-    normalized.includes("?????") ||
-    normalized.includes("??????")
+    normalized.includes("ارسال") ||
+    normalized.includes("پردازش")
   ) {
     return "secondary";
   }
