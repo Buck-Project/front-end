@@ -382,7 +382,7 @@ const ProductDetails: React.FC<{
             <div className="mt-6 flex flex-col md:flex-row-reverse gap-16 w-full max-w-[720px] mx-auto">
                 <div className="flex-1 p-3">
                     <Label className="block mb-2 text-right">تعداد:</Label>
-                    <div className="flex items-center justify-start gap-2">
+                    <div className="flex items-center justify-start gap-2 max-md:justify-end">
                         <Button variant="outline" size="icon" onClick={increaseQuantity} disabled={quantity >= product.stock}>
                             +
                         </Button>
@@ -395,7 +395,7 @@ const ProductDetails: React.FC<{
 
                 <div className="flex-1 p-3">
                     <Label className="block mb-2 text-right">انتخاب سایز:</Label>
-                    <div className="flex justify-center gap-2">
+                    <div className="flex justify-center gap-2 max-md:justify-end">
                         {product.sizes.map((size) => (
                             <button
                                 key={size}
@@ -411,7 +411,7 @@ const ProductDetails: React.FC<{
 
                 <div className="flex-1 p-3">
                     <Label className="block mb-2 text-right">رنگ:</Label>
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-end gap-2 max-md:justify-end">
                         {product.colors.map((color) => (
                             <button
                                 key={color.id}
@@ -954,7 +954,7 @@ const ProductPage: React.FC = () => {
                         </div>
                         <ChevronLeftIcon className="w-5 h-5 text-gray-300" />
                     </div>
-                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right mr-6 max-md:mr-0 max-md:mt-2 max-md:w-full max-md:justify-center">
+                    <span className="bg-pink-600 text-white px-4 py-2 rounded-full shadow-sm inline-flex items-center gap-2 text-right mr-6 max-md:mr-2 max-md:mt-0 max-md:w-auto max-md:px-2 max-md:py-0.5 max-md:text-[10px]">
                         <PackageIcon className="w-4 h-4" />
                         <span className="text-right">تیشرت CATWAREHOUSE</span>
                     </span>
