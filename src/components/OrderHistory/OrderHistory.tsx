@@ -68,29 +68,29 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
       {orders.map((order) => (
         <Card key={order.id} className="p-5 sm:p-6 space-y-2 shadow-md">
           <div className="flex flex-row-reverse items-center justify-between gap-3">
-            <span className="text-sm text-muted-foreground text-right leading-tight">????? ?????</span>
+            <span className="text-sm text-muted-foreground text-right leading-tight">شماره سفارش</span>
             <span className="font-bold text-sm text-left leading-tight">{order.id}</span>
           </div>
 
           <div className="flex flex-row-reverse items-center justify-between gap-3">
-            <span className="text-sm text-muted-foreground text-right leading-tight">?????</span>
+            <span className="text-sm text-muted-foreground text-right leading-tight">وضعیت</span>
             <Badge className="text-white border-0 vazir text-xs" variant={getOrderStatusVariant(order.status)}>
               {order.status}
             </Badge>
           </div>
 
           <div className="flex flex-row-reverse items-center justify-between gap-3">
-            <span className="text-sm text-muted-foreground text-right leading-tight">????</span>
-            <span className="font-bold text-sm text-left leading-tight">{translateNumber(order.amount)} ?????</span>
+            <span className="text-sm text-muted-foreground text-right leading-tight">مبلغ</span>
+            <span className="font-bold text-sm text-left leading-tight">{translateNumber(order.amount)} تومان</span>
           </div>
 
           <div className="flex flex-row-reverse items-center justify-between gap-3">
-            <span className="text-sm text-muted-foreground text-right leading-tight">????? ?????</span>
+            <span className="text-sm text-muted-foreground text-right leading-tight">تعداد اقلام</span>
             <span className="text-sm text-left leading-tight">{translateNumber(order.items)}</span>
           </div>
 
           <div className="flex flex-row-reverse items-center justify-between gap-3">
-            <span className="text-sm text-muted-foreground text-right leading-tight">?????</span>
+            <span className="text-sm text-muted-foreground text-right leading-tight">تاریخ</span>
             <span className="text-sm text-left leading-tight">{translateNumber(order.date)}</span>
           </div>
 
@@ -101,7 +101,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
               className="vazir w-full"
               onClick={() => openOrderModal(order)}
             >
-              ?????? ??????
+              مشاهده جزئیات
             </Button>
           </div>
         </Card>
@@ -115,12 +115,12 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50">
-              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">??????</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">?????</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">????</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap hidden md:table-cell">????? ?????</TableHead>
-              <TableHead className="text-right vazir text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap hidden md:table-cell">?????</TableHead>
-              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">????? ?????</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">جزئیات</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">وضعیت</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">مبلغ</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap hidden md:table-cell">تعداد اقلام</TableHead>
+              <TableHead className="text-right vazir text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap hidden md:table-cell">تاریخ</TableHead>
+              <TableHead className="text-right vazir font-medium text-foreground text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 whitespace-nowrap">شماره سفارش</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -150,7 +150,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                 </TableCell>
 
                 <TableCell className="text-right text-xs md:text-sm font-bold py-2 md:py-3 px-3 md:px-4">
-                  {translateNumber(order.amount)} ?????
+                  {translateNumber(order.amount)} تومان
                 </TableCell>
 
                 <TableCell className="text-right text-xs md:text-sm py-2 md:py-3 px-3 md:px-4 hidden md:table-cell">
@@ -195,9 +195,9 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
 
           <div className="flex flex-col items-start text-right flex-1 min-w-0">
             <h3 className="font-extrabold text-foreground text-lg md:text-xl truncate">
-              {userData?.fullName || "??? ?????"}
+              {userData?.fullName || "نام کاربر"}
             </h3>
-            <p className="text-muted-foreground text-xs md:text-sm truncate mt-0.5">????? ??? ??? ?? ???????</p>
+            <p className="text-muted-foreground text-xs md:text-sm truncate mt-0.5">سفارش‌های شما در فروشگاه</p>
           </div>
         </div>
 
@@ -209,7 +209,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                 <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs md:text-sm">????? ??? ????</p>
+                <p className="text-muted-foreground text-xs md:text-sm">سفارش‌های فعال</p>
                 <p className="text-xl md:text-2xl font-bold">{translateNumber(data.current.length)}</p>
               </div>
             </div>
@@ -221,7 +221,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                 <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs md:text-sm">????? ??? ????? ???</p>
+                <p className="text-muted-foreground text-xs md:text-sm">سفارش‌های تحویل شده</p>
                 <p className="text-xl md:text-2xl font-bold">{translateNumber(data.past.length)}</p>
               </div>
             </div>
@@ -233,7 +233,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                 <XCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
               <div>
-                <p className="text-muted-foreground text-xs md:text-sm">????? ??? ??? ???</p>
+                <p className="text-muted-foreground text-xs md:text-sm">سفارش‌های لغو شده</p>
                 <p className="text-xl md:text-2xl font-bold">{translateNumber(data.cancelled.length)}</p>
               </div>
             </div>
@@ -244,9 +244,9 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
         <div className="max-w-5xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mx-auto w-full max-w-md flex justify-center rounded-xl-50 bg-muted p-1 vazir">
-              <TabsTrigger value="current" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">????? ??? ????</TabsTrigger>
-              <TabsTrigger value="past" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">????? ??? ?????</TabsTrigger>
-              <TabsTrigger value="cancelled" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">????? ??? ??? ???</TabsTrigger>
+              <TabsTrigger value="current" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">سفارش‌های جاری</TabsTrigger>
+              <TabsTrigger value="past" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">سفارش‌های گذشته</TabsTrigger>
+              <TabsTrigger value="cancelled" className="flex-1 px-2 md:px-3 py-2 text-xs md:text-sm font-medium">سفارش‌های لغو شده</TabsTrigger>
             </TabsList>
 
             <TabsContent value="current" className="mt-4 md:mt-6">
@@ -256,7 +256,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                   <div className="hidden md:block">{renderOrderTable(data.current)}</div>
                 </>
               ) : (
-                <Card className="py-12 text-center text-muted-foreground vazir">????? ????? ???? ?????.</Card>
+                <Card className="py-12 text-center text-muted-foreground vazir">سفارش فعالی وجود ندارد</Card>
               )}
             </TabsContent>
 
@@ -267,7 +267,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                   <div className="hidden md:block">{renderOrderTable(data.past)}</div>
                 </>
               ) : (
-                <Card className="py-12 text-center text-muted-foreground vazir">????? ????? ??? ?? ???? ?????.</Card>
+                <Card className="py-12 text-center text-muted-foreground vazir">سفارش تحویل شده‌ای وجود ندارد</Card>
               )}
             </TabsContent>
 
@@ -278,7 +278,7 @@ export function OrderHistory({ data }: { data: OrderHistoryData }) {
                   <div className="hidden md:block">{renderOrderTable(data.cancelled)}</div>
                 </>
               ) : (
-                <Card className="py-12 text-center text-muted-foreground vazir">????? ??? ??? ?? ???? ?????.</Card>
+                <Card className="py-12 text-center text-muted-foreground vazir">سفارش لغو شده‌ای وجود ندارد</Card>
               )}
             </TabsContent>
           </Tabs>
