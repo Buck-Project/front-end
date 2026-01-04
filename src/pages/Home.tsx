@@ -21,6 +21,8 @@ import style3 from "@/assets/style3.jpg";
 import style4 from "@/assets/style4.jpg";
 import poshtibani from "@/assets/poshtibani.png";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import CompleteProfileDialog from "@/components/Home/CompleteProfileDialog";
+import useUserStore from "@/store/userStore/userStore";
 
 export default function Home() {
   const location = useLocation();
