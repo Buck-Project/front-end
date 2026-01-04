@@ -4,18 +4,44 @@ import { baseURL } from './services';
 // ۱. تعریف Interface ها برای جلوگیری از ارورهای تایپ اسکریپت
 export interface Product {
     id: number;
+    market_id?: number;
     name: string;
-    brand: string;
+    brand?: string;
     price: number;
     old_price?: number;
-    description: string;
-    images: string;
+    product_serial?: string | null;
+    description?: string | null;
+    images?: string | string[];
+    image?: string | string[];
     images_list?: string[];
+    tags?: string[] | null;
+    color?: string[];
+    size?: string | null;
+    gender?: string | null;
+    inventory_count?: number;
     material?: string;
     category?: string;
     category_model?: string;
     is_wishlisted?: boolean;
     rating?: number;
+    rating_count?: number;
+    sales?: number;
+    status?: string;
+    created_at?: string;
+    updated_at?: string;
+    market?: {
+        id: number;
+        manager_id?: number;
+        brand?: string;
+        description?: string | null;
+        logo?: string | null;
+        baner?: string | null;
+        email?: string | null;
+        mobile?: string | null;
+        address?: string | null;
+        created_at?: string;
+        updated_at?: string;
+    };
 }
 
 export interface Review {
@@ -25,6 +51,19 @@ export interface Review {
     rating: number;
 }
 
+type ApiResponse<T> = {
+    status?: string;
+    data?: T;
+};
+
+const unwrapData = <T>(payload: ApiResponse<T> | T): T => {
+    return (payload as ApiResponse<T>).data ?? (payload as T);
+};
+
+const normalizeReviews = (payload: ApiResponse<Review[]> | Review[]) => {
+    const reviews = unwrapData(payload);
+    return Array.isArray(reviews) ? reviews : [];
+};
 // ۲. تنظیم آدرس پایه
 const BASE_URL = baseURL;
 
@@ -33,15 +72,24 @@ const BASE_URL = baseURL;
  */
 export const getProductPageData = async (id: string | number) => {
     try {
+        console.log("[productService] getProductPageData", id);
         const [productRes, reviewsRes] = await Promise.all([
-            axios.get<Product>(`${BASE_URL}/product-profiles/${id}`),
-            axios.get<Review[]>(`${BASE_URL}/product-profiles/${id}/reviews`)
+            axios.get<ApiResponse<Product> | Product>(`${BASE_URL}/product-profiles/${id}`),
+            axios.get<ApiResponse<Review[]> | Review[]>(`${BASE_URL}/product-profiles/${id}/reviews`)
         ]);
 
-        let productData = productRes.data;
+        const productData = unwrapData(productRes.data);
+        const reviews = normalizeReviews(reviewsRes.data);
+        console.log("[productService] product payload", {
+            id: productData?.id,
+            images: productData?.images,
+            image: productData?.image,
+            images_list: productData?.images_list,
+            reviewsCount: reviews.length
+        });
 
         // اصلاح فرمت تصاویر (اگر رشته JSON بود به آرایه تبدیل شود)
-        const rawImages = productData.images;
+        const rawImages = productData.images_list ?? productData.images ?? productData.image;
         let imageList: string[] = [];
 
         if (typeof rawImages === 'string') {
@@ -54,12 +102,17 @@ export const getProductPageData = async (id: string | number) => {
             imageList = rawImages;
         }
 
-        productData.images = imageList[0] ?? "";
-        productData.images_list = imageList;
+        if (!productData.images_list || productData.images_list.length === 0) {
+            productData.images_list = imageList;
+        }
+
+        if (!productData.images && imageList.length > 0) {
+            productData.images = imageList;
+        }
 
         return {
             product: productData,
-            reviews: reviewsRes.data
+            reviews
         };
     } catch (error) {
         console.error("خطا در دریافت اطلاعات محصول:", error);
@@ -96,6 +149,10 @@ export const toggleWishlist = async (id: string | number) => {
  * دریافت لیست محصولات برای گرید (روت شماره ۱ شما)
  */
 export const getAllProductProfiles = async () => {
-    const response = await axios.get<Product[]>(`${BASE_URL}/product-profiles`);
-    return response.data;
+    const response = await axios.get<ApiResponse<Product[]> | Product[]>(`${BASE_URL}/product-profiles`);
+    const payload = unwrapData(response.data);
+    return Array.isArray(payload) ? payload : [];
 };
+
+
+

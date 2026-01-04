@@ -13,6 +13,10 @@ export default defineConfig({
 				target: "http://185.60.136.225",
 				changeOrigin: true,
 			},
+			"/market-logo": {
+				target: "http://185.60.136.225",
+				changeOrigin: true,
+			},
 		},
 	},
 	resolve: {

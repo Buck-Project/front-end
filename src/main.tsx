@@ -7,6 +7,15 @@ import PersianDigitNormalizer from "./components/PersianDigitNormalizer";
 // import { values } from '@/data/about/values';
 // import { team } from '@/data/about/team';
 
+const IGNORED_PORT_MESSAGE = "The message port closed before a response was received.";
+window.addEventListener("unhandledrejection", (event) => {
+	const reason = event.reason as { message?: string } | string | undefined;
+	const message = typeof reason === "string" ? reason : reason?.message;
+	if (message === IGNORED_PORT_MESSAGE) {
+		event.preventDefault();
+	}
+});
+
 createRoot(document.getElementById("root")!).render(
 	<>
 		<PersianDigitNormalizer />
