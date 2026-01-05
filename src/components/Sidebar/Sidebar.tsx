@@ -1,21 +1,36 @@
 // src/components/Sidebar/Sidebar.tsx
 import { useEffect, useRef, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import type { NavItem } from "@/types/sidebarTypes";
+import { useNavigate } from 'react-router-dom';
+import { DASHBOARD_SIDEBAR_ITEMS } from '@/pages/SidebarConstant';
+import type { NavItem, SidebarProps } from '@/types/sidebarTypes';
 
-type SidebarProps = {
-  items: NavItem[];
-  className?: string;
+// تابع کمکی برای اضافه کردن onClick
+const mapItemsWithNavigation = (navigate: (path: string) => void): NavItem[] => {
+  return DASHBOARD_SIDEBAR_ITEMS.map(item => ({
+    ...item,
+    onClick: () => {
+      if (item.id === 'logout') {
+        // مثلاً logout logic
+        localStorage.removeItem('token');
+        navigate('/login');
+      } else {
+        navigate(item.path);
+      }
+    },
+  }));
 };
 
-export default function Sidebar({ items, className }: SidebarProps) {
+export default function Sidebar() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0 });
   const navRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  // آیتم‌ها را با onClick پر می‌کنیم
+  const items: NavItem[] = mapItemsWithNavigation(navigate);
 
   const topItems = items.slice(0, -1);
   const bottomItem = items[items.length - 1];
@@ -87,7 +102,7 @@ export default function Sidebar({ items, className }: SidebarProps) {
       className={`relative z-50 h-20 w-full md:h-full md:w-20 md:bg-sidebar md:shadow-lg transition-all duration-300 ease-in-out ${isHovered ? "md:w-72" : "md:w-20"} ${className ?? ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ fontFamily: "vazirmatn, sans-serif" }}
+      style={{ fontFamily: 'vazirmatn, sans-serif' }}
     >
       {/* Mobile Bottom Bar */}
       <nav 
@@ -168,25 +183,25 @@ export default function Sidebar({ items, className }: SidebarProps) {
       {/* Desktop Sidebar */}
       <nav className="hidden h-full flex-col justify-between overflow-y-auto py-4 md:flex bg-sidebar shadow-lg">
         <div>
-          {topItems.map((item) => {
+          {topItems.map(item => {
             const isActive = item.id === activeId;
             return (
               <div
                 key={item.id}
                 onClick={() => handleClick(item)}
-                className={`relative flex cursor-pointer items-center justify-end px-9 py-6 transition-colors duration-200
-                  ${isActive ? "bg-muted border-r-4 border-primary" : "hover:bg-muted-foreground"}
+                className={`relative flex items-center justify-end px-9 py-6 cursor-pointer transition-colors duration-200
+                  ${isActive ? 'bg-muted border-r-4 border-primary' : 'hover:bg-muted-foreground'}
                 `}
               >
                 <span
-                  className={`mr-14 whitespace-nowrap text-2xl text-foreground transition-all duration-300
-                    ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"}
-                    ${isActive ? "font-bold" : ""}
+                  className={`text-foreground text-2xl mr-14 whitespace-nowrap transition-all duration-300
+                    ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}
+                    ${isActive ? 'font-bold' : ''}
                   `}
                 >
                   {item.label}
                 </span>
-                <div className="shrink-0 text-foreground [&>svg]:h-8 [&>svg]:w-8">
+                <div className="flex-shrink-0 text-foreground [&>svg]:w-8 [&>svg]:h-8">
                   {item.icon}
                 </div>
               </div>
@@ -202,19 +217,19 @@ export default function Sidebar({ items, className }: SidebarProps) {
                 <div
                   key={bottomItem.id}
                   onClick={() => handleClick(bottomItem)}
-                  className={`relative flex cursor-pointer items-center justify-end px-9 py-4 transition-colors duration-200
-                    ${isActive ? "bg-muted border-r-4 border-primary" : "hover:bg-muted-foreground"}
+                  className={`relative flex items-center justify-end px-9 py-4 cursor-pointer transition-colors duration-200
+                    ${isActive ? 'bg-muted border-r-4 border-primary' : 'hover:bg-muted-foreground'}
                   `}
                 >
                   <span
-                    className={`mr-14 whitespace-nowrap text-2xl text-foreground transition-all duration-300
-                      ${isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"}
-                      ${isActive ? "font-bold" : ""}
+                    className={`text-foreground text-2xl mr-14 whitespace-nowrap transition-all duration-300
+                      ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'}
+                      ${isActive ? 'font-bold' : ''}
                     `}
                   >
                     {bottomItem.label}
                   </span>
-                  <div className="shrink-0 text-foreground [&>svg]:h-8 [&>svg]:w-8">
+                  <div className="flex-shrink-0 text-foreground [&>svg]:w-8 [&>svg]:h-8">
                     {bottomItem.icon}
                   </div>
                 </div>

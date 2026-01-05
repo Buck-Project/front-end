@@ -1,26 +1,18 @@
 export interface BaseParams {
-  endPoint: string;
-  headers?: Record<string, any>;
-  skipAuth?: boolean;
+	endPoint: string;
+	headers?: Record<string, string>;
 }
 
-// ---- GET ----
 export interface GetParams extends BaseParams {
-  params?: Record<string, any>;
+	params?: Record<string, any>;
 }
 
-// ---- POST ----
 export interface PostParams extends BaseParams {
-  data: any; // می‌تواند object یا FormData باشد
+	data: any;
 }
 
-// ---- PATCH ----
 export type PatchParams = PostParams;
-
-// ---- PUT ----
 export type PutParams = PostParams;
-
-// ---- DELETE ----
 export interface DeleteParams extends BaseParams {
-  data?: any;
+	data?: any;
 }

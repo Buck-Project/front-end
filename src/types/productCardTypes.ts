@@ -9,8 +9,7 @@ export interface Color {
   label: string;
 }
 
-export interface Product {
-  id: number;
+export interface ProductData {
   discount: number;
   hasDiscount: boolean;
   image: string;

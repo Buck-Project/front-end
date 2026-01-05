@@ -90,8 +90,16 @@ export const router = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            // {
+            //     path: "/product-page",
+            //     element: (
+            //         <ProtectedRoute>
+            //             <ProductPages />
+            //         </ProtectedRoute>
+            //     ),
+            // },
             {
-                path: "/product-page",
+                path: "/ProductPage/:id",
                 element: (
                     <ProtectedRoute>
                         <ProductPages />

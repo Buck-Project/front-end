@@ -11,7 +11,6 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 export default function SidebarLayout() {
-  const navigate = useNavigate();
   const location = useLocation();
   const clearAuth = useUserStore((state) => state.clearAuth);
 

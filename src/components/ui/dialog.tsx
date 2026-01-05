@@ -36,14 +36,17 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({
-  className,
-  children,
-  variant = "default",
-  hideCloseButton = false,
-  disableOverlayClose = false,
-  ...props
-}, ref) => (
+>((
+  {
+    className,
+    children,
+    variant = "default",
+    hideCloseButton = false,
+    disableOverlayClose = false,
+    ...props
+  },
+  ref
+) => (
   <DialogPortal>
     <DialogOverlay />
 
@@ -63,7 +66,6 @@ const DialogContent = React.forwardRef<
         "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
         "data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]",
         "data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
-        // variant styles
         variant === "default" && "bg-background text-foreground border border-border",
         variant === "warning" && "bg-yellow-50 text-yellow-900 border border-yellow-200",
         variant === "success" && "bg-green-50 text-green-900 border border-green-200",

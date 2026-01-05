@@ -42,8 +42,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ Product }) => {
             >
                 <Heart
                     className={`w-5 h-5 transition-colors ${isWishlisted
-                        ? "fill-primary text-primary"
-                        : "fill-none text-muted-foreground"
+                        ? "fill-red-500 text-muted-foreground"
+                        : "fill-none text-muted-foreground hover:fill-primary"
                         }`}
                 />
             </button>
