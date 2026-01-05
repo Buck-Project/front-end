@@ -3,7 +3,7 @@ function ContactUSpage() {
 	
 
 	return (
-		<div className="w-full h-screen font-3xl flex flex-col place-self-center justify-center">
+		<div className="w-full min-h-screen font-3xl flex flex-col md:h-screen md:place-self-center md:justify-center">
 			<ContactUs />
 		</div>
 	);
