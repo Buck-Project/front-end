@@ -1,20 +1,19 @@
+// src/stores/useProfileStore.ts
+
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { UserState } from "@/types/userTypes";
+import type { UserState } from "../../types/userTypes";
 
 const useUserStore = create<UserState>()(
 	persist(
 		(set) => ({
-			token: null,
+			username: null,
 
-			setToken: (token: string) =>
-				set((prev) => ({ ...prev, token })),
-			
-			clearToken: () =>
-				set((prev) => ({ ...prev, token: null })),
+			setUsername: (username: string) =>
+				set((prev) => ({ ...prev, username })),
 		}),
 		{
-			name: "user-storage",
+			name: "profile-storage",
 			storage: createJSONStorage(() => sessionStorage),
 		}
 	)

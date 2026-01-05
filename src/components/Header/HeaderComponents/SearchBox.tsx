@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/Custom/CustomInput";
 import { Search } from "lucide-react";
 
 const SearchBox = () => {

@@ -16,14 +16,29 @@ import {
   DialogTitle,
 } from '../components/ui/dialog';
 import { Button } from '../components/ui/button';
-import { translateNumber } from '@/utils/translateNumber'
+import { translateNumber } from '@/utils/translateNumber';
 import type ValidationFormValues from '@/types/loginTypes';
-import BackToLogin from '@/components/ui/toLeftSvg';
+import BackToLogin from '@/components/login/backToLogin';
 import SubmitSpinner from '@/components/login/submitSpinner';
-import useUserStore from '@/store/userStore/userStore';
 import ToRight from '@/components/ui/toRightSvg';
+import useAuthStore from '@/store/authStore/authStore';
+import useUserStore from '@/store/userStore/userStore';
 
 
+
+// 🔹 هوک تشخیص موبایل — SSR-safe
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  return isMobile;
+};
 
 const Validation: React.FC = () => {
   const navigate = useNavigate();
@@ -32,7 +47,11 @@ const Validation: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+  
+  // دریافت setToken و setAuth از store
   const setToken = useUserStore((state) => state.setToken);
+  const setAuth = useUserStore((state) => state.setAuth);
+  const isMobile = useIsMobile();
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
@@ -40,7 +59,7 @@ const Validation: React.FC = () => {
     message: '',
     buttonText: '',
     onButtonClick: () => { },
-    imageSrc: ''
+    imageSrc: '',
   });
 
   useEffect(() => {
@@ -67,11 +86,18 @@ const Validation: React.FC = () => {
             imageSrc: successCat,
             onButtonClick: () => {
               if (result.data?.token) {
+                // ذخیره توکن در Zustand store
                 setToken(result.data.token);
+                const tempUser = {
+                  id: '',
+                  mobile: phone,
+                  role: 'user' as const,
+                };
+                setAuth(result.data.token, tempUser);
               }
-              setModalConfig(prev => ({ ...prev, isOpen: false }));
-              navigate('/');
-            }
+              setModalConfig((prev) => ({ ...prev, isOpen: false }));
+              navigate('/', { state: { fromValidation: true } });
+            },
           });
         } else {
           setModalConfig({
@@ -81,8 +107,8 @@ const Validation: React.FC = () => {
             buttonText: 'تلاش مجدد',
             imageSrc: errorCat,
             onButtonClick: () => {
-              setModalConfig(prev => ({ ...prev, isOpen: false }));
-            }
+              setModalConfig((prev) => ({ ...prev, isOpen: false }));
+            },
           });
         }
       } else {
@@ -93,8 +119,8 @@ const Validation: React.FC = () => {
           buttonText: 'باشه',
           imageSrc: errorCat,
           onButtonClick: () => {
-            setModalConfig(prev => ({ ...prev, isOpen: false }));
-          }
+            setModalConfig((prev) => ({ ...prev, isOpen: false }));
+          },
         });
       }
     } catch (err) {
@@ -106,8 +132,8 @@ const Validation: React.FC = () => {
         buttonText: 'باشه',
         imageSrc: errorCat,
         onButtonClick: () => {
-          setModalConfig(prev => ({ ...prev, isOpen: false }));
-        }
+          setModalConfig((prev) => ({ ...prev, isOpen: false }));
+        },
       });
     } finally {
       setLoading(false);
@@ -119,15 +145,19 @@ const Validation: React.FC = () => {
     try {
       const result = await checkPhone(phone);
       if (result.success) {
-          setModalConfig({
+
+        const otpCode = result.data?.message;
+        console.log('OTP Code:', otpCode);
+        
+        setModalConfig({
           isOpen: true,
           title: 'ارسال مجدد',
           message: 'کد تأیید مجدداً ارسال شد.',
           buttonText: 'باشه',
           imageSrc: successCat,
           onButtonClick: () => {
-            setModalConfig(prev => ({ ...prev, isOpen: false }));
-          }
+            setModalConfig((prev) => ({ ...prev, isOpen: false }));
+          },
         });
       } else {
         setModalConfig({
@@ -137,8 +167,8 @@ const Validation: React.FC = () => {
           buttonText: 'باشه',
           imageSrc: errorCat,
           onButtonClick: () => {
-            setModalConfig(prev => ({ ...prev, isOpen: false }));
-          }
+            setModalConfig((prev) => ({ ...prev, isOpen: false }));
+          },
         });
       }
     } catch (err) {
@@ -150,8 +180,8 @@ const Validation: React.FC = () => {
         buttonText: 'باشه',
         imageSrc: errorCat,
         onButtonClick: () => {
-          setModalConfig(prev => ({ ...prev, isOpen: false }));
-        }
+          setModalConfig((prev) => ({ ...prev, isOpen: false }));
+        },
       });
     } finally {
       setLoading(false);
@@ -178,30 +208,22 @@ const Validation: React.FC = () => {
     }
   };
 
-
   const initialValues: ValidationFormValues = { code: '' };
 
   return (
     <div className="flex min-h-screen" dir="rtl">
       <div className="w-full flex items-center justify-center p-6 md:p-10">
-        <div className="w-full max-w-xl h-5/6 bg-login-card-bg rounded-4xl border-3 border-primary-border shadow-2xl p-8 relative overflow-hidden">
+        <div className="w-full max-w-xl h-5/6 bg-card rounded-3xl border-2 border-border shadow-2xl p-8 relative overflow-hidden">
 
-          <a
-            href="/login"
-            className="absolute top-4 right-4 bg-bg-section1 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
-          >
-            <ToRight />
-          </a>
+          <BackToLogin />
 
-          <div className="text-center mb-8">
+          <div className={`text-center ${isMobile ? 'mt-10 px-4' : 'mb-8'}`}>
             <img src={logo} alt="CB Buck Gallery" className="mx-auto w-32 h-auto" />
             <h2 className="text-3xl font-bold text-titr">عضویت/ورود</h2>
             {phone && (
               <p className="text-sm text-text mt-4">
                 لطفا کد ارسال شده برای شماره{' '}
-                <span className="font-bold">
-                  {translateNumber(phone)}
-                </span>
+                <span className="font-bold">{translateNumber(phone)}</span>
                 را وارد کنید.
               </p>
             )}
@@ -218,7 +240,7 @@ const Validation: React.FC = () => {
                   e.preventDefault();
                   handleVerify({ code: otp.join('') });
                 }}
-                className="space-y-6 px-6"
+                className={`space-y-6 ${isMobile ? 'px-4' : 'px-6'}`}
               >
                 <div className="flex gap-2 justify-center" dir="ltr">
                   {otp.map((digit, index) => (
@@ -237,7 +259,7 @@ const Validation: React.FC = () => {
                         handleOtpChange(englishValue, index);
                       }}
                       onKeyDown={(e) => handleOtpKeyDown(e, index)}
-                      className="w-12 h-12 text-center text-lg bg-white border border-transparent rounded-lg focus:border-primary-border focus:border-2 focus:ring-0 text-center text-l transition-all duration-200 outline-none disabled:bg-card disabled:cursor-not-allowed"
+                      className="w-12 h-12 text-center text-lg bg-white shadow border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
                     />
                   ))}
                 </div>
@@ -246,14 +268,9 @@ const Validation: React.FC = () => {
                   <Button
                     type="submit"
                     disabled={loading || isSubmitting || otp.join('').length !== 6}
-                    className="w-82 bg-bg-section2 text-white text-md rounded-md disabled:opacity-50 hover:bg-bg-section1 cursor-pointer"
+                    className="w-82 bg-black text-white text-md rounded-md disabled:opacity-50 cursor-pointer"
                   >
-                    {loading || isSubmitting ? (
-
-                      <SubmitSpinner />
-                    ) : (
-                      'ورود'
-                    )}
+                    {loading || isSubmitting ? <SubmitSpinner /> : 'ورود'}
                   </Button>
                 </div>
 
@@ -263,7 +280,7 @@ const Validation: React.FC = () => {
                     type="button"
                     onClick={handleResendCode}
                     disabled={loading || isSubmitting}
-                    className="text-bg-section2 font-medium disabled:text-text cursor-pointer"
+                    className="text-link font-medium disabled:text-text cursor-pointer"
                   >
                     ارسال مجدد
                   </button>
@@ -272,13 +289,16 @@ const Validation: React.FC = () => {
             )}
           </Formik>
 
-          <div className="absolute bottom-0 left-0 w-48 h-55 opacity-80 pointer-events-none">
+          <div className="absolute bottom-0 left-1 w-48 h-55 opacity-80 pointer-events-none">
             <img src={buck} alt="Hand Illustration" className="w-full h-full object-contain" />
           </div>
         </div>
       </div>
 
-      <Dialog open={modalConfig.isOpen} onOpenChange={(open) => !open && setModalConfig(prev => ({ ...prev, isOpen: false }))}>
+      <Dialog
+        open={modalConfig.isOpen}
+        onOpenChange={(open) => !open && setModalConfig((prev) => ({ ...prev, isOpen: false }))}
+      >
         <DialogContent className="sm:max-w-md" dir="rtl">
           <DialogHeader>
             <div className="flex justify-center mb-4">
@@ -298,7 +318,7 @@ const Validation: React.FC = () => {
           <DialogFooter className="sm:justify-center">
             <Button
               type="button"
-              variant='dialog'
+              variant="dialog"
               onClick={modalConfig.onButtonClick}
               className="w-full sm:w-auto min-w-[220px] cursor-pointer"
             >
