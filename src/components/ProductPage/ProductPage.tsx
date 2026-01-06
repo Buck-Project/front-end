@@ -1,5 +1,7 @@
 // src/pages/ProductPage.tsx
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon, CheckIcon, RepeatIcon, ShieldIcon, MessageSquareIcon, ThumbsUpIcon, ThumbsDownIcon, HomeIcon, UsersIcon, ShirtIcon, PackageIcon, Store } from 'lucide-react';
-import { useParams, useSearchParams } from 'react-router-dom';
 import { getProductPageData, type Product as ApiProduct, type Review as ApiReview } from '@/services/productService';
 import { baseURL } from '@/services/services';
 
