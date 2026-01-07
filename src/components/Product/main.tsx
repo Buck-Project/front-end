@@ -1,7 +1,7 @@
-import { EnhancedProductGallery } from "@/components/Product_tmp/EnhancedProductGallery";
-import ProductCard from "@/components/Product_tmp/ProductCard";
-import { ReviewCard } from "@/components/Product_tmp/ReviewCard";
-import { SizeGuide } from "@/components/Product_tmp/SizeGuide";
+import { EnhancedProductGallery } from "@/components/Product/EnhancedProductGallery";
+import ProductCard from "@/components/Product/ProductCard";
+import { ReviewCard } from "@/components/Product/ReviewCard";
+import { SizeGuide } from "@/components/Product/SizeGuide";
 
 function Main() {
 

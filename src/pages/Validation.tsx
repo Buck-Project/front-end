@@ -20,7 +20,6 @@ import { translateNumber } from '@/utils/translateNumber';
 import type ValidationFormValues from '@/types/loginTypes';
 import BackToLogin from '@/components/login/backToLogin';
 import SubmitSpinner from '@/components/login/submitSpinner';
-import ToRight from '@/components/ui/toRightSvg';
 import useAuthStore from '@/store/authStore/authStore';
 import useUserStore from '@/store/userStore/userStore';
 

@@ -1,5 +1,10 @@
-import axios from 'axios';
-import { baseURL } from './services';
+import type {
+  Product,
+  GetProductsResponse,
+  CreateProductPayload,
+  CreateProductResponse,
+  UpdateProductPayload,
+} from "../types/productTypes";
 
 import { getData, postImageData, putImageData, deleteData } from "./services";
 
@@ -120,57 +125,9 @@ export const createProductService = async (
     data: formData,
   });
 
-/**
- * دریافت اطلاعات کامل محصول و نظرات (مطابق روت‌های ۲ و ۳ شما)
- */
-export const getProductPageData = async (id: string | number) => {
-    try {
-        console.log("[productService] getProductPageData", id);
-        const [productRes, reviewsRes] = await Promise.all([
-            axios.get<ApiResponse<Product> | Product>(`${BASE_URL}/product-profiles/${id}`),
-            axios.get<ApiResponse<Review[]> | Review[]>(`${BASE_URL}/product-profiles/${id}/reviews`)
-        ]);
-
-        const productData = unwrapData(productRes.data);
-        const reviews = normalizeReviews(reviewsRes.data);
-        console.log("[productService] product payload", {
-            id: productData?.id,
-            images: productData?.images,
-            image: productData?.image,
-            images_list: productData?.images_list,
-            reviewsCount: reviews.length
-        });
-
-        // اصلاح فرمت تصاویر (اگر رشته JSON بود به آرایه تبدیل شود)
-        const rawImages = productData.images_list ?? productData.images ?? productData.image;
-        let imageList: string[] = [];
-
-        if (typeof rawImages === 'string') {
-            try {
-                imageList = JSON.parse(rawImages);
-            } catch {
-                imageList = [rawImages];
-            }
-        } else if (Array.isArray(rawImages)) {
-            imageList = rawImages;
-        }
-
-        if (!productData.images_list || productData.images_list.length === 0) {
-            productData.images_list = imageList;
-        }
-
-        if (!productData.images && imageList.length > 0) {
-            productData.images = imageList;
-        }
-
-        return {
-            product: productData,
-            reviews
-        };
-    } catch (error) {
-        console.error("خطا در دریافت اطلاعات محصول:", error);
-        throw error;
-    }
+  return {
+    product: normalizeProduct(product),
+  };
 };
 
 export const updateProductService = async (
@@ -183,29 +140,13 @@ export const updateProductService = async (
     data: formData,
   });
 
-    // سینتکس دقیق برای رفع اروری که در عکس داشتی:
-    // آرگومان اول: URL
-    // آرگومان دوم: Body (چون خالیه {} می‌ذاریم)
-    // آرگومان سوم: Config (شامل Headers)
-    return axios.post(
-        `${BASE_URL}/product-profiles/${id}/wishlist-toggle`,
-        {},
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-    );
+  return normalizeProduct(product);
 };
 
-/**
- * دریافت لیست محصولات برای گرید (روت شماره ۱ شما)
- */
-export const getAllProductProfiles = async () => {
-    const response = await axios.get<ApiResponse<Product[]> | Product[]>(`${BASE_URL}/product-profiles`);
-    const payload = unwrapData(response.data);
-    return Array.isArray(payload) ? payload : [];
+export const deleteProductService = async (
+  productId: string
+): Promise<void> => {
+  await deleteData({
+    endPoint: `${"/api/manager/Dproduct"}/${productId}`,
+  });
 };
-
-
-

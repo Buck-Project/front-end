@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../Product/ProductCard';
 import type { BestSellProps } from '@/types/brandProfileTypes';
 import { Button } from '../ui/button';
-import ToLeft from '../ui/toLeftSvg';
+import ToLeft from '../ui/toLeft';
 
 const BestSell: React.FC<BestSellProps> = ({ brandData, products }) => {
   // Show only first 3 products (as per original logic)
