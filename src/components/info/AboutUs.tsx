@@ -19,25 +19,31 @@ export default function App() {
           </h1>
 
           <p className="text-sm text-text mb-8 leading-relaxed">
-            از سال ۱۴۰۳ ما با ارائه راهکارهای خلاقانه، به توآورانه، به کسب‌وکارها کمک کرده‌ایم تا به اهداف خود دست یابند. 
+            از سال ۱۴۰۳ ما با ارائه راهکارهای خلاقانه، به توآورانه، به کسب‌وکارها کمک کرده‌ایم تا به اهداف خود دست یابند.
             تیم ما متشکل از متخصصان با تجربه است که با اشتیاق و تعهد، بهترین خدمات را به شما ارائه می‌دهند.
           </p>
         </div>
       </div>
 
       {/* Stats */}
-      <div 
+      <div
         className="py-4 mb-20"
         style={{
           background: 'linear-gradient(to right, var(--bg-section1), var(--bg-section2))',
         }}
       >
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          {/* grid-cols-1 در موبایل (پیش‌فرض)، grid-cols-2 در sm، grid-cols-4 از md به بالا */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {stats.map((s, i) => (
-              <div key={i} className="flex flex-col items-center justify-center h-32">
+              <div
+                key={i}
+                className="flex flex-col items-center justify-center h-24 sm:h-28 md:h-32"
+              >
                 <div className="text-xl font-bold text-white mb-1">{s.number}</div>
-                <div className="text-white text-xs font-medium text-center">{s.label}</div>
+                <div className="text-white text-xs font-medium text-center px-2">
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
@@ -56,7 +62,7 @@ export default function App() {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 mx-[150px]">
           {values.map((value, index) => (
             <div
               key={index}
@@ -90,18 +96,22 @@ export default function App() {
         </div>
 
         {/* Row 1 - 4 cards */}
-        <div className="flex justify-center mb-10">
-          <div className="flex gap-10" style={{ width: 'calc(100% - 480px)' }}>
+        <div className="container mx-auto mb-10 px-[150px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
             {team.slice(0, 4).map((member, index) => (
               <div
                 key={index}
-                className="bg-card rounded-3xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] transition-all duration-300"
-                style={{ width: '330px', height: '400px', fontWeight: '500' }}
+                className="bg-card rounded-3xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)]
+                   hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)]
+                   transition-all duration-300
+                   w-full max-w-[320px] sm:max-w-[300px] lg:max-w-[330px]
+                   flex flex-col"
+                style={{ height: '400px', fontWeight: '500' }}
               >
-                <div className="bg-muted h-[250px] rounded-t-3xl flex items-center justify-center">
+                <div className="bg-muted h-[250px] rounded-t-3xl flex items-center justify-center flex-shrink-0">
                   <Users className="w-16 h-16 text-muted-foreground" />
                 </div>
-                <div className="p-4 text-center">
+                <div className="p-4 text-center flex-grow flex flex-col justify-center">
                   <h3 className="text-sm font-extrabold text-titr">{member.role}</h3>
                   <p className="text-xs text-text">{member.name}</p>
                 </div>
@@ -111,24 +121,26 @@ export default function App() {
         </div>
 
         {/* Row 2 - 3 cards */}
-        <div className="flex justify-center">
-          <div className="flex gap-10" style={{ width: 'calc(100% - 700px)' }}>
-            {team.slice(4).map((member, index) => (
-              <div
-                key={index + 4}
-                className="bg-card rounded-3xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] transition-all duration-300"
-                style={{ width: '330px', height: '400px', fontWeight: '500' }}
-              >
-                <div className="bg-muted h-[250px] rounded-t-3xl flex items-center justify-center">
-                  <Users className="w-16 h-16 text-muted-foreground" />
-                </div>
-                <div className="p-4 text-center">
-                  <h3 className="text-sm font-extrabold text-titr">{member.role}</h3>
-                  <p className="text-xs text-text">{member.name}</p>
-                </div>
+        <div className="flex flex-wrap justify-center gap-6 p-4 px-[150px]">
+          {team.slice(4).map((member, index) => (
+            <div
+              key={index + 4}
+              className="bg-card rounded-3xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] 
+                 hover:shadow-[0_12px_40px_-2px_rgba(0,0,0,0.2)] 
+                 transition-all duration-300
+                 w-full sm:w-[300px] md:w-[310px] lg:w-[330px]
+                 max-w-[330px] flex-shrink-0"
+              style={{ height: '400px', fontWeight: '500' }}
+            >
+              <div className="bg-muted h-[250px] rounded-t-3xl flex items-center justify-center">
+                <Users className="w-16 h-16 text-muted-foreground" />
               </div>
-            ))}
-          </div>
+              <div className="p-4 text-center">
+                <h3 className="text-sm font-extrabold text-titr">{member.role}</h3>
+                <p className="text-xs text-text">{member.name}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
