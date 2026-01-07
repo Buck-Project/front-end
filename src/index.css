@@ -249,3 +249,21 @@ body {
     @apply border-border outline-ring/50;
   }
 }
+
+@keyframes l15 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.contact-pill {
+  background-color: var(--contact-pill);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
