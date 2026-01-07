@@ -44,6 +44,6 @@ root_directory = os.getcwd()
 excluded_items = ["node_modules", "tree.py",
                   "doc",   ".vscode", ".git"]  # استثناء فایل یا پوشه‌ها
 # پوشه‌هایی که باید بدون دنباله نمایش داده شوند
-exclude_subfolders = [ "logs","myprojectenv", "registration","blog","select2", "migrations", "__pycache__", "img", "assets"]
+exclude_subfolders = [ "logs", "venv", "static", "migrations", "images", "__pycache__", "admin", "media", "assets", "components"]
 
 print_tree(root_directory, excluded_items, exclude_subfolders)

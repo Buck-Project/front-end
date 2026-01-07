@@ -9,21 +9,26 @@ export interface Color {
   label: string;
 }
 
-export interface ProductData {
+export interface Product {
+  id: number | string;
   discount: number;
   hasDiscount: boolean;
   image: string;
-  model: string;             // = brand
+  model: string;             // = brand name
+  brandSlug?: string;        // normalized brand key
   name: string;
   price: number;
   sizes: Size[];
   colors: Color[];
-  rating: number;            // ✅ وجود دارد
+  rating: number;            // rating value
   stock: number;             // = inventory_Count
   ratingCount: number;
   sales: number;
   category: string;
   discountedPrice: number;
+  subCategory?: string;
+  modelStyle?: string;
+  gender?: string;
 }
 
 export interface ImageData {
@@ -32,7 +37,7 @@ export interface ImageData {
 }
 
 export interface ColorSelectorProps {
-  product:Product
+  product: Product;
 }
 
 export interface ProductProps {
@@ -45,7 +50,7 @@ export interface ProductImageProps {
 }
 
 export interface SizeSelectorProps {
-  product : Product
+  product: Product;
 }
 
 export interface ProductCardProps {

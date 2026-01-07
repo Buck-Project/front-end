@@ -1,43 +1,65 @@
-import adidas from '@/assets/brands/Adidas-Logo.wine.png';
-import dior from '@/assets/brands/Christian_Dior_(fashion_house)-Logo.wine.png';
-import balenciaga from '@/assets/brands/Balenciaga-Logo.wine.png';
-import chanel from '@/assets/brands/Chanel-Logo.wine.png';
-import zara from '@/assets/brands/Zara_(retailer)-Logo.wine.png';
-import louisVuitton from '@/assets/brands/Louis_Vuitton-Logo.wine.png';
-import burberry from '@/assets/brands/Burberry-Logo.wine.png';
-import fendi from '@/assets/brands/Fendi-Logo.wine.png';
-import nike from '@/assets/brands/Nike,_Inc.-Logo.wine.png';
-import gucci from '@/assets/brands/Gucci-Logo.wine.png';
+import React, { useEffect, useRef } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { brands } from '@/data/homePageData';
 
 const BrandSlider = () => {
-  const brands = [
-    { name: "Adidas", logo: adidas },
-    { name: "Dior", logo: dior },
-    { name: "Balenciaga", logo: balenciaga },
-    { name: "Chanel", logo: chanel },
-    { name: "Zara", logo: zara },
-    { name: "Louis Vuitton", logo: louisVuitton },
-    { name: "Burberry", logo: burberry },
-    { name: "Fendi", logo: fendi },
-    { name: "Nike", logo: nike },
-    { name: "Gucci", logo: gucci }
-  ];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const controls = useAnimation();
+  const duplicatedBrands = [...brands, ...brands]; // برای اطمینان از پوشش کامل viewport
+
+  useEffect(() => {
+    const animate = () => {
+      if (!containerRef.current) return;
+
+      const container = containerRef.current;
+      const containerWidth = container.scrollWidth / 2; // فقط نیمی از عرض کل (یک دور کامل)
+
+      // انیمیشن بی‌پایان با جهش نرم
+      controls.start({
+        x: [0, containerWidth],
+        transition: {
+          duration: 15, // می‌توانید تنظیم کنید
+          ease: 'linear',
+          repeat: Infinity,
+          repeatType: 'loop',
+        },
+      });
+    };
+
+    animate();
+
+    return () => controls.stop();
+  }, [controls]);
 
   return (
-    <div className="py-6 ">
-      <div className="bg-gradient-to-r from-background-color via-bg-section1 to-background-color rounded-lg p-4">
-        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8">
-          {brands.map((brand, index) => (
-            <div key={index} className="flex-shrink-0">
-              <a href={`brands/${brand.name}`}>
-                <img
-                  src={brand.logo}
-                  alt={brand.name}
-                  className="h-17 w-auto object-contain cursor-pointer"
-                />
-              </a>
-            </div>
-          ))}
+    <div className="py-4 md:py-6 overflow-hidden">
+      <div className="h-32 md:h-40 bg-gradient-to-r from-background-color via-bg-section1 to-background-color rounded-lg">
+        <div className="relative overflow-hidden h-full">
+          {/* 👇 فقط نیمه چپ را در موبایل نمایش دهیم */}
+          <div className="absolute inset-0 flex items-center justify-start">
+            <motion.div
+              ref={containerRef}
+              className="flex items-center gap-6 md:gap-8 whitespace-nowrap"
+              dir="rtl"
+              animate={controls}
+              style={{ display: 'inline-flex' }}
+            >
+              {duplicatedBrands.map((brand, index) => (
+                <a
+                  key={`${brand.name}-${index}`}
+                  href={`brands/${brand.name}`}
+                  className="flex-shrink-0 flex items-center justify-center h-full px-2"
+                  aria-label={`برند ${brand.name}`}
+                >
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-12 w-auto md:h-16 lg:h-20 max-h-full object-contain"
+                  />
+                </a>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>
