@@ -4,7 +4,7 @@ import { Navigation, FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
-import ProductCard from '@/components/Product_tmp/ProductCard';
+import ProductCard from '@/components/Product/ProductCard';
 import { toPersianDigits } from '@/utils/PersianDigits';
 import type { Timer, SurpriseSectionProps } from '@/types/homeTypes';
 import { Button } from '../ui/button';

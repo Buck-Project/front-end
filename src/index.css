@@ -24,8 +24,8 @@ body {
   opacity: 0.9;
 }
 .vazir {
-		font-family: "Vazir", sans-serif;
-	}
+  font-family: "Vazir", sans-serif;
+}
 
 .hide-scrollbar {
   -ms-overflow-style: none;
@@ -49,7 +49,7 @@ body {
 }
 
 :root {
-  font-family: "Vazir","Vazirmatn", sans-serif;
+  font-family: "Vazir", "Vazirmatn", sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -103,7 +103,7 @@ body {
   --input: oklch(0.94 0 0);
   --ring: oklch(0.72 0.19 35 / 0.3);
   --form-ring: oklch(46.849% 0.30212 264.226);
-  --card: #F6F6F6;
+  --card: #f6f6f6;
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -129,11 +129,11 @@ body {
   /* ---------- Theme Mapping ---------- */
   --text: oklch(0.45 0 0);
   --card-text: white;
-  --titr:  oklch(0.25 0 0);
+  --titr: oklch(0.25 0 0);
   /* --special-titr: ; */
 
-  --bg-section1: #ED775A;
-  --bg-section2: #E4004B;
+  --bg-section1: #ed775a;
+  --bg-section2: #e4004b;
 }
 
 @theme inline {
@@ -191,7 +191,6 @@ body {
   --color-form-ring: var(--form-ring);
   --color-bg-section1: var(--bg-section1);
   --color-bg-section2: var(--bg-section2);
-  
 }
 
 .dark {

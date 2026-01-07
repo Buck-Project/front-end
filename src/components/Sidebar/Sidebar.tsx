@@ -1,5 +1,5 @@
 // src/components/Sidebar/Sidebar.tsx
-import { DASHBOARD_SIDEBAR_ITEMS } from '@/pages/SidebarConstant';
+import { USER_DASHBOARD_SIDEBAR_ITEMS } from '@/pages/SidebarConstant';
 import type { NavItem, SidebarProps } from '@/types/sidebarTypes';
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 // تابع کمکی برای اضافه کردن onClick
 const mapItemsWithNavigation = (navigate: (path: string) => void): NavItem[] => {
-  return DASHBOARD_SIDEBAR_ITEMS.map(item => ({
+  return USER_DASHBOARD_SIDEBAR_ITEMS.map(item => ({
     ...item,
     onClick: () => {
       if (item.id === 'logout') {

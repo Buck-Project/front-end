@@ -8,14 +8,19 @@ import Error500 from "@/pages/Error500";
 import ProductListing from "@/components/ProductListing/productListing";
 import LoginForm from "@/pages/Login";
 import Validation from "@/pages/Validation";
+import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
+import WishlistPage from "@/pages/WishList";
+import ProductManagementPage from "@/pages/BrandDash/ProductManagement";
+import OrderHistoryPage from "@/pages/OrderHistoryPage";
+import UserDashInformation from "@/pages/userDashInfo";
+import FAQ from "@/pages/FAQ";
 import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
+import AboutUs from "@/pages/AboutUs";
+import ContactUs from "@/components/ContactUs/ContactUs";
 import Payment from "@/pages/PaymentPage";
 import ShoppingCart from "@/pages/shoppingCart";
 import ProductPages from "@/pages/ProductPage";
 import EnhancedProductPage from "@/pages/EnhancedProductPage";
-import FAQ from "@/pages/FAQ";
-import AboutUs from "@/pages/AboutUs";
-import ContactUs from "@/components/ContactUs/ContactUs";
 // import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
 // import SidebarLayout from "@/layouts/PublicLayout/SidebarLayout";
 // import WishlistPage from "@/pages/WishList";
@@ -27,9 +32,6 @@ import BrandHomePage from "@/pages/BrandDash/Home";
 import BrandProfile from "@/pages/BrandProfile";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import FilterPage from "@/pages/FilterPage";
-import UserDashInformation from "@/pages/userDashInfo";
-import WishlistPage from "@/pages/WishList";
-import OrderHistoryPage from "@/pages/OrderHistoryPage";
 
 
 export const router = createBrowserRouter([
@@ -88,6 +90,14 @@ export const router = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            // {
+            //     path: "/product-page",
+            //     element: (
+            //         <ProtectedRoute>
+            //             <ProductPages />
+            //         </ProtectedRoute>
+            //     ),
+            // },
             {
                 path: "/product-page/:id",
                 element: (
