@@ -10,7 +10,7 @@ import LoginForm from "@/pages/Login";
 import Validation from "@/pages/Validation";
 import BrandProfileEditPage from "@/pages/BrandProfileEditPage";
 import WishlistPage from "@/pages/WishList";
-import ProductManagementPage from "@/pages/BrandDash/ProductManagementPage";
+import ProductManagementPage from "@/pages/BrandDash/ProductManagement";
 import OrderHistoryPage from "@/pages/OrderHistoryPage";
 import UserDashInformation from "@/pages/userDashInfo";
 import FAQ from "@/pages/FAQ";
