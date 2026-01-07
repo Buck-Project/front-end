@@ -19,7 +19,6 @@ import errorCat from '../assets/error.png';
 import { translateNumber } from '../utils/translateNumber';
 import type LoginFormValues from '@/types/loginTypes';
 import ErrorForm from '@/components/login/errorForm';
-import { Input } from '@/components/ui/input';
 
 // 🔹 هوک تشخیص موبایل — اضافه شد ✅
 const useIsMobile = () => {
@@ -59,6 +58,10 @@ const LoginForm: React.FC = () => {
       const result = await checkPhone(values.phone);
 
       if (result.success) {
+
+        const otpCode = result.data?.message;
+        console.log('OTP Code:', otpCode);
+
         if (result.data.registered === true) {
           setModalConfig({
             isOpen: true,
@@ -117,14 +120,9 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-background-color" dir="rtl">
-      <div className={`w-full flex items-center justify-center ${isMobile ? 'p-0' : 'p-6 md:p-10'}`}>
-        <div
-          className={`w-full relative overflow-hidden ${isMobile
-            ? 'h-screen bg-login-card-bg rounded-none'
-            : 'max-w-xl h-5/6 bg-login-card-bg rounded-4xl border-3 border-primary-border p-8'
-            }`}
-        >
-          <div className={`text-center ${isMobile ? 'mt-10 px-4' : 'mb-8'}`}>
+      <div className="w-full flex items-center justify-center p-6 md:p-10">
+        <div className="w-full max-w-xl h-5/6 bg-card rounded-3xl border-2 border-border shadow-2xl p-8 relative overflow-hidden">
+          <div className="text-center mb-8">
             <img src={logo} alt="CB Buck Gallery" className="mx-auto w-32 h-auto" />
             <h2 className="text-3xl font-bold text-titr">عضویت/ورود</h2>
             <p className="text-sm text-text mt-2">خوش آمدید!</p>
@@ -142,16 +140,12 @@ const LoginForm: React.FC = () => {
                   <div className="w-full max-w-xs">
                     <Field name="phone">
                       {({ field, form }: any) => (
-                        <Input
-                          {...field}
-                          type="tel"
-                          inputMode="numeric"
+                        <input
+                          type="text"
                           placeholder="۰۹۱۲۳۴۵۶۷۸۹"
                           disabled={loading}
-                          onlyNumbers
-                          forceRTL
-                          containerClassName="w-full"
-                          inputClassName="w-full px-4 py-2.5 bg-white border border-transparent rounded-lg focus:border-primary-border focus:border-2 focus:ring-0 text-center text-sm transition-all duration-200 outline-none disabled:bg-card disabled:cursor-not-allowed"
+                          inputMode="numeric"
+                          className="w-full px-4 py-2.5 bg-white border border-border rounded-lg focus:ring-2 focus:form-ring focus:border-transparent transition-all duration-200 outline-none disabled:bg-card disabled:cursor-not-allowed text-center text-sm"
                           value={translateNumber(field.value || '')}
                           // ✅ اینجا form.setFieldValue — دقیقاً مثل فایل اصلی شما
                           onChange={(e) => handlePhoneChange(e, form.setFieldValue)}
@@ -171,7 +165,6 @@ const LoginForm: React.FC = () => {
 
                 <div className="flex justify-center">
                   <Button
-                    className="bg-bg-section2 rounded-xl hover:bg-bg-section1"
                     type="submit"
                     disabled={loading || isSubmitting}
                     variant="dialog"
@@ -183,9 +176,9 @@ const LoginForm: React.FC = () => {
 
                 <div className={`text-center text-xs ${isMobile ? 'mt-6' : 'mt-4'}`}>
                   <span className="text-text">ایجاد حساب به معنای پذیرش </span>
-                  <Link to="/terms" className="text-bg-section2 hover:underline">قوانین و مقررات</Link>
+                  <Link to="/terms" className="text-link">قوانین و مقررات</Link>
                   <span className="text-text"> و </span>
-                  <Link to="/privacy" className="text-bg-section2 hover:underline">حریم‌خصوصی</Link>
+                  <Link to="/privacy" className="text-link">حریم‌خصوصی</Link>
                   <span className="text-text"> است.</span>
                 </div>
               </Form>

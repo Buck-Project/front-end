@@ -1,44 +1,19 @@
-// src/stores/userStore/userStore.ts
+// src/stores/useProfileStore.ts
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { UserState } from "@/types/userTypes";
+import type { UserState } from "../../types/userTypes";
 
 const useUserStore = create<UserState>()(
 	persist(
-		(set, get) => ({
-			token: null,
-			user: null,
-			isAuthenticated: false,
-			profileCompleted: false, // فعلاً false، بعداً از API میاد
+		(set) => ({
+			username: null,
 
-			setToken: (token: string) =>
-				set({ token, isAuthenticated: !!token }),
-
-			setUser: (user) =>
-				set({ user }),
-
-			setAuth: (token: string, user) =>
-				set({ token, user, isAuthenticated: true }),
-
-			setProfileCompleted: (completed: boolean) =>
-				set({ profileCompleted: completed }),
-
-			clearAuth: () =>
-				set({ 
-					token: null, 
-					user: null, 
-					isAuthenticated: false,
-					profileCompleted: false 
-				}),
-
-			// Helper getters
-			getUserId: () => get().user?.id || null,
-			getRole: () => get().user?.role || null,
-			isBrand: () => get().user?.role === 'brand',
+			setUsername: (username: string) =>
+				set((prev) => ({ ...prev, username })),
 		}),
 		{
-			name: "user-storage",
+			name: "profile-storage",
 			storage: createJSONStorage(() => sessionStorage),
 		}
 	)

@@ -12,7 +12,10 @@ export default defineConfig({
 			"/api": {
 				target: "http://185.60.136.225",
 				changeOrigin: true,
-				secure: false,
+			},
+			"/market-logo": {
+				target: "http://185.60.136.225",
+				changeOrigin: true,
 			},
 		},
 	},

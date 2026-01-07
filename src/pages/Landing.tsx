@@ -1,22 +1,12 @@
-// src/pages/Landing.tsx
-// import { useNavigate } from "react-router-dom"; // 👈 حذف شد
+import { useNavigate } from "react-router-dom";
+import Main from "@/components/Product/main"
 
 function Landing() {
 	// const Navigate = useNavigate(); // 👈 حذف شد
 
 	return (
-		<div className="w-full h-screen font-3xl flex flex-col place-self-center justify-center">
-			{/*             <div className="flex gap-2 rounded-md place-self-center">
-                <button
-                    className="text-white bg-sky-600 rounded-md p-2 cursor-pointer"
-                    onClick={() => {
-                        Navigate("/temp");
-                    }}
-                >
-                    Temp route
-                </button>
-            </div>
-            <p className="text-5xl text-center ">This is your landing</p> */}
+		<div>
+			<Main/>
 		</div>
 	);
 }

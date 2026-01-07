@@ -13,7 +13,6 @@ import Footer from "@/components/Footer/Footer";
 import ExitModal from "@/components/ExitComponent/exitComponent";
 
 export default function SidebarLayout() {
-  const navigate = useNavigate();
   const location = useLocation();
   const clearAuth = useUserStore((state) => state.clearAuth);
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
