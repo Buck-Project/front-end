@@ -21,7 +21,7 @@ const mapItemsWithNavigation = (navigate: (path: string) => void): NavItem[] => 
   }));
 };
 
-export default function Sidebar() {
+export default function Sidebar({ className }: SidebarProps = {}) {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);

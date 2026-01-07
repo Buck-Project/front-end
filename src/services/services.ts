@@ -40,7 +40,7 @@ apiClient.interceptors.response.use(
 	}
 );
 
-// ✅ GET
+// バ. GET
 export const getData = async ({ endPoint, headers, params }: GetParams) => {
 	try {
 		const response: AxiosResponse = await apiClient.get(endPoint, {
@@ -54,7 +54,7 @@ export const getData = async ({ endPoint, headers, params }: GetParams) => {
 	}
 };
 
-// ✅ POST
+// バ. POST
 export const postData = async ({ endPoint, data, headers }: PostParams) => {
 	try {
 		const response: AxiosResponse = await apiClient.post(endPoint, data, {
@@ -67,7 +67,7 @@ export const postData = async ({ endPoint, data, headers }: PostParams) => {
 	}
 };
 
-// ✅ POST image/form-data
+// バ. POST image/form-data
 export const postImageData = async ({ endPoint, data }: PostParams) => {
 	try {
 		const response: AxiosResponse = await apiClient.post(endPoint, data, {
@@ -80,7 +80,20 @@ export const postImageData = async ({ endPoint, data }: PostParams) => {
 	}
 };
 
-// ✅ PATCH
+// バ. PATCH
+// バ. PUT image/form-data
+export const putImageData = async ({ endPoint, data }: PutParams) => {
+	try {
+		const response: AxiosResponse = await apiClient.put(endPoint, data, {
+			headers: { "Content-Type": "multipart/form-data" },
+		});
+		return response.data;
+	} catch (error) {
+		console.error("error in putImageData", error);
+		throw error;
+	}
+};
+
 export const patchData = async ({ endPoint, data, headers }: PatchParams) => {
 	try {
 		const response: AxiosResponse = await apiClient.patch(endPoint, data, {
@@ -93,7 +106,7 @@ export const patchData = async ({ endPoint, data, headers }: PatchParams) => {
 	}
 };
 
-// ✅ PUT
+// バ. PUT
 export const putData = async ({ endPoint, data }: PutParams) => {
 	try {
 		const response: AxiosResponse = await apiClient.put(endPoint, data);
@@ -104,7 +117,7 @@ export const putData = async ({ endPoint, data }: PutParams) => {
 	}
 };
 
-// ✅ DELETE
+// バ. DELETE
 export const deleteData = async ({ endPoint, data, headers }: DeleteParams) => {
 	try {
 		const response: AxiosResponse = await apiClient.delete(endPoint, {

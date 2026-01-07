@@ -1,7 +1,15 @@
-﻿// src/constants/sidebarItems.ts
+// src/constants/sidebarItems.ts
 import type { NavItem } from '@/types/sidebarTypes';
-import { Home, User, Settings, LogOut } from 'lucide-react'; // ÛŒØ§ Ù‡Ø± Ø¢ÛŒÚ©ÙˆÙ†ÛŒ Ú©Ù‡ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ù…ÛŒâ€ŒÚ©Ù†ÛŒØ¯
-import { useNavigate } from 'react-router-dom'; // âš ï¸ ÙÙ‚Ø· Ø¯Ø§Ø®Ù„ Ú©Ø§Ù…Ù¾ÙˆÙ†Ù†Øª Ù…ÛŒâ€ŒØ´ÙˆØ¯ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ú©Ø±Ø¯
+import {
+  Home,
+  Settings,
+  LogOut,
+  Bell,
+  Heart,
+  CircleUserRound,
+  ShoppingBag,
+  Banana,
+} from 'lucide-react';
 
 export const USER_DASHBOARD_SIDEBAR_ITEMS: Omit<NavItem, "onClick">[] = [
   {
